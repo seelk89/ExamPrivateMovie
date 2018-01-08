@@ -5,10 +5,77 @@
  */
 package examprivatemovie.GUI;
 
+import examprivatemovie.BE.Category;
+import examprivatemovie.BE.Movie;
+import examprivatemovie.BLL.BLLManager;
+import java.util.List;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 /**
  *
  * @author Anni
  */
 public class MovieModel {
+     BLLManager bllm = new BLLManager();
     
+    private ObservableList<Movie> mList = FXCollections.observableArrayList();
+    
+       public List<Movie> getAllMovies()
+       {
+           return bllm.getAllMovies();
+       }
+       
+       private ObservableList<Category> cList = FXCollections.observableArrayList();
+    
+       public List<Category> getAllCategories()
+       {
+           return bllm.getAllCategories();
+       }
+ 
+       public List<Movie> getAllMoviesBySearching(String name)
+       {
+           return bllm.getAllMoviesBySearching(name);
+       }
+       
+       public ObservableList<Movie> getMoviesList()
+    {
+        return mList;
+    }
+       
+       public ObservableList<Category> getCategoriesList()
+    {
+        return cList;
+    }
+       
+       public void AddMovie(Movie m)
+       {
+           bllm.addMovieToDb(m);
+           mList.addAll(bllm.getAllMovies());
+       }
+
+       public void editMovie(Movie m)
+       {
+           bllm.editMovieInDb(m);
+           //cList.addAll(bllm.getAllChars());
+       }
+    
+       public void deleteMovie(Movie selectedMovie)
+       {
+           bllm.deleteMovieFromDb(selectedMovie);
+           mList.remove(selectedMovie);
+       }
+       
+       public void loadMovie()
+       {
+           mList.clear();
+           mList.addAll(bllm.getAllMovies());
+       }
+       
+              
+       public void loadCategory()
+       {
+           cList.clear();
+           cList.addAll(bllm.getAllCategories());
+       }
 }

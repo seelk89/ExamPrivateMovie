@@ -20,9 +20,9 @@ public class ConnectionManager {
 
     public ConnectionManager()
     {
-        ds.setDatabaseName("CS2017WLO");
+        ds.setDatabaseName("CS2017B_Exam1");
         ds.setUser("CS2017B_1");
-        ds.setPassword("javajava"); //not correct password
+        ds.setPassword("9kolol9A"); 
         ds.setPortNumber(1433);
         ds.setServerName("10.176.111.31");
             

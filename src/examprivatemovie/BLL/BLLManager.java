@@ -5,10 +5,49 @@
  */
 package examprivatemovie.BLL;
 
+import examprivatemovie.BE.Category;
+import examprivatemovie.BE.Movie;
+import examprivatemovie.DAL.DALManager;
+import java.util.List;
+
 /**
  *
  * @author Anni
  */
 public class BLLManager {
+    
+    
+    DALManager dalm = new DALManager();
+    
+       public List<Movie> getAllMovies()
+       {
+           return dalm.getAllMovies();
+       }
+       
+        public List<Category> getAllCategories()
+       {
+           return dalm.getAllCategories();
+       }
+ 
+       public List<Movie> getAllMoviesBySearching(String name)
+       {
+           return dalm.getAllMoviesBySearching(name);
+       }
+       
+       public void addMovieToDb(Movie m)
+       {
+           dalm.addMovieToDB(m);
+       }
+
+       public void editMovieInDb(Movie m)
+       {
+           dalm.editMovieInDb(m);
+       }
+    
+       public void deleteMovieFromDb(Movie selectedChar)
+       {
+           dalm.deleteCharFromDb(selectedChar);
+       }
+
     
 }

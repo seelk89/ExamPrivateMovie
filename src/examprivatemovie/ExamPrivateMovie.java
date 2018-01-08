@@ -25,6 +25,7 @@ public class ExamPrivateMovie extends Application
         
         Scene scene = new Scene(root);
         
+        stage.setTitle("Exam Project Private Movie Collection");
         stage.setScene(scene);
         stage.show();
     }
