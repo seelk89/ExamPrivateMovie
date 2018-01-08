@@ -5,6 +5,8 @@
  */
 package examprivatemovie.BE;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -13,8 +15,23 @@ import javafx.beans.property.StringProperty;
  * @author Anni
  */
 public class Category {
-
+    
+    private final IntegerProperty id = new SimpleIntegerProperty();
     private final StringProperty name = new SimpleStringProperty();
+  
+
+    public int getId() {
+        return id.get();
+    }
+
+    public void setId(int value) {
+        id.set(value);
+    }
+
+    public IntegerProperty idProperty() {
+        return id;
+    }
+    
 
     public String getName() {
         return name.get();

@@ -78,6 +78,44 @@ public class DALManager {
         }
         return allCategories;
     }
+      
+//    /**
+//     * 
+//     * Gets each and every song in the Playlist table where the songs playlist_id is equal the selected playlists playlists_id.
+//     */
+//    public List<Category> getAllMoviesInCategory(int CategoryId)
+//    {
+//        List<Category> allMoviesInCategory = new ArrayList();
+//
+//        try (Connection con = cm.getConnection())
+//        {
+//            PreparedStatement stmt = con.prepareStatement("SELECT * FROM Category WHERE CategoryId = ? ORDER BY playlistOrder");
+//
+//            stmt.setInt(1, CategoryId);
+//
+//            ResultSet rs = stmt.executeQuery();
+//            
+//            while (rs.next())
+//            {
+//                Category c = new Category();
+//                c.setId(rs.getInt("id"));
+//                c.setPlaylistsId(rs.getInt("playlists_id"));
+//                c.setPlaylistOrder(rs.getInt("playlistOrder"));
+//                c.setSongsTitle(rs.getString("songs_title"));
+//                c.setSongsArtist(rs.getString("songs_artist"));
+//                c.setSongsGenre(rs.getString("songs_genre"));
+//                c.setSongsTime(rs.getString("songs_time"));
+//                c.setSongsFileLocation(rs.getString("songs_fileLocation"));
+//
+//                allMoviesInCategory.add(c);
+//            }
+//        } catch (SQLException ex)
+//        {
+//            Logger.getLogger(DALManager.class.getName()).log(
+//                    Level.SEVERE, null, ex);
+//        }
+//        return allMoviesInCategory;
+//    }
 
    public void addMovieToDB(Movie m)
    {

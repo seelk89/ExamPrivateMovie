@@ -21,7 +21,21 @@ public class Movie {
     private final IntegerProperty IMDBRating = new SimpleIntegerProperty();
     private final StringProperty filelink = new SimpleStringProperty();
     private final StringProperty lastview = new SimpleStringProperty();
+    private final IntegerProperty id = new SimpleIntegerProperty();
 
+    public int getId() {
+        return id.get();
+    }
+
+    public void setId(int value) {
+        id.set(value);
+    }
+
+    public IntegerProperty idProperty() {
+        return id;
+    }
+
+    
     public String getLastview() {
         return lastview.get();
     }
