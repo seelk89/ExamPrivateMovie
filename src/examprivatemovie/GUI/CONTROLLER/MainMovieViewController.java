@@ -105,7 +105,9 @@ public class MainMovieViewController implements Initializable
     }
 
     @FXML
-    private void clickPlayMovie(ActionEvent event) {
+    private void clickPlayMovie(ActionEvent event) 
+    {
+        
     }
     
 }
