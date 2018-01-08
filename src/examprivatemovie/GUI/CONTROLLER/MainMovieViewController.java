@@ -81,15 +81,15 @@ public class MainMovieViewController implements Initializable
          TableMovieView.setItems(model.getMoviesList());
          TableCategoryView.setItems(model.getCategoriesList()); 
         
-//         TableCategoryView.focusedProperty().addListener(
-//                new ChangeListener<Boolean>() {
-//            @Override
-//            public void changed(ObservableValue<? extends Boolean> 
-//                    observable, Boolean oldValue, Boolean newValue) {
-//                lastFocus = "Movie";
-//            }
-//        }
-//        );
+         TableCategoryView.focusedProperty().addListener(
+                new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> 
+                    observable, Boolean oldValue, Boolean newValue) {
+                lastFocus = "Movie";
+            }
+        }
+        );
     }    
 
     @FXML
