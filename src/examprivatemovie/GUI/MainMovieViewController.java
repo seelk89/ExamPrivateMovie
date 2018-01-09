@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package examprivatemovie.GUI.CONTROLLER;
+package examprivatemovie.GUI;
 
+import examprivatemovie.GUI.AddMovieViewController;
 import examprivatemovie.BE.Category;
 import examprivatemovie.BE.Movie;
 import examprivatemovie.GUI.MovieModel;
@@ -103,13 +104,13 @@ public class MainMovieViewController implements Initializable
     }
 
     @FXML
-    private void ClickAddMovie(ActionEvent event) throws IOException 
-    {
+    private void ClickAddMovie(ActionEvent event) throws IOException {
+
         Stage newWindow = new Stage();
 
         newWindow.initModality(Modality.APPLICATION_MODAL);
 
-        FXMLLoader fxLoader = new FXMLLoader(getClass().getResource("DeletePlaylistWindow.fxml"));
+        FXMLLoader fxLoader = new FXMLLoader(getClass().getResource("AddMovieView.fxml"));
 
         Parent root = fxLoader.load();
 
@@ -117,6 +118,7 @@ public class MainMovieViewController implements Initializable
         controller.setParentWindowController(this);
 
         Scene scene = new Scene(root);
+        newWindow.setTitle("Add Movie");
         newWindow.setScene(scene);
         newWindow.showAndWait();
     }
@@ -126,22 +128,7 @@ public class MainMovieViewController implements Initializable
     }
 
     @FXML
-    private void clickPlayMovie(ActionEvent event) throws IOException 
-    {
-        Stage newWindow = new Stage();
-
-        newWindow.initModality(Modality.APPLICATION_MODAL);
-
-        FXMLLoader fxLoader = new FXMLLoader(getClass().getResource("PlayView.fxml"));
-
-        Parent root = fxLoader.load();
-
-        PlayViewController controller = fxLoader.getController();
-        controller.setParentWindowController(this);
-
-        Scene scene = new Scene(root);
-        newWindow.setScene(scene);
-        newWindow.showAndWait();
+    private void clickPlayMovie(ActionEvent event) {
     }
     
 }

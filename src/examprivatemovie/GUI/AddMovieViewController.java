@@ -3,11 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package examprivatemovie.GUI.CONTROLLER;
+package examprivatemovie.GUI;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
+import java.io.File;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 
 /**
  * FXML Controller class
@@ -19,6 +27,7 @@ public class AddMovieViewController implements Initializable
 
     private MainMovieViewController parent;
 
+
     /**
      * Initializes the controller class.
      */
@@ -27,8 +36,8 @@ public class AddMovieViewController implements Initializable
     {
         // TODO
     }    
-    
-    public void setParentWindowController(MainMovieViewController parent) {
+    public void setParentWindowController(MainMovieViewController parent)
+    {
         this.parent = parent;
     }
 }
