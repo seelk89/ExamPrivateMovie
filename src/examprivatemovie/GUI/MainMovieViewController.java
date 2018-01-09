@@ -26,6 +26,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.InputMethodEvent;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -65,8 +68,6 @@ public class MainMovieViewController implements Initializable
     private Button btnPlay;
     private String lastFocus = "";
     MovieModel model = new MovieModel();
-    @FXML
-    private Button btnSearch;
     
     @Override
     public void initialize(URL url, ResourceBundle rb)
@@ -153,13 +154,16 @@ public class MainMovieViewController implements Initializable
     @FXML
     private void clickPlayMovie(ActionEvent event) {
     }
-    
+
 
     @FXML
-    private void writeSearchForMovie(ActionEvent event) {
-        
-        System.out.println("Searching for Movie by title and imdb rating");
+    private void writeSearchForMovieKeyTyped(KeyEvent event) {
+           System.out.println("Searching for Movie by title and imdb rating");
         model.search(txtSearchFilter.getText(), txtSearchFilter.getText());
-        
     }
+
+
+
+   
+    
 }
