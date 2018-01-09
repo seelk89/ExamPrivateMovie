@@ -30,9 +30,9 @@ public class BLLManager {
            return dalm.getAllCategories();
        }
  
-        public List<CatMovie> getAllMoviesInCategory(int id)
+        public List<CatMovie> getAllMoviesInCategory()
         {
-            return dalm.getAllMoviesInCategory(id);
+            return dalm.getAllMoviesInCategory();
         }
         
        public List<Movie> getAllMoviesBySearching(String name, String imdbRating)
@@ -44,6 +44,11 @@ public class BLLManager {
        {
            dalm.addMovieToDB(m);
        }
+       
+//       public void addMovieToCategory(CatMovie catm)
+//       {
+//           dalm.addMovieToCategory(catm);
+//       }
 
        public void editMovieInDb(Movie m)
        {

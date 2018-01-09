@@ -83,7 +83,7 @@ public class DALManager {
      * 
      * Shows all movies in the selected category
      */
-    public List<CatMovie> getAllMoviesInCategory(int id)
+    public List<CatMovie> getAllMoviesInCategory()
     {
         List<CatMovie> allMoviesInCategory = new ArrayList();
 
@@ -99,7 +99,7 @@ public class DALManager {
         );   
             
 
-            stmt.setInt(1, id);
+//            stmt.setInt(1, id);
 
             ResultSet rs = stmt.executeQuery();
             
@@ -166,6 +166,43 @@ public class DALManager {
         }
    }
         
+   public void addMovieToCategory(CatMovie catm)
+   {
+       try (Connection con = cm.getConnection())
+        {
+            String sql
+                    = "INSERT INTO CatMovie"
+                    + "(id, CategoryId, MovieId) "
+                    + "VALUES(?,?,?)";
+
+            PreparedStatement pstmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+            
+            pstmt.setInt(1, catm.getId());
+            pstmt.setInt(2, catm.getCategoryId());
+            pstmt.setInt(3, catm.getMovieId());
+
+            
+
+            int affected = pstmt.executeUpdate();
+            if (affected < 1)
+            {
+                throw new SQLException("Movie could not be added to category/ies");
+            }
+
+            // Get database generated id, probs not necessary
+            ResultSet rs = pstmt.getGeneratedKeys();
+            if (rs.next())
+            {
+                //char.setId(rs.getInt(1));
+            }
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(DALManager.class.getName()).log(
+                    Level.SEVERE, null, ex);
+        }
+   }
+   
    public void editMovieInDb(Movie m)
    {
        try (Connection con = cm.getConnection())

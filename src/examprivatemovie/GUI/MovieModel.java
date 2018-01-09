@@ -34,11 +34,11 @@ public class MovieModel {
            return bllm.getAllCategories();
        }
        
-       private ObservableList<CatMovie> cmList = FXCollections.observableArrayList();
+       private ObservableList<CatMovie> catmList = FXCollections.observableArrayList();
     
-       public List<CatMovie> getAllMoviesInCategory(int id)
+       public List<CatMovie> getAllMoviesInCategory()
        {
-           return bllm.getAllMoviesInCategory(id);
+           return bllm.getAllMoviesInCategory();
        }
  
        public List<Movie> getAllMoviesBySearching(String name, String imdbRating)
@@ -56,9 +56,9 @@ public class MovieModel {
         return cList;
        }
        
-       public ObservableList<CatMovie> getAllMoviesInCategory()
+       public ObservableList<CatMovie> getMoviesInCategoryList()
        {
-        return cmList;
+        return catmList;
        }
        
     /**
@@ -70,7 +70,7 @@ public class MovieModel {
         mList.addAll(bllm.getAllMoviesBySearching(title, imdbRating));
     }
        
-       public void AddMovie(Movie m)
+       public void addMovie(Movie m)
        {
            bllm.addMovieToDb(m);
            mList.addAll(bllm.getAllMovies());
@@ -101,9 +101,9 @@ public class MovieModel {
            cList.addAll(bllm.getAllCategories());
        }
        
-       public void loadMoviesInCategory(int id)
+       public void loadMoviesInCategory()
        {
-           cmList.clear();
-           cmList.addAll(bllm.getAllMoviesInCategory(id));
+           catmList.clear();
+           catmList.addAll(bllm.getAllMoviesInCategory());
        }
 }

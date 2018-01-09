@@ -5,6 +5,7 @@
  */
 package examprivatemovie.GUI;
 
+import examprivatemovie.BE.CatMovie;
 import examprivatemovie.BE.Movie;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -195,7 +196,13 @@ public class AddMovieViewController implements Initializable
         m.setIMDBRating(txtImdbRating.getText());
         m.setFilelink(txtFileLocation.getText());
         
-        model.AddMovie(m);
+        CatMovie cm = new CatMovie();
+        
+        // set category id, get movie id, 
+        
+        
+        model.addMovie(m);
+        //model.addMovieToCategory(cm);
         
         Stage window = (Stage) btnSave.getScene().getWindow();
         window.close();

@@ -46,7 +46,7 @@ public class MainMovieViewController implements Initializable
     @FXML
     private TableColumn<Movie, String> columnCategory;
     @FXML
-    private TableView<Movie> TableMovieView;
+    private TableView<CatMovie> TableMovieView;
     @FXML
     private TableColumn<Movie, String> columnTitle;
     @FXML
@@ -88,7 +88,7 @@ public class MainMovieViewController implements Initializable
          model.loadMovie();
          model.loadCategory();
         
-         TableMovieView.setItems(model.getMoviesList());
+//         TableMovieView.setItems(model.getMoviesList());
          TableCategoryView.setItems(model.getCategoriesList()); 
         
          TableCategoryView.focusedProperty().addListener(
@@ -110,13 +110,16 @@ public class MainMovieViewController implements Initializable
             }
         }
         );
+         
+        TableMovieView.setItems(model.getMoviesInCategoryList());
+
     }    
 
 
     /**
      * Gets selected Movie from list
      */
-    private Movie getSelectedMovie() {
+    private CatMovie getSelectedMovie() {
         return TableMovieView.getSelectionModel().getSelectedItem();
     }
 
@@ -152,8 +155,8 @@ public class MainMovieViewController implements Initializable
     @FXML
     private void clickRemoveMovie(ActionEvent event) {
 
-        Movie selectedMovie = getSelectedMovie();
-        model.removeMovie(selectedMovie);
+//        Movie selectedMovie = getSelectedMovie();
+//        model.removeMovie(selectedMovie);
     }
 
     @FXML
