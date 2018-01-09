@@ -33,19 +33,28 @@ public class MovieModel {
            return bllm.getAllCategories();
        }
  
-       public List<Movie> getAllMoviesBySearching(String name)
+       public List<Movie> getAllMoviesBySearching(String name, String imdbRating)
        {
-           return bllm.getAllMoviesBySearching(name);
+           return bllm.getAllMoviesBySearching(name, imdbRating);
        }
        
        public ObservableList<Movie> getMoviesList()
-    {
+       {
         return mList;
-    }
+       }
        
        public ObservableList<Category> getCategoriesList()
-    {
+       {
         return cList;
+       }
+       
+    /**
+     * Clears the list and searches in column title and artist for text in txtFilter.
+     */
+    public void search(String title, String imdbRating)
+    {
+        mList.clear();
+        mList.addAll(bllm.getAllMoviesBySearching(title, imdbRating));
     }
        
        public void AddMovie(Movie m)

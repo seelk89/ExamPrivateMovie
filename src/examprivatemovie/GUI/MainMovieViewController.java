@@ -65,6 +65,8 @@ public class MainMovieViewController implements Initializable
     private Button btnPlay;
     private String lastFocus = "";
     MovieModel model = new MovieModel();
+    @FXML
+    private Button btnSearch;
     
     @Override
     public void initialize(URL url, ResourceBundle rb)
@@ -89,6 +91,16 @@ public class MainMovieViewController implements Initializable
          TableCategoryView.setItems(model.getCategoriesList()); 
         
          TableCategoryView.focusedProperty().addListener(
+                new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> 
+                    observable, Boolean oldValue, Boolean newValue) {
+                lastFocus = "Category";
+            }
+        }
+        );
+         
+         TableMovieView.focusedProperty().addListener(
                 new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> 
@@ -123,12 +135,29 @@ public class MainMovieViewController implements Initializable
         newWindow.showAndWait();
     }
 
+    
+    private Movie getSelectedMovie() 
+    {
+        return TableMovieView.getSelectionModel().getSelectedItem();
+    }
+    
     @FXML
     private void ClickRemoveMovie(ActionEvent event) {
+
+        Movie selectedMovie = getSelectedMovie();
+        model.deleteMovie(selectedMovie);
     }
 
     @FXML
     private void clickPlayMovie(ActionEvent event) {
     }
     
+
+    @FXML
+    private void writeSearchForMovie(ActionEvent event) {
+        
+        System.out.println("Searching for Movie by title and imdb rating");
+        model.search(txtSearchFilter.getText(), txtSearchFilter.getText());
+        
+    }
 }
