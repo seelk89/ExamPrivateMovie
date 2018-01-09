@@ -38,10 +38,9 @@ public class DALManager {
             {
                 Movie m = new Movie();
                 m.setName(rs.getString("name"));
-                m.setPersonalRating(rs.getInt("personalRating"));
-                m.setIMDBRating(rs.getInt("IMDBRating"));
+                m.setPersonalRating(rs.getString("personalRating"));
+                m.setIMDBRating(rs.getString("IMDBRating"));
                 m.setFilelink(rs.getString("filelink"));
-                m.setLastview(rs.getString("lastview"));
 
 
                 allMovies.add(m);
@@ -123,17 +122,16 @@ public class DALManager {
         {
             String sql
                     = "INSERT INTO Movie"
-                    + "(name, personalRating, IMDBRating, filelink, lastview) "
-                    + "VALUES(?,?,?,?,?)";
+                    + "(name, personalRating, IMDBRating, filelink) "
+                    + "VALUES(?,?,?,?)";
 
             PreparedStatement pstmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
             
             pstmt.setString(1, m.getName());
-            pstmt.setInt(2, m.getPersonalRating());
-            pstmt.setInt(3, m.getIMDBRating());
+            pstmt.setString(2, m.getPersonalRating());
+            pstmt.setString(3, m.getIMDBRating());
             pstmt.setString(4, m.getFilelink());
-            pstmt.setString(5, m.getLastview());
 
             
 
@@ -162,16 +160,15 @@ public class DALManager {
         {
             String sql
                     = "UPDATE Movie SET "
-                    + "name=?, personalRating=?, IMDBRating=?, filelink=?, lastview=? "
+                    + "name=?, personalRating=?, IMDBRating=?, filelink=? "
                     + "WHERE name=?";
 
             PreparedStatement pstmt = con.prepareStatement(sql);
 
             pstmt.setString(1, m.getName());
-            pstmt.setInt(2, m.getPersonalRating());
-            pstmt.setInt(3, m.getIMDBRating());
+            pstmt.setString(2, m.getPersonalRating());
+            pstmt.setString(3, m.getIMDBRating());
             pstmt.setString(4, m.getFilelink());
-            pstmt.setString(5, m.getLastview());
             
 
             int affected = pstmt.executeUpdate();
@@ -206,7 +203,7 @@ public class DALManager {
    
     public List<Movie> getAllMoviesBySearching
         (
-            String name)
+            String name, String imdbRating)
         {
 
         List<Movie> allMovies = new ArrayList();
@@ -217,14 +214,14 @@ public class DALManager {
             String query
                     = "SELECT * FROM Movie "
                     + "WHERE name LIKE ? "
-//                    + "OR "
-//                    + "element LIKE ? "
+                    + "OR "
+                    + "imdbRating LIKE ? "
                     + "ORDER BY name ";
 
             PreparedStatement pstmt
                     = con.prepareStatement(query);
             pstmt.setString(1, "%" + name + "%");
-//            pstmt.setString(2, "%" + element + "%");
+            pstmt.setString(2, "%" + imdbRating + "%");
 
             ResultSet rs = pstmt.executeQuery();
             while (rs.next())
@@ -232,10 +229,9 @@ public class DALManager {
 
                 Movie m = new Movie();
                 m.setName(rs.getString("name"));
-                m.setPersonalRating(rs.getInt("personalRating"));
-                m.setIMDBRating(rs.getInt("IMDBRating"));
+                m.setPersonalRating(rs.getString("personalRating"));
+                m.setIMDBRating(rs.getString("imdbRating")); //imdb capital letters or no?
                 m.setFilelink(rs.getString("filelink"));
-                m.setLastview(rs.getString("lastview"));
                 allMovies.add(m);
             }
         } catch (SQLException ex)

@@ -29,9 +29,9 @@ public class BLLManager {
            return dalm.getAllCategories();
        }
  
-       public List<Movie> getAllMoviesBySearching(String name)
+       public List<Movie> getAllMoviesBySearching(String name, String imdbRating)
        {
-           return dalm.getAllMoviesBySearching(name);
+           return dalm.getAllMoviesBySearching(name, imdbRating);
        }
        
        public void addMovieToDb(Movie m)

@@ -12,6 +12,7 @@ import java.io.File;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -26,6 +27,29 @@ public class AddMovieViewController implements Initializable
 {
 
     private MainMovieViewController parent;
+    private TextField fileLocation;
+    @FXML
+    private ChoiceBox<?> genre1;
+    @FXML
+    private ChoiceBox<?> genre2;
+    @FXML
+    private ChoiceBox<?> genre3;
+    @FXML
+    private ChoiceBox<?> genre4;
+    @FXML
+    private Button btnFileLocation;
+    
+    private Window stage;
+    @FXML
+    private TextField txtPersonalRating;
+    @FXML
+    private TextField txtFileLocation;
+    @FXML
+    private TextField txtImdbRating;
+    @FXML
+    private TextField txtMovieTitle;
+    @FXML
+    private Button btnSave;
 
 
     /**
@@ -39,5 +63,25 @@ public class AddMovieViewController implements Initializable
     public void setParentWindowController(MainMovieViewController parent)
     {
         this.parent = parent;
+    }
+
+    @FXML
+    private void clickFileLocation(ActionEvent event)
+    {
+        String absolutePath = null;
+
+        final FileChooser fileChooser = new FileChooser();
+
+        File song = fileChooser.showOpenDialog(stage);
+        if (song != null) {
+            absolutePath = song.getAbsolutePath();
+        }
+
+        txtFileLocation.setText(absolutePath);
+    }
+
+    @FXML
+    private void clickSave(ActionEvent event)
+    {
     }
 }

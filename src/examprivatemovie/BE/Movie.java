@@ -17,8 +17,8 @@ import javafx.beans.property.StringProperty;
 public class Movie {
 
     private final StringProperty name = new SimpleStringProperty();
-    private final IntegerProperty PersonalRating = new SimpleIntegerProperty();
-    private final IntegerProperty IMDBRating = new SimpleIntegerProperty();
+    private final StringProperty PersonalRating = new SimpleStringProperty();
+    private final StringProperty IMDBRating = new SimpleStringProperty();
     private final StringProperty filelink = new SimpleStringProperty();
     private final StringProperty lastview = new SimpleStringProperty();
     private final IntegerProperty id = new SimpleIntegerProperty();
@@ -62,28 +62,28 @@ public class Movie {
     }
     
 
-    public int getIMDBRating() {
+    public String getIMDBRating() {
         return IMDBRating.get();
     }
 
-    public void setIMDBRating(int value) {
+    public void setIMDBRating(String value) {
         IMDBRating.set(value);
     }
 
-    public IntegerProperty IMDBRatingProperty() {
+    public StringProperty IMDBRatingProperty() {
         return IMDBRating;
     }
     
     
-    public int getPersonalRating() {
+    public String getPersonalRating() {
         return PersonalRating.get();
     }
 
-    public void setPersonalRating(int value) {
+    public void setPersonalRating(String value) {
         PersonalRating.set(value);
     }
 
-    public IntegerProperty PersonalRatingProperty() {
+    public StringProperty PersonalRatingProperty() {
         return PersonalRating;
     }
    
