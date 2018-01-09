@@ -133,6 +133,8 @@ public class MainMovieViewController implements Initializable
         newWindow.setTitle("Add Movie");
         newWindow.setScene(scene);
         newWindow.showAndWait();
+        
+        model.loadMovie();
     }
 
     
