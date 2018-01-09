@@ -5,6 +5,7 @@
  */
 package examprivatemovie.BLL;
 
+import examprivatemovie.BE.CatMovie;
 import examprivatemovie.BE.Category;
 import examprivatemovie.BE.Movie;
 import examprivatemovie.DAL.DALManager;
@@ -29,6 +30,11 @@ public class BLLManager {
            return dalm.getAllCategories();
        }
  
+        public List<CatMovie> getAllMoviesInCategory(int id)
+        {
+            return dalm.getAllMoviesInCategory(id);
+        }
+        
        public List<Movie> getAllMoviesBySearching(String name, String imdbRating)
        {
            return dalm.getAllMoviesBySearching(name, imdbRating);
@@ -44,9 +50,9 @@ public class BLLManager {
            dalm.editMovieInDb(m);
        }
     
-       public void deleteMovieFromDb(Movie selectedChar)
+       public void removeMovieFromDb(Movie selectedMovie)
        {
-           dalm.deleteCharFromDb(selectedChar);
+           dalm.removeMovieFromDb(selectedMovie);
        }
 
     

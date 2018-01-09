@@ -5,6 +5,7 @@
  */
 package examprivatemovie.GUI;
 
+import examprivatemovie.BE.CatMovie;
 import examprivatemovie.BE.Category;
 import examprivatemovie.BE.Movie;
 import examprivatemovie.BLL.BLLManager;
@@ -19,7 +20,7 @@ import javafx.collections.ObservableList;
 public class MovieModel {
      BLLManager bllm = new BLLManager();
     
-    private ObservableList<Movie> mList = FXCollections.observableArrayList();
+       private ObservableList<Movie> mList = FXCollections.observableArrayList();
     
        public List<Movie> getAllMovies()
        {
@@ -31,6 +32,13 @@ public class MovieModel {
        public List<Category> getAllCategories()
        {
            return bllm.getAllCategories();
+       }
+       
+       private ObservableList<CatMovie> cmList = FXCollections.observableArrayList();
+    
+       public List<CatMovie> getAllMoviesInCategory(int id)
+       {
+           return bllm.getAllMoviesInCategory(id);
        }
  
        public List<Movie> getAllMoviesBySearching(String name, String imdbRating)
@@ -46,6 +54,11 @@ public class MovieModel {
        public ObservableList<Category> getCategoriesList()
        {
         return cList;
+       }
+       
+       public ObservableList<CatMovie> getAllMoviesInCategory()
+       {
+        return cmList;
        }
        
     /**
@@ -66,12 +79,12 @@ public class MovieModel {
        public void editMovie(Movie m)
        {
            bllm.editMovieInDb(m);
-           //cList.addAll(bllm.getAllChars());
+        
        }
     
-       public void deleteMovie(Movie selectedMovie)
+       public void removeMovie(Movie selectedMovie)
        {
-           bllm.deleteMovieFromDb(selectedMovie);
+           bllm.removeMovieFromDb(selectedMovie);
            mList.remove(selectedMovie);
        }
        
@@ -86,5 +99,11 @@ public class MovieModel {
        {
            cList.clear();
            cList.addAll(bllm.getAllCategories());
+       }
+       
+       public void loadMoviesInCategory(int id)
+       {
+           cmList.clear();
+           cmList.addAll(bllm.getAllMoviesInCategory(id));
        }
 }

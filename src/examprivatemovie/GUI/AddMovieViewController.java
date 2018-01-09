@@ -164,6 +164,7 @@ public class AddMovieViewController implements Initializable
         genre4.getItems().add("War");
         genre4.getItems().add("Western");
     }   
+    
     public void setParentWindowController(MainMovieViewController parent)
     {
         this.parent = parent;
