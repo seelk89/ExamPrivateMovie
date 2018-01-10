@@ -5,6 +5,7 @@
  */
 package examprivatemovie.GUI;
 
+import examprivatemovie.BE.CatMovie;
 import examprivatemovie.GUI.AddMovieViewController;
 import examprivatemovie.BE.Category;
 import examprivatemovie.BE.Movie;
@@ -48,7 +49,7 @@ public class MainMovieViewController implements Initializable
     @FXML
     private TableColumn<Movie, String> columnCategory;
     @FXML
-    private TableView<Movie> TableMovieView;
+    private TableView<CatMovie> TableMovieView;
     @FXML
     private TableColumn<Movie, String> columnTitle;
     @FXML
@@ -86,12 +87,11 @@ public class MainMovieViewController implements Initializable
                  new PropertyValueFactory("IMDBRating"));
          columnLastViewed.setCellValueFactory(
                 new PropertyValueFactory("lastview"));
-
      
          model.loadMovie();
          model.loadCategory();
         
-         TableMovieView.setItems(model.getMoviesList());
+//         TableMovieView.setItems(model.getMoviesList());
          TableCategoryView.setItems(model.getCategoriesList()); 
         
          TableCategoryView.focusedProperty().addListener(
@@ -113,14 +113,28 @@ public class MainMovieViewController implements Initializable
             }
         }
         );
+         
+        TableMovieView.setItems(model.getMoviesInCategoryList());
+
     }    
 
-    @FXML
-    private void ClickEditMovie(ActionEvent event) {
+
+    /**
+     * Gets selected Movie from list
+     */
+    private CatMovie getSelectedMovie() {
+        return TableMovieView.getSelectionModel().getSelectedItem();
+    }
+
+    /**
+     * Gets selected Category from left list
+     */
+    private Category getSelectedMovieInCategory() {
+        return TableCategoryView.getSelectionModel().getSelectedItem();
     }
 
     @FXML
-    private void ClickAddMovie(ActionEvent event) throws IOException {
+    private void clickAddMovie(ActionEvent event) throws IOException {
 
         Stage newWindow = new Stage();
 
@@ -140,20 +154,11 @@ public class MainMovieViewController implements Initializable
         
         model.loadMovie();
     }
-
-    
-    private Movie getSelectedMovie() 
-    {
-        return TableMovieView.getSelectionModel().getSelectedItem();
-    }
     
     @FXML
-    private void ClickRemoveMovie(ActionEvent event) {
+    private void clickRemoveMovie(ActionEvent event) {
 
-        Movie selectedMovie = getSelectedMovie();
-        model.deleteMovie(selectedMovie);
-    }
-
+<<<<<<< HEAD
     @FXML
     private void clickPlayMovie(ActionEvent event) throws IOException 
     {
@@ -179,17 +184,40 @@ public class MainMovieViewController implements Initializable
         newWindow.showAndWait();
         
         model.loadMovie();
+=======
+//        Movie selectedMovie = getSelectedMovie();
+//        model.removeMovie(selectedMovie);
+>>>>>>> 429dae175577498adcfec13326a80291d23b82b0
     }
-
 
     @FXML
     private void writeSearchForMovieKeyTyped(KeyEvent event) {
-           System.out.println("Searching for Movie by title and imdb rating");
+        System.out.println("Searching for Movie by title and imdb rating");
         model.search(txtSearchFilter.getText(), txtSearchFilter.getText());
     }
+    
+    @FXML
+    private void clickEditMovie(ActionEvent event) {
+    }
+    
+    @FXML
+    private void clickPlayMovie(ActionEvent event) throws IOException {
+        Stage newWindow = new Stage();
 
+        newWindow.initModality(Modality.APPLICATION_MODAL);
 
+        FXMLLoader fxLoader = new FXMLLoader(getClass().getResource("PlayView.fxml"));
 
+        Parent root = fxLoader.load();
+
+        PlayViewController controller = fxLoader.getController();
+        controller.setParentWindowController(this);
+
+        Scene scene = new Scene(root);
+        newWindow.setTitle("Play Movie");
+        newWindow.setScene(scene);
+        newWindow.showAndWait();
+    }
    
     
 }

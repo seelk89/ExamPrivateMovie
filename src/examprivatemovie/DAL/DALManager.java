@@ -5,6 +5,7 @@
  */
 package examprivatemovie.DAL;
 
+import examprivatemovie.BE.CatMovie;
 import examprivatemovie.BE.Category;
 import examprivatemovie.BE.Movie;
 import java.sql.Connection;
@@ -79,43 +80,54 @@ public class DALManager {
         return allCategories;
     }
       
-//    /**
-//     * 
-//     * Gets each and every song in the Playlist table where the songs playlist_id is equal the selected playlists playlists_id.
-//     */
-//    public List<Category> getAllMoviesInCategory(int CategoryId)
-//    {
-//        List<Category> allMoviesInCategory = new ArrayList();
-//
-//        try (Connection con = cm.getConnection())
-//        {
-//            PreparedStatement stmt = con.prepareStatement("SELECT * FROM Category WHERE CategoryId = ? ORDER BY playlistOrder");
-//
-//            stmt.setInt(1, CategoryId);
-//
-//            ResultSet rs = stmt.executeQuery();
-//            
-//            while (rs.next())
-//            {
-//                Category c = new Category();
-//                c.setId(rs.getInt("id"));
-//                c.setPlaylistsId(rs.getInt("playlists_id"));
-//                c.setPlaylistOrder(rs.getInt("playlistOrder"));
-//                c.setSongsTitle(rs.getString("songs_title"));
-//                c.setSongsArtist(rs.getString("songs_artist"));
-//                c.setSongsGenre(rs.getString("songs_genre"));
-//                c.setSongsTime(rs.getString("songs_time"));
-//                c.setSongsFileLocation(rs.getString("songs_fileLocation"));
-//
-//                allMoviesInCategory.add(c);
-//            }
-//        } catch (SQLException ex)
-//        {
-//            Logger.getLogger(DALManager.class.getName()).log(
-//                    Level.SEVERE, null, ex);
-//        }
-//        return allMoviesInCategory;
-//    }
+    /**
+     * 
+     * Shows all movies in the selected category
+     */
+    public List<CatMovie> getAllMoviesInCategory()
+    {
+        List<CatMovie> allMoviesInCategory = new ArrayList();
+
+        try (Connection con = cm.getConnection())
+        {
+            PreparedStatement stmt = con.prepareStatement
+        
+
+        ( " SELECT Movie.name, Movie.personalRating, Movie.imdbRating, Movie.lastview " 
+        + " FROM ((CatMovie " 
+        + " INNER JOIN Category ON CatMovie.CategoryId = Category.id) " 
+        + " INNER JOIN Movie ON CatMovie.MovieId = Movie.id) "
+        );   
+            
+
+//            stmt.setInt(1, id);
+
+            ResultSet rs = stmt.executeQuery();
+            
+            while (rs.next())
+            {
+//                Movie c = new Movie();
+//                c.setName(rs.getString("name"));
+//                c.setPersonalRating(rs.getString("personalRating"));
+//                c.setIMDBRating(rs.getString("imdbRating"));
+//                c.setFilelink(rs.getString("filelink"));
+//                c.setLastview(rs.getString("lastview"));
+//          
+                CatMovie cm = new CatMovie();
+                cm.setId(rs.getInt("id"));
+                cm.setCategoryId(rs.getInt("CategoryId"));
+                cm.setMovieId(rs.getInt("MovieId"));
+               
+
+                allMoviesInCategory.add(cm);
+            }
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(DALManager.class.getName()).log(
+                    Level.SEVERE, null, ex);
+        }
+        return allMoviesInCategory;
+    }
 
    public void addMovieToDB(Movie m)
    {
@@ -155,6 +167,43 @@ public class DALManager {
         }
    }
         
+   public void addMovieToCategory(CatMovie catm)
+   {
+       try (Connection con = cm.getConnection())
+        {
+            String sql
+                    = "INSERT INTO CatMovie"
+                    + "(id, CategoryId, MovieId) "
+                    + "VALUES(?,?,?)";
+
+            PreparedStatement pstmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+            
+            pstmt.setInt(1, catm.getId());
+            pstmt.setInt(2, catm.getCategoryId());
+            pstmt.setInt(3, catm.getMovieId());
+
+            
+
+            int affected = pstmt.executeUpdate();
+            if (affected < 1)
+            {
+                throw new SQLException("Movie could not be added to category/ies");
+            }
+
+            // Get database generated id, probs not necessary
+            ResultSet rs = pstmt.getGeneratedKeys();
+            if (rs.next())
+            {
+                //char.setId(rs.getInt(1));
+            }
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(DALManager.class.getName()).log(
+                    Level.SEVERE, null, ex);
+        }
+   }
+   
    public void editMovieInDb(Movie m)
    {
        try (Connection con = cm.getConnection())
@@ -186,7 +235,7 @@ public class DALManager {
    }
    
 
-   public void deleteCharFromDb(Movie selectedMovie)
+   public void removeMovieFromDb(Movie selectedMovie)
    {
        try (Connection con = cm.getConnection())
         {

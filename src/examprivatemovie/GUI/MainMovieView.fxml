@@ -25,9 +25,9 @@
       </TableView>
       <ButtonBar layoutX="196.0" layoutY="452.0" prefHeight="40.0" prefWidth="200.0">
         <buttons>
-          <Button fx:id="btnEdit" mnemonicParsing="false" onAction="#ClickEditMovie" text="Edit" />
-            <Button fx:id="btnAdd" mnemonicParsing="false" onAction="#ClickAddMovie" text="Add" />
-            <Button fx:id="btnRemove" mnemonicParsing="false" onAction="#ClickRemoveMovie" text="Remove" />
+          <Button fx:id="btnEdit" mnemonicParsing="false" onAction="#clickEditMovie" text="Edit" />
+            <Button fx:id="btnAdd" mnemonicParsing="false" onAction="#clickAddMovie" text="Add" />
+            <Button fx:id="btnRemove" mnemonicParsing="false" onAction="#clickRemoveMovie" text="Remove" />
         </buttons>
       </ButtonBar>
       <Button fx:id="btnPlay" layoutX="564.0" layoutY="46.0" mnemonicParsing="false" onAction="#clickPlayMovie" text="Play Movie" />
