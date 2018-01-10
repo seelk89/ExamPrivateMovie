@@ -114,7 +114,7 @@ public class MovieModel {
             bllm.editDate(formattedDateTime, selectedId);
        }
 
-       public void loadMoviesInCategory()
+       public void loadMoviesInCategory(int id)
        {
            catmList.clear();
            catmList.addAll(bllm.getAllMoviesInCategory());
