@@ -19,6 +19,7 @@ import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -27,10 +28,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.InputMethodEvent;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
@@ -40,9 +43,8 @@ import javafx.stage.Stage;
  *
  * @author Jesper
  */
-public class MainMovieViewController implements Initializable
-{
-    
+public class MainMovieViewController implements Initializable {
+
     private Label label;
     @FXML
     private TableView<Category> TableCategoryView;
@@ -72,48 +74,46 @@ public class MainMovieViewController implements Initializable
     private Button btnPlay;
     private String lastFocus = "";
     MovieModel model = new MovieModel();
-    
+
     @Override
-    public void initialize(URL url, ResourceBundle rb)
-    {
-         columnCategory.setCellValueFactory(
+    public void initialize(URL url, ResourceBundle rb) {
+        editingCells();
+        columnCategory.setCellValueFactory(
                 new PropertyValueFactory("name"));
-     
-         columnTitle.setCellValueFactory(
+
+        columnTitle.setCellValueFactory(
                 new PropertyValueFactory("name"));
-         columnPersonalRating.setCellValueFactory(
+        columnPersonalRating.setCellValueFactory(
                 new PropertyValueFactory("personalRating"));
-         columnIMDBRating.setCellValueFactory(
-                 new PropertyValueFactory("IMDBRating"));
-         columnLastViewed.setCellValueFactory(
+        columnIMDBRating.setCellValueFactory(
+                new PropertyValueFactory("IMDBRating"));
+        columnLastViewed.setCellValueFactory(
                 new PropertyValueFactory("lastview"));
-     
-         model.loadMovie();
-         model.loadCategory();
-        
+
+        model.loadMovie();
+        model.loadCategory();
+
 //         TableMovieView.setItems(model.getMoviesList());
-         TableCategoryView.setItems(model.getCategoriesList()); 
-        
-         TableCategoryView.focusedProperty().addListener(
+        TableCategoryView.setItems(model.getCategoriesList());
+
+        TableCategoryView.focusedProperty().addListener(
                 new ChangeListener<Boolean>() {
             @Override
-            public void changed(ObservableValue<? extends Boolean> 
-                    observable, Boolean oldValue, Boolean newValue) {
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                 lastFocus = "Category";
             }
         }
         );
-         
-         TableMovieView.focusedProperty().addListener(
+
+        TableMovieView.focusedProperty().addListener(
                 new ChangeListener<Boolean>() {
             @Override
-            public void changed(ObservableValue<? extends Boolean> 
-                    observable, Boolean oldValue, Boolean newValue) {
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                 lastFocus = "Movie";
             }
         }
         );
-         
+
         TableMovieView.setItems(model.getMoviesInCategoryList());
 
         TableCategoryView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Category>() {
@@ -123,8 +123,26 @@ public class MainMovieViewController implements Initializable
             }
         }
         );
-    }    
+    }
 
+    private void editingCells() {
+        TableMovieView.setEditable(true);
+        TableMovieView.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if (event.getCode().isLetterKey() || event.getCode() == KeyCode.ENTER || event.getCode() == KeyCode.DELETE || event.getCode() == KeyCode.BACK_SPACE) {
+                    return;
+                }
+                if (TableMovieView.getEditingCell() == null) {
+                    if (event.getCode().isLetterKey() || event.getCode().isDigitKey()) {
+                        TablePosition focusedCell = TableMovieView.getFocusModel().getFocusedCell();
+                        TableMovieView.edit(focusedCell.getRow(), focusedCell.getTableColumn());
+                    }
+                }
+            }
+        });
+        TableMovieView.getSelectionModel().setCellSelectionEnabled(true);
+    }
 
     /**
      * Gets selected Movie from list
@@ -158,20 +176,19 @@ public class MainMovieViewController implements Initializable
         newWindow.setTitle("Add Movie");
         newWindow.setScene(scene);
         newWindow.showAndWait();
-        
+
         model.loadMovie();
     }
-    
+
     @FXML
-    private void clickRemoveMovie(ActionEvent event) 
-    {
-        
+    private void clickRemoveMovie(ActionEvent event) {
+
 //        Movie selectedMovie = getSelectedMovie();
 //        model.removeMovie(selectedMovie);
     }
+
     @FXML
-    private void clickPlayMovie(ActionEvent event) throws IOException 
-    {
+    private void clickPlayMovie(ActionEvent event) throws IOException {
         Stage newWindow = new Stage();
 
         newWindow.initModality(Modality.APPLICATION_MODAL);
@@ -186,15 +203,14 @@ public class MainMovieViewController implements Initializable
         Scene scene = new Scene(root);
         newWindow.setTitle("Play view");
         newWindow.setScene(scene);
-        
+
         int selectedMovieId = TableMovieView.getSelectionModel().getSelectedItem().getId();
         System.out.println(selectedMovieId);
         model.editDate(selectedMovieId);
-        
-        newWindow.showAndWait();
-        
-        model.loadMovie();
 
+        newWindow.showAndWait();
+
+        model.loadMovie();
 
     }
 
@@ -203,10 +219,9 @@ public class MainMovieViewController implements Initializable
         System.out.println("Searching for Movie by title and imdb rating");
         model.search(txtSearchFilter.getText(), txtSearchFilter.getText());
     }
-    
+
     @FXML
     private void clickEditMovie(ActionEvent event) {
     }
-   
-    
+
 }

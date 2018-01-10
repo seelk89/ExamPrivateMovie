@@ -7,6 +7,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 
 <AnchorPane id="AnchorPane" prefHeight="549.0" prefWidth="693.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="examprivatemovie.GUI.MainMovieViewController">
    <children>
@@ -15,14 +16,18 @@
           <TableColumn fx:id="columnCategory" text="Categories" />
         </columns>
       </TableView>
-      <TableView fx:id="TableMovieView" layoutX="145.0" layoutY="87.0" prefHeight="365.0" prefWidth="403.0">
-        <columns>
-          <TableColumn fx:id="columnTitle" prefWidth="112.0" text="Title" />
-          <TableColumn fx:id="columnPersonalRating" prefWidth="104.0" text="Personal Rating" />
-            <TableColumn fx:id="columnIMDBRating" prefWidth="93.0" text="IMDB Rating" />
-            <TableColumn fx:id="columnLastViewed" prefWidth="78.0" text="Last viewed" />
-        </columns>
-      </TableView>
+      <HBox layoutX="145.0" layoutY="87.0" prefHeight="365.0" prefWidth="403.0">
+         <children>
+            <TableView fx:id="TableMovieView" prefHeight="365.0" prefWidth="403.0">
+              <columns>
+                <TableColumn fx:id="columnTitle" prefWidth="112.0" text="Title" />
+                <TableColumn fx:id="columnPersonalRating" prefWidth="104.0" text="Personal Rating" />
+                  <TableColumn fx:id="columnIMDBRating" prefWidth="93.0" text="IMDB Rating" />
+                  <TableColumn fx:id="columnLastViewed" prefWidth="78.0" text="Last viewed" />
+              </columns>
+            </TableView>
+         </children>
+      </HBox>
       <ButtonBar layoutX="196.0" layoutY="452.0" prefHeight="40.0" prefWidth="200.0">
         <buttons>
           <Button fx:id="btnEdit" mnemonicParsing="false" onAction="#clickEditMovie" text="Edit" />
