@@ -49,5 +49,8 @@ public class BLLManager {
            dalm.deleteCharFromDb(selectedChar);
        }
 
-    
+       public void editDate(String d, int selectedId)
+       {
+           dalm.editDate(d, selectedId);
+       }
 }

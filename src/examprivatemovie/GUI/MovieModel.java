@@ -8,6 +8,8 @@ package examprivatemovie.GUI;
 import examprivatemovie.BE.Category;
 import examprivatemovie.BE.Movie;
 import examprivatemovie.BLL.BLLManager;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -86,5 +88,16 @@ public class MovieModel {
        {
            cList.clear();
            cList.addAll(bllm.getAllCategories());
+       }
+       
+       public void editDate(int selectedId)
+       {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            LocalDateTime dateTime = LocalDateTime.now();
+            String formattedDateTime = dateTime.format(formatter);
+            
+            System.out.println(formattedDateTime);
+            
+            bllm.editDate(formattedDateTime, selectedId);
        }
 }

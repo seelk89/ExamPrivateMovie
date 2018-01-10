@@ -37,6 +37,7 @@ public class DALManager {
             while (rs.next())
             {
                 Movie m = new Movie();
+                m.setId(rs.getInt("id"));
                 m.setName(rs.getString("name"));
                 m.setPersonalRating(rs.getString("personalRating"));
                 m.setIMDBRating(rs.getString("IMDBRating"));
@@ -242,4 +243,31 @@ public class DALManager {
         return allMovies;
 
     }
+        
+    public void editDate(String d, int selectedId)
+    {
+        try (Connection con = cm.getConnection())
+        {
+            String sql
+                    = "UPDATE Movie SET "
+                    + "lastview=? "
+                    + "WHERE id=?";
+
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            pstmt.setString(1, d);
+            pstmt.setInt(2, selectedId);
+
+            int affected = pstmt.executeUpdate();
+            if (affected < 1)
+            {
+                throw new SQLException("Date could not be updated");
+            }
+
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(DALManager.class.getName()).log(
+                    Level.SEVERE, null, ex);
+        }
+    }
+
 }

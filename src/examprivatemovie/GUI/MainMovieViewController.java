@@ -11,6 +11,9 @@ import examprivatemovie.BE.Movie;
 import examprivatemovie.GUI.MovieModel;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -152,7 +155,30 @@ public class MainMovieViewController implements Initializable
     }
 
     @FXML
-    private void clickPlayMovie(ActionEvent event) {
+    private void clickPlayMovie(ActionEvent event) throws IOException 
+    {
+        Stage newWindow = new Stage();
+
+        newWindow.initModality(Modality.APPLICATION_MODAL);
+
+        FXMLLoader fxLoader = new FXMLLoader(getClass().getResource("PlayView.fxml"));
+
+        Parent root = fxLoader.load();
+
+        PlayViewController controller = fxLoader.getController();
+        controller.setParentWindowController(this);
+
+        Scene scene = new Scene(root);
+        newWindow.setTitle("Play view");
+        newWindow.setScene(scene);
+        
+        int selectedMovieId = TableMovieView.getSelectionModel().getSelectedItem().getId();
+        System.out.println(selectedMovieId);
+        model.editDate(selectedMovieId);
+        
+        newWindow.showAndWait();
+        
+        model.loadMovie();
     }
 
 

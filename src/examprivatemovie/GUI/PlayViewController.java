@@ -8,6 +8,8 @@ package examprivatemovie.GUI;
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.DoubleProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.media.Media;
@@ -38,11 +40,18 @@ public class PlayViewController implements Initializable
     public void initialize(URL url, ResourceBundle rb)
     {
         
-//        String path = new File ("C:/Users/Jesper/Desktop/NetbeansProjects/ExamPrivateMovie/SampleVideo_1280x720_2mb.mp4").getAbsolutePath();
-//        me = new Media(new File(path).toURI().toString());
-//        mp = new MediaPlayer(me);
-//        mediaView.setMediaPlayer(mp);
+        String path = new File ("C:/Users/Jesper/Desktop/NetbeansProjects/ExamPrivateMovie/SampleVideo_1280x720_2mb.mp4").getAbsolutePath();
+        me = new Media(new File(path).toURI().toString());
+        mp = new MediaPlayer(me);
         
+        mediaView.setMediaPlayer(mp);
+        mediaView.setMediaPlayer(mp);
+        mp.setAutoPlay(true);
+        
+        DoubleProperty width = mediaView.fitWidthProperty();
+        DoubleProperty height = mediaView.fitHeightProperty();
+        width.bind(Bindings.selectDouble(mediaView.sceneProperty(), "width"));
+        height.bind(Bindings.selectDouble(mediaView.sceneProperty(), "height"));
     }    
     
     public void setParentWindowController(MainMovieViewController parent)
