@@ -103,7 +103,6 @@ public class MovieModel {
            cList.addAll(bllm.getAllCategories());
        }
        
-<<<<<<< HEAD
        public void editDate(int selectedId)
        {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
@@ -113,11 +112,12 @@ public class MovieModel {
             System.out.println(formattedDateTime);
             
             bllm.editDate(formattedDateTime, selectedId);
-=======
+       }
+
        public void loadMoviesInCategory()
        {
            catmList.clear();
            catmList.addAll(bllm.getAllMoviesInCategory());
->>>>>>> 429dae175577498adcfec13326a80291d23b82b0
+
        }
 }

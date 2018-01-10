@@ -156,9 +156,12 @@ public class MainMovieViewController implements Initializable
     }
     
     @FXML
-    private void clickRemoveMovie(ActionEvent event) {
-
-<<<<<<< HEAD
+    private void clickRemoveMovie(ActionEvent event) 
+    {
+        
+//        Movie selectedMovie = getSelectedMovie();
+//        model.removeMovie(selectedMovie);
+    }
     @FXML
     private void clickPlayMovie(ActionEvent event) throws IOException 
     {
@@ -184,10 +187,8 @@ public class MainMovieViewController implements Initializable
         newWindow.showAndWait();
         
         model.loadMovie();
-=======
-//        Movie selectedMovie = getSelectedMovie();
-//        model.removeMovie(selectedMovie);
->>>>>>> 429dae175577498adcfec13326a80291d23b82b0
+
+
     }
 
     @FXML
@@ -198,25 +199,6 @@ public class MainMovieViewController implements Initializable
     
     @FXML
     private void clickEditMovie(ActionEvent event) {
-    }
-    
-    @FXML
-    private void clickPlayMovie(ActionEvent event) throws IOException {
-        Stage newWindow = new Stage();
-
-        newWindow.initModality(Modality.APPLICATION_MODAL);
-
-        FXMLLoader fxLoader = new FXMLLoader(getClass().getResource("PlayView.fxml"));
-
-        Parent root = fxLoader.load();
-
-        PlayViewController controller = fxLoader.getController();
-        controller.setParentWindowController(this);
-
-        Scene scene = new Scene(root);
-        newWindow.setTitle("Play Movie");
-        newWindow.setScene(scene);
-        newWindow.showAndWait();
     }
    
     
