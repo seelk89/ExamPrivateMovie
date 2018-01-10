@@ -93,7 +93,7 @@ public class DALManager {
             PreparedStatement stmt = con.prepareStatement
         
 
-        ( " SELECT Movie.name, Movie.personalRating, Movie.imdbRating, Movie.lastview " 
+        ( " SELECT * " 
         + " FROM ((CatMovie " 
         + " INNER JOIN Category ON CatMovie.CategoryId = Category.id) " 
         + " INNER JOIN Movie ON CatMovie.MovieId = Movie.id) "

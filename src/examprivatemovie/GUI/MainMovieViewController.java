@@ -116,6 +116,13 @@ public class MainMovieViewController implements Initializable
          
         TableMovieView.setItems(model.getMoviesInCategoryList());
 
+        TableCategoryView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Category>() {
+            @Override
+            public void changed(ObservableValue<? extends Category> observable, Category oldValue, Category newValue) {
+                model.loadMoviesInCategory(newValue.getId());
+            }
+        }
+        );
     }    
 
 
