@@ -50,8 +50,8 @@ public class PlayViewController implements Initializable
         
         DoubleProperty width = mediaView.fitWidthProperty();
         DoubleProperty height = mediaView.fitHeightProperty();
-        //width.bind(Bindings.selectDouble(mediaView.sceneProperty(), "width"));
-        //height.bind(Bindings.selectDouble(mediaView.sceneProperty(), "height"));
+        width.bind(Bindings.selectDouble(mediaView.sceneProperty(), "width"));
+        height.bind(Bindings.selectDouble(mediaView.sceneProperty(), "height"));
     }    
     
     public void setParentWindowController(MainMovieViewController parent)

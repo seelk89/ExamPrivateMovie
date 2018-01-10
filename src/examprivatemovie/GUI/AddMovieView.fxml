@@ -22,5 +22,6 @@
       <Label layoutX="24.0" layoutY="119.0" text="Genre:" />
       <Button fx:id="btnFileLocation" layoutX="178.0" layoutY="271.0" mnemonicParsing="false" onAction="#clickFileLocation" text="Location" />
       <Button fx:id="btnSave" layoutX="199.0" layoutY="303.0" mnemonicParsing="false" onAction="#clickSave" text="Save" />
+      <Label layoutX="22.0" layoutY="307.0" text="Only mp4 or mpeg4 file format" />
    </children>
 </AnchorPane>

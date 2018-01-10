@@ -319,4 +319,48 @@ public class DALManager {
         }
     }
 
+    public void matchMovieCat(int categoryId)
+    {
+        try (Connection con = cm.getConnection())
+        {
+            int movieId = 0;
+            int catId = 0;
+            
+            PreparedStatement pstmt1 = con.prepareStatement ("SELECT MAX(id) FROM Movie");
+            
+            ResultSet rsMovie = pstmt1.executeQuery();
+            
+            if(rsMovie.next())
+                movieId = rsMovie.getInt(1);
+           
+            PreparedStatement pstmt2 = con.prepareStatement ("SELECT * FROM Category WHERE id = ?");
+            
+            pstmt2.setInt(1, categoryId);
+            
+            ResultSet rsCat = pstmt2.executeQuery();
+            
+            if(rsCat.next())
+                catId = rsMovie.getInt(1);
+            
+            PreparedStatement pstmt3 = con.prepareStatement ("INSERT INTO CatMovie "
+                    + "(CategoryId, MovieId) "
+                    + "VALUES (?, ?)");
+            
+            pstmt3.setInt(1, catId);
+            pstmt3.setInt(2, movieId);
+            
+            pstmt3.executeQuery();
+
+            int affected = pstmt1.executeUpdate();
+            if (affected < 1)
+            {
+                throw new SQLException("Date could not be updated");
+            }
+
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(DALManager.class.getName()).log(
+                    Level.SEVERE, null, ex);
+        }
+    }
 }
