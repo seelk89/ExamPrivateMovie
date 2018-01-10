@@ -120,4 +120,9 @@ public class MovieModel {
            catmList.addAll(bllm.getAllMoviesInCategory());
 
        }
+       
+       public void matchMovie(String categoryName)
+       {
+           bllm.matchMovieCat(categoryName);
+       }
 }

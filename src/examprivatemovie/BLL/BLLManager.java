@@ -64,4 +64,9 @@ public class BLLManager {
        {
            dalm.editDate(d, selectedId);
        }
+       
+       public void matchMovieCat(String categoryName)
+       {
+           dalm.matchMovieCat(categoryName);
+       }
 }

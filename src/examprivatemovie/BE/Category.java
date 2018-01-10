@@ -44,5 +44,10 @@ public class Category {
     public StringProperty nameProperty() {
         return name;
     }
-    
+
+    @Override
+    public String toString()
+    {
+        return "" + name;
+    }
 }
