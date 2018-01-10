@@ -129,14 +129,14 @@ public class MainMovieViewController implements Initializable
     /**
      * Gets selected Movie from list
      */
-    private CatMovie getSelectedMovie() {
+    public CatMovie getSelectedMovie() {
         return TableMovieView.getSelectionModel().getSelectedItem();
     }
 
     /**
      * Gets selected Category from left list
      */
-    private Category getSelectedMovieInCategory() {
+    public Category getSelectedMovieInCategory() {
         return TableCategoryView.getSelectionModel().getSelectedItem();
     }
 

@@ -5,6 +5,8 @@
  */
 package examprivatemovie.GUI;
 
+import examprivatemovie.BE.Category;
+import examprivatemovie.BE.Movie;
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -16,6 +18,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 
+ 
 /**
  * FXML Controller class
  *
@@ -39,6 +42,7 @@ public class PlayViewController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
+        //Movie path = get
         
         String path = new File ("C:/Users/Jesper/Desktop/NetbeansProjects/ExamPrivateMovie/SampleVideo_1280x720_2mb.mp4").getAbsolutePath();
         me = new Media(new File(path).toURI().toString());

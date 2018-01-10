@@ -127,14 +127,36 @@ public class AddMovieViewController implements Initializable
         m.setIMDBRating(txtImdbRating.getText());
         m.setFilelink(txtFileLocation.getText());
         
-        model.addMovie(m);
         
-        model.matchMovie("Action");
+        String fileLocation = txtFileLocation.getText();
         
-        CatMovie cm = new CatMovie();
+        if(fileLocation.endsWith("mp4") || fileLocation.endsWith("mpeg4"))
+        {
+            model.addMovie(m);
+        }
         
+        //String genre1Value = genre1.getValue();
         
-        // set category id, get movie id, 
+        String genre2Value = genre2.getValue();
+        
+        if(genre2Value != null)
+        {
+            model.matchMovie(genre2Value);
+        }
+        
+        String genre3Value = genre3.getValue();
+        
+        if(genre3Value != null)
+        {
+            model.matchMovie(genre3Value);
+        }
+        
+        String genre4Value = genre4.getValue();
+        
+        if(genre4Value != null)
+        {
+            model.matchMovie(genre4Value);
+        }
         
         Stage window = (Stage) btnSave.getScene().getWindow();
         window.close();
