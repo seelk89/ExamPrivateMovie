@@ -38,9 +38,9 @@ public class MovieModel {
        
        private ObservableList<Movie> catmList = FXCollections.observableArrayList();
     
-       public List<Movie> getAllMoviesInCategory()
+       public List<Movie> getAllMoviesInCategory(int selectedId)
        {
-           return bllm.getAllMoviesInCategory();
+           return bllm.getAllMoviesInCategory(selectedId);
        }
  
        public List<Movie> getAllMoviesBySearching(String name, String imdbRating)
@@ -114,10 +114,15 @@ public class MovieModel {
             bllm.editDate(formattedDateTime, selectedId);
        }
 
-       public void loadMoviesInCategory(int id)
+       public void loadMoviesInCategory(int selectedId)
        {
            catmList.clear();
-           catmList.addAll(bllm.getAllMoviesInCategory());
+           catmList.addAll(bllm.getAllMoviesInCategory(selectedId));
 
+       }
+       
+       public void matchMovie(String categoryName)
+       {
+           bllm.matchMovieCat(categoryName);
        }
 }

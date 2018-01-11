@@ -119,24 +119,31 @@ public class MainMovieViewController implements Initializable
         TableCategoryView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Category>() {
             @Override
             public void changed(ObservableValue<? extends Category> observable, Category oldValue, Category newValue) {
+               // int idgaf = (int) Category(); doesn't work
                 model.loadMoviesInCategory(newValue.getId());
+                
             }
         }
         );
     }    
 
-
     /**
      * Gets selected Movie from list
      */
-    private Movie getSelectedMovie() {
+
+    public Movie getSelectedMovie() {
+
         return TableMovieView.getSelectionModel().getSelectedItem();
     }
 
     /**
      * Gets selected Category from left list
      */
-    private Category getSelectedMovieInCategory() {
+    public Category getSelectedCategory() {
+        return TableCategoryView.getSelectionModel().getSelectedItem();
+    }
+    
+    public Category getSelectedCategoryId() {
         return TableCategoryView.getSelectionModel().getSelectedItem();
     }
 

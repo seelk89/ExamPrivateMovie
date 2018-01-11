@@ -83,7 +83,7 @@ public class DALManager {
      * 
      * Shows all movies in the selected category
      */
-    public List<Movie> getAllMoviesInCategory()
+    public List<Movie> getAllMoviesInCategory(int selectedId)
     {
         System.out.println("You clicked on a category");
         List<Movie> allMoviesInCategory = new ArrayList();
@@ -95,13 +95,14 @@ public class DALManager {
 
         ( " SELECT Movie.name, Movie.personalRating, Movie.imdbRating, Movie.lastview " 
         + " FROM ((CatMovie " 
-        + " INNER JOIN Category ON CatMovie.CategoryId = Category.id) " //exchange Category.id 1 with id of selected category
+        + " INNER JOIN Category ON CatMovie.CategoryId = Category.id) " 
         + " INNER JOIN Movie ON CatMovie.MovieId = Movie.id) "
-                + " WHERE Category.Id = 1"
+        + " WHERE Category.Id = ? " //make selected
         );   
             
-
-//            stmt.setInt(1, id);
+            
+            
+            stmt.setInt(1, selectedId);
 
             ResultSet rs = stmt.executeQuery();
             
@@ -316,39 +317,45 @@ public class DALManager {
         }
     }
 
-    public void matchMovieCat(int categoryId)
+    public void matchMovieCat(String categoryName)
     {
         try (Connection con = cm.getConnection())
         {
             int movieId = 0;
             int catId = 0;
             
+            //Gets the newly added Movies id
             PreparedStatement pstmt1 = con.prepareStatement ("SELECT MAX(id) FROM Movie");
             
             ResultSet rsMovie = pstmt1.executeQuery();
             
             if(rsMovie.next())
                 movieId = rsMovie.getInt(1);
-           
-            PreparedStatement pstmt2 = con.prepareStatement ("SELECT * FROM Category WHERE id = ?");
             
-            pstmt2.setInt(1, categoryId);
+            System.out.println(movieId);
+            
+            //Gets the id of the category that has been selected
+            PreparedStatement pstmt2 = con.prepareStatement ("SELECT id FROM Category WHERE name = ?");
+            
+            pstmt2.setString(1, categoryName);
             
             ResultSet rsCat = pstmt2.executeQuery();
             
             if(rsCat.next())
-                catId = rsMovie.getInt(1);
+                catId = rsCat.getInt(1);
             
-            PreparedStatement pstmt3 = con.prepareStatement ("INSERT INTO CatMovie "
+            System.out.println(catId);
+            
+            //Inserts the movieId along with the categoryId into CatMovie
+            String sql = "INSERT INTO CatMovie "
                     + "(CategoryId, MovieId) "
-                    + "VALUES (?, ?)");
-            
+                    + "VALUES (?, ?)";
+
+            PreparedStatement pstmt3 = con.prepareStatement(sql);
             pstmt3.setInt(1, catId);
             pstmt3.setInt(2, movieId);
             
-            pstmt3.executeQuery();
-
-            int affected = pstmt1.executeUpdate();
+            int affected = pstmt3.executeUpdate();
             if (affected < 1)
             {
                 throw new SQLException("Date could not be updated");
