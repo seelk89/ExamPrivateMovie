@@ -5,7 +5,7 @@
  */
 package examprivatemovie.GUI;
 
-import examprivatemovie.BE.CatMovie;
+
 import examprivatemovie.BE.Category;
 import examprivatemovie.BE.Movie;
 import java.net.URL;

@@ -5,7 +5,7 @@
  */
 package examprivatemovie.GUI;
 
-import examprivatemovie.BE.CatMovie;
+
 import examprivatemovie.GUI.AddMovieViewController;
 import examprivatemovie.BE.Category;
 import examprivatemovie.BE.Movie;
@@ -49,7 +49,7 @@ public class MainMovieViewController implements Initializable
     @FXML
     private TableColumn<Movie, String> columnCategory;
     @FXML
-    private TableView<CatMovie> TableMovieView;
+    private TableView<Movie> TableMovieView;
     @FXML
     private TableColumn<Movie, String> columnTitle;
     @FXML
@@ -91,6 +91,16 @@ public class MainMovieViewController implements Initializable
          model.loadMovie();
          model.loadCategory();
         
+         txtSearchFilter.textProperty().addListener(new ChangeListener<String>()
+         {
+             @Override
+             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                System.out.println("Searching for Movie by title and imdb rating");
+             model.search(newValue, newValue);
+             }
+             
+         });
+         
 //         TableMovieView.setItems(model.getMoviesList());
          TableCategoryView.setItems(model.getCategoriesList()); 
         
@@ -119,24 +129,31 @@ public class MainMovieViewController implements Initializable
         TableCategoryView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Category>() {
             @Override
             public void changed(ObservableValue<? extends Category> observable, Category oldValue, Category newValue) {
+               // int idgaf = (int) Category(); doesn't work
                 model.loadMoviesInCategory(newValue.getId());
+                
             }
         }
         );
     }    
 
-
     /**
      * Gets selected Movie from list
      */
-    public CatMovie getSelectedMovie() {
+
+    public Movie getSelectedMovie() {
+
         return TableMovieView.getSelectionModel().getSelectedItem();
     }
 
     /**
      * Gets selected Category from left list
      */
-    public Category getSelectedMovieInCategory() {
+    public Category getSelectedCategory() {
+        return TableCategoryView.getSelectionModel().getSelectedItem();
+    }
+    
+    public Category getSelectedCategoryId() {
         return TableCategoryView.getSelectionModel().getSelectedItem();
     }
 
@@ -166,8 +183,9 @@ public class MainMovieViewController implements Initializable
     private void clickRemoveMovie(ActionEvent event) 
     {
         
-//        Movie selectedMovie = getSelectedMovie();
-//        model.removeMovie(selectedMovie);
+        Movie selectedMovie = getSelectedMovie();
+        model.removeMovie(selectedMovie);
+        //remove entry from CatMovie as well
     }
     @FXML
     private void clickPlayMovie(ActionEvent event) throws IOException 
@@ -195,13 +213,6 @@ public class MainMovieViewController implements Initializable
         
         model.loadMovie();
 
-
-    }
-
-    @FXML
-    private void writeSearchForMovieKeyTyped(KeyEvent event) {
-        System.out.println("Searching for Movie by title and imdb rating");
-        model.search(txtSearchFilter.getText(), txtSearchFilter.getText());
     }
     
     @FXML

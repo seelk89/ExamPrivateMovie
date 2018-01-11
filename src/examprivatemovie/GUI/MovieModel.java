@@ -5,7 +5,7 @@
  */
 package examprivatemovie.GUI;
 
-import examprivatemovie.BE.CatMovie;
+
 import examprivatemovie.BE.Category;
 import examprivatemovie.BE.Movie;
 import examprivatemovie.BLL.BLLManager;
@@ -36,11 +36,11 @@ public class MovieModel {
            return bllm.getAllCategories();
        }
        
-       private ObservableList<CatMovie> catmList = FXCollections.observableArrayList();
+       private ObservableList<Movie> catmList = FXCollections.observableArrayList();
     
-       public List<CatMovie> getAllMoviesInCategory()
+       public List<Movie> getAllMoviesInCategory(int selectedId)
        {
-           return bllm.getAllMoviesInCategory();
+           return bllm.getAllMoviesInCategory(selectedId);
        }
  
        public List<Movie> getAllMoviesBySearching(String name, String imdbRating)
@@ -58,7 +58,7 @@ public class MovieModel {
         return cList;
        }
        
-       public ObservableList<CatMovie> getMoviesInCategoryList()
+       public ObservableList<Movie> getMoviesInCategoryList()
        {
         return catmList;
        }
@@ -68,8 +68,8 @@ public class MovieModel {
      */
     public void search(String title, String imdbRating)
     {
-        mList.clear();
-        mList.addAll(bllm.getAllMoviesBySearching(title, imdbRating));
+        catmList.clear();
+        catmList.addAll(bllm.getAllMoviesBySearching(title, imdbRating));
     }
        
        public void addMovie(Movie m)
@@ -87,13 +87,13 @@ public class MovieModel {
        public void removeMovie(Movie selectedMovie)
        {
            bllm.removeMovieFromDb(selectedMovie);
-           mList.remove(selectedMovie);
+           catmList.remove(selectedMovie);
        }
        
        public void loadMovie()
        {
-           mList.clear();
-           mList.addAll(bllm.getAllMovies());
+           catmList.clear();
+           catmList.addAll(bllm.getAllMovies());
        }
        
               
@@ -114,10 +114,10 @@ public class MovieModel {
             bllm.editDate(formattedDateTime, selectedId);
        }
 
-       public void loadMoviesInCategory(int id)
+       public void loadMoviesInCategory(int selectedId)
        {
            catmList.clear();
-           catmList.addAll(bllm.getAllMoviesInCategory());
+           catmList.addAll(bllm.getAllMoviesInCategory(selectedId));
 
        }
        
