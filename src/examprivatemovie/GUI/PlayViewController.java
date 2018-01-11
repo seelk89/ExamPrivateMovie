@@ -52,10 +52,10 @@ public class PlayViewController implements Initializable
         mediaView.setMediaPlayer(mp);
         mp.setAutoPlay(true);
         
-        DoubleProperty width = mediaView.fitWidthProperty();
-        DoubleProperty height = mediaView.fitHeightProperty();
-        width.bind(Bindings.selectDouble(mediaView.sceneProperty(), "width"));
-        height.bind(Bindings.selectDouble(mediaView.sceneProperty(), "height"));
+        //DoubleProperty width = mediaView.fitWidthProperty();
+        //DoubleProperty height = mediaView.fitHeightProperty();
+        //width.bind(Bindings.selectDouble(mediaView.sceneProperty(), "width"));
+        //height.bind(Bindings.selectDouble(mediaView.sceneProperty(), "height"));
     }    
     
     public void setParentWindowController(MainMovieViewController parent)

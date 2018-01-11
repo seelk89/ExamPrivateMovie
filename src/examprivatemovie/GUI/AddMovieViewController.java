@@ -63,6 +63,7 @@ public class AddMovieViewController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
+        
         //genre1 choicebox options
         genre1.setItems(FXCollections.observableArrayList(model.getAllCategories()));
         
