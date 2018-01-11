@@ -5,9 +5,9 @@
         <group>
             <file>file:/C:/Users/Jesper/Desktop/NetbeansProjects/ExamPrivateMovie/src/examprivatemovie/GUI/MainMovieViewController.java</file>
             <file>file:/C:/Users/Jesper/Desktop/NetbeansProjects/ExamPrivateMovie/src/examprivatemovie/DAL/DALManager.java</file>
-            <file>file:/C:/Users/Jesper/Desktop/NetbeansProjects/ExamPrivateMovie/src/examprivatemovie/GUI/PlayViewController.java</file>
+            <file>file:/C:/Users/Jesper/Desktop/NetbeansProjects/ExamPrivateMovie/src/examprivatemovie/GUI/MovieModel.java</file>
+            <file>file:/C:/Users/Jesper/Desktop/NetbeansProjects/ExamPrivateMovie/src/examprivatemovie/BE/Category.java</file>
             <file>file:/C:/Users/Jesper/Desktop/NetbeansProjects/ExamPrivateMovie/src/examprivatemovie/GUI/AddMovieViewController.java</file>
-            <file>file:/C:/Users/Jesper/Desktop/NetbeansProjects/ExamPrivateMovie/src/examprivatemovie/BE/Movie.java</file>
         </group>
     </open-files>
 </project-private>

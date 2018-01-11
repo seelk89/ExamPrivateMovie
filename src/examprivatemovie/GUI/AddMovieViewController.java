@@ -32,14 +32,16 @@ public class AddMovieViewController implements Initializable
 
     private MainMovieViewController parent;
     private TextField fileLocation;
+    
     @FXML
     private ChoiceBox<Category> genre1;
     @FXML
-    private ChoiceBox<String> genre2;
+    private ChoiceBox<Category> genre2;
     @FXML
-    private ChoiceBox<String> genre3;
+    private ChoiceBox<Category> genre3;
     @FXML
-    private ChoiceBox<String> genre4;
+    private ChoiceBox<Category> genre4;
+    
     @FXML
     private Button btnFileLocation;
     
@@ -68,34 +70,13 @@ public class AddMovieViewController implements Initializable
         genre1.setItems(FXCollections.observableArrayList(model.getAllCategories()));
         
         //genre2 choicebox options
-        genre2.getItems().add("Action");
-        genre2.getItems().add("Adventure");
-        genre2.getItems().add("Animation");
-        genre2.getItems().add("Biography");
-        genre2.getItems().add("Comedy");
-        genre2.getItems().add("crime");
-        genre2.getItems().add("Documentary");
-        genre2.getItems().add("Drama");
-        genre2.getItems().add("Family");
-        genre2.getItems().add("Fantasy");
-        genre2.getItems().add("Film noir");
-        genre2.getItems().add("History");
-        genre2.getItems().add("Horror");
-        genre2.getItems().add("Music");
-        genre2.getItems().add("Musical");
-        genre2.getItems().add("Mystery");
-        genre2.getItems().add("Romance");
-        genre2.getItems().add("Sci-fi");
-        genre2.getItems().add("Short");
-        genre2.getItems().add("Sport");
-        genre2.getItems().add("Superhero");
-        genre2.getItems().add("Thriller");
-        genre2.getItems().add("War");
-        genre2.getItems().add("Western");
+        genre2.setItems(FXCollections.observableArrayList(model.getAllCategories()));
         
         //genre3 choicebox options
-               
+        genre3.setItems(FXCollections.observableArrayList(model.getAllCategories()));
+        
         //genre4 choicebox options
+        genre4.setItems(FXCollections.observableArrayList(model.getAllCategories()));
     }   
     
     public void setParentWindowController(MainMovieViewController parent)
@@ -136,28 +117,33 @@ public class AddMovieViewController implements Initializable
             model.addMovie(m);
         }
         
-        //String genre1Value = genre1.getValue();
-        
-        String genre2Value = genre2.getValue();
-        
-        if(genre2Value != null)
-        {
-            model.matchMovie(genre2Value);
-        }
-        
-        String genre3Value = genre3.getValue();
-        
-        if(genre3Value != null)
-        {
-            model.matchMovie(genre3Value);
-        }
-        
-        String genre4Value = genre4.getValue();
-        
-        if(genre4Value != null)
-        {
-            model.matchMovie(genre4Value);
-        }
+//        String genre1Value = genre1.getValue();
+//        
+//        if(genre1Value != null)
+//        {
+//            model.matchMovie(genre1Value);
+//        }
+//
+//        String genre2Value = genre2.getValue();
+//        
+//        if(genre2Value != null)
+//        {
+//            model.matchMovie(genre2Value);
+//        }
+//        
+//        String genre3Value = genre3.getValue();
+//        
+//        if(genre3Value != null)
+//        {
+//            model.matchMovie(genre3Value);
+//        }
+//        
+//        String genre4Value = genre4.getValue();
+//        
+//        if(genre4Value != null)
+//        {
+//            model.matchMovie(genre4Value);
+//        }
         
         Stage window = (Stage) btnSave.getScene().getWindow();
         window.close();
