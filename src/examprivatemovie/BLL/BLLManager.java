@@ -5,7 +5,7 @@
  */
 package examprivatemovie.BLL;
 
-import examprivatemovie.BE.CatMovie;
+
 import examprivatemovie.BE.Category;
 import examprivatemovie.BE.Movie;
 import examprivatemovie.DAL.DALManager;
@@ -30,7 +30,7 @@ public class BLLManager {
            return dalm.getAllCategories();
        }
  
-        public List<CatMovie> getAllMoviesInCategory()
+        public List<Movie> getAllMoviesInCategory()
         {
             return dalm.getAllMoviesInCategory();
         }

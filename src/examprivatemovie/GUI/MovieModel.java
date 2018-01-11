@@ -5,7 +5,7 @@
  */
 package examprivatemovie.GUI;
 
-import examprivatemovie.BE.CatMovie;
+
 import examprivatemovie.BE.Category;
 import examprivatemovie.BE.Movie;
 import examprivatemovie.BLL.BLLManager;
@@ -36,9 +36,9 @@ public class MovieModel {
            return bllm.getAllCategories();
        }
        
-       private ObservableList<CatMovie> catmList = FXCollections.observableArrayList();
+       private ObservableList<Movie> catmList = FXCollections.observableArrayList();
     
-       public List<CatMovie> getAllMoviesInCategory()
+       public List<Movie> getAllMoviesInCategory()
        {
            return bllm.getAllMoviesInCategory();
        }
@@ -58,7 +58,7 @@ public class MovieModel {
         return cList;
        }
        
-       public ObservableList<CatMovie> getMoviesInCategoryList()
+       public ObservableList<Movie> getMoviesInCategoryList()
        {
         return catmList;
        }

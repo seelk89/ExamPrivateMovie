@@ -5,7 +5,7 @@
  */
 package examprivatemovie.GUI;
 
-import examprivatemovie.BE.CatMovie;
+
 import examprivatemovie.GUI.AddMovieViewController;
 import examprivatemovie.BE.Category;
 import examprivatemovie.BE.Movie;
@@ -49,7 +49,7 @@ public class MainMovieViewController implements Initializable
     @FXML
     private TableColumn<Movie, String> columnCategory;
     @FXML
-    private TableView<CatMovie> TableMovieView;
+    private TableView<Movie> TableMovieView;
     @FXML
     private TableColumn<Movie, String> columnTitle;
     @FXML
@@ -129,7 +129,7 @@ public class MainMovieViewController implements Initializable
     /**
      * Gets selected Movie from list
      */
-    private CatMovie getSelectedMovie() {
+    private Movie getSelectedMovie() {
         return TableMovieView.getSelectionModel().getSelectedItem();
     }
 
