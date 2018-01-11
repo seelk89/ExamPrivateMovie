@@ -91,6 +91,16 @@ public class MainMovieViewController implements Initializable
          model.loadMovie();
          model.loadCategory();
         
+         txtSearchFilter.textProperty().addListener(new ChangeListener<String>()
+         {
+             @Override
+             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                System.out.println("Searching for Movie by title and imdb rating");
+             model.search(newValue, newValue);
+             }
+             
+         });
+         
 //         TableMovieView.setItems(model.getMoviesList());
          TableCategoryView.setItems(model.getCategoriesList()); 
         
@@ -173,8 +183,9 @@ public class MainMovieViewController implements Initializable
     private void clickRemoveMovie(ActionEvent event) 
     {
         
-//        Movie selectedMovie = getSelectedMovie();
-//        model.removeMovie(selectedMovie);
+        Movie selectedMovie = getSelectedMovie();
+        model.removeMovie(selectedMovie);
+        //remove entry from CatMovie as well
     }
     @FXML
     private void clickPlayMovie(ActionEvent event) throws IOException 
@@ -202,13 +213,6 @@ public class MainMovieViewController implements Initializable
         
         model.loadMovie();
 
-
-    }
-
-    @FXML
-    private void writeSearchForMovieKeyTyped(KeyEvent event) {
-        System.out.println("Searching for Movie by title and imdb rating");
-        model.search(txtSearchFilter.getText(), txtSearchFilter.getText());
     }
     
     @FXML

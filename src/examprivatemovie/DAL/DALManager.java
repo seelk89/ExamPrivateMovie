@@ -68,6 +68,7 @@ public class DALManager {
             {
                 Category c = new Category();
                 c.setName(rs.getString("name"));
+                c.setId(rs.getInt("id"));
 
                 allCategories.add(c);
             }
@@ -93,11 +94,11 @@ public class DALManager {
             PreparedStatement stmt = con.prepareStatement
         
 
-        ( " SELECT Movie.name, Movie.personalRating, Movie.imdbRating, Movie.lastview " 
+        ( " SELECT Movie.name, Movie.personalRating, Movie.imdbRating, Movie.lastview, Movie.filelink "
         + " FROM ((CatMovie " 
         + " INNER JOIN Category ON CatMovie.CategoryId = Category.id) " 
         + " INNER JOIN Movie ON CatMovie.MovieId = Movie.id) "
-        + " WHERE Category.Id = ? " //make selected
+        + " WHERE Category.Id = ? "
         );   
             
             
@@ -112,7 +113,7 @@ public class DALManager {
                 m.setName(rs.getString("name"));
                 m.setPersonalRating(rs.getString("personalRating"));
                 m.setIMDBRating(rs.getString("imdbRating"));
-                //m.setFilelink(rs.getString("filelink"));
+                m.setFilelink(rs.getString("filelink")); //dunno if works
                 m.setLastview(rs.getString("lastview"));
                
 

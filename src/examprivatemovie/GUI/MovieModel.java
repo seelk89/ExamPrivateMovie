@@ -68,8 +68,8 @@ public class MovieModel {
      */
     public void search(String title, String imdbRating)
     {
-        mList.clear();
-        mList.addAll(bllm.getAllMoviesBySearching(title, imdbRating));
+        catmList.clear();
+        catmList.addAll(bllm.getAllMoviesBySearching(title, imdbRating));
     }
        
        public void addMovie(Movie m)
@@ -87,13 +87,13 @@ public class MovieModel {
        public void removeMovie(Movie selectedMovie)
        {
            bllm.removeMovieFromDb(selectedMovie);
-           mList.remove(selectedMovie);
+           catmList.remove(selectedMovie);
        }
        
        public void loadMovie()
        {
-           mList.clear();
-           mList.addAll(bllm.getAllMovies());
+           catmList.clear();
+           catmList.addAll(bllm.getAllMovies());
        }
        
               
