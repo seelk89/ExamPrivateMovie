@@ -65,7 +65,6 @@ public class AddMovieViewController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-        
         //genre1 choicebox options
         genre1.setItems(FXCollections.observableArrayList(model.getAllCategories()));
         
@@ -109,43 +108,43 @@ public class AddMovieViewController implements Initializable
         m.setIMDBRating(txtImdbRating.getText());
         m.setFilelink(txtFileLocation.getText());
         
-        
         String fileLocation = txtFileLocation.getText();
         
         if(fileLocation.endsWith("mp4") || fileLocation.endsWith("mpeg4"))
         {
             model.addMovie(m);
-        }
         
-//        String genre1Value = genre1.getValue();
-//        
-//        if(genre1Value != null)
-//        {
-//            model.matchMovie(genre1Value);
-//        }
+            boolean genre1Empty = genre1.getSelectionModel().isEmpty();
+
+            if(genre1Empty != true)
+            {
+                String genre1Value = genre1.getValue().getName();
+                model.matchMovie(genre1Value);
+            }
+
+//            String genre2Value = genre2.getValue().getName();
 //
-//        String genre2Value = genre2.getValue();
-//        
-//        if(genre2Value != null)
-//        {
-//            model.matchMovie(genre2Value);
-//        }
-//        
-//        String genre3Value = genre3.getValue();
-//        
-//        if(genre3Value != null)
-//        {
-//            model.matchMovie(genre3Value);
-//        }
-//        
-//        String genre4Value = genre4.getValue();
-//        
-//        if(genre4Value != null)
-//        {
-//            model.matchMovie(genre4Value);
-//        }
-        
-        Stage window = (Stage) btnSave.getScene().getWindow();
-        window.close();
+//            if(genre2Value != null)
+//            {
+//                model.matchMovie(genre2Value);
+//            }
+//
+//            String genre3Value = genre3.getValue().getName();
+//
+//            if(genre3Value != null)
+//            {
+//                model.matchMovie(genre3Value);
+//            }
+//
+//            String genre4Value = genre4.getValue().getName();
+//
+//            if(genre4Value != null)
+//            {
+//                model.matchMovie(genre4Value);
+//            }
+
+            Stage window = (Stage) btnSave.getScene().getWindow();
+            window.close();
+        }
     }
 }

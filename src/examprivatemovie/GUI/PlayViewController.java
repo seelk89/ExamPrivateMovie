@@ -42,21 +42,29 @@ public class PlayViewController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-        //Movie path = get
+        //play();
+    } 
+    
+    private void play(MainMovieViewController parent)
+    {
+        this.parent = parent;
+        String path = parent.getSelectedMovie().getFilelink();
         
-        String path = new File ("C:/Users/Jesper/Desktop/NetbeansProjects/ExamPrivateMovie/SampleVideo_1280x720_2mb.mp4").getAbsolutePath();
-        me = new Media(new File(path).toURI().toString());
+        System.out.println(path);
+        
+        String filmPath = new File (path).getAbsolutePath();
+        me = new Media(new File(filmPath).toURI().toString());
         mp = new MediaPlayer(me);
         
         mediaView.setMediaPlayer(mp);
         mediaView.setMediaPlayer(mp);
         mp.setAutoPlay(true);
         
-        //DoubleProperty width = mediaView.fitWidthProperty();
-        //DoubleProperty height = mediaView.fitHeightProperty();
-        //width.bind(Bindings.selectDouble(mediaView.sceneProperty(), "width"));
-        //height.bind(Bindings.selectDouble(mediaView.sceneProperty(), "height"));
-    }    
+        DoubleProperty width = mediaView.fitWidthProperty();
+        DoubleProperty height = mediaView.fitHeightProperty();
+        width.bind(Bindings.selectDouble(mediaView.sceneProperty(), "width"));
+        height.bind(Bindings.selectDouble(mediaView.sceneProperty(), "height"));
+    }
     
     public void setParentWindowController(MainMovieViewController parent)
     {

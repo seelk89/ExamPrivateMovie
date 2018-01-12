@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.media.MediaView?>
 
@@ -7,4 +8,7 @@
    <center>
       <MediaView fx:id="mediaView" fitHeight="200.0" fitWidth="200.0" BorderPane.alignment="CENTER" />
    </center>
+   <bottom>
+      <Button fx:id="btnPlay" mnemonicParsing="false" onAction="#clickPlay" text="Play" BorderPane.alignment="CENTER" />
+   </bottom>
 </BorderPane>
