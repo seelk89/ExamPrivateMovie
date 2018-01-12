@@ -84,9 +84,9 @@ public class MovieModel {
         
        }
     
-       public void removeMovie(Movie selectedMovie)
+       public void removeMovie(Movie selectedMovie, Movie selectedMovieId)
        {
-           bllm.removeMovieFromDb(selectedMovie);
+           bllm.removeMovieFromDb(selectedMovie, selectedMovieId);
            catmList.remove(selectedMovie);
        }
        

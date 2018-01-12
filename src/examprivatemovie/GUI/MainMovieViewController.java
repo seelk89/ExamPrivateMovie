@@ -194,7 +194,8 @@ public class MainMovieViewController implements Initializable {
     private void clickRemoveMovie(ActionEvent event) {
 
         Movie selectedMovie = getSelectedMovie();
-        model.removeMovie(selectedMovie);
+        Movie selectedMovieId = getSelectedMovie();
+        model.removeMovie(selectedMovie, selectedMovieId);
         //remove entry from CatMovie as well
     }
 

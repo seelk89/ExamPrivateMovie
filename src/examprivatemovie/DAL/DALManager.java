@@ -165,43 +165,7 @@ public class DALManager {
         }
    }
         
-//   public void addMovieToCategory(Movie catm)
-//   {
-//       try (Connection con = cm.getConnection())
-//        {
-//            String sql
-//                    = "INSERT INTO CatMovie"
-//                    + "(id, CategoryId, MovieId) "
-//                    + "VALUES(?,?,?)";
-//
-//            PreparedStatement pstmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-//
-//            
-//            pstmt.setInt(1, catm.getId());
-//            pstmt.setInt(2, catm.getCategoryId());
-//            pstmt.setInt(3, catm.getMovieId());
-//
-//            
-//
-//            int affected = pstmt.executeUpdate();
-//            if (affected < 1)
-//            {
-//                throw new SQLException("Movie could not be added to category/ies");
-//            }
-//
-//            // Get database generated id, probs not necessary
-//            ResultSet rs = pstmt.getGeneratedKeys();
-//            if (rs.next())
-//            {
-//                //char.setId(rs.getInt(1));
-//            }
-//        } catch (SQLException ex)
-//        {
-//            Logger.getLogger(DALManager.class.getName()).log(
-//                    Level.SEVERE, null, ex);
-//        }
-//   }
-   
+
    public void editMovieInDb(Movie m)
    {
        try (Connection con = cm.getConnection())
@@ -233,21 +197,34 @@ public class DALManager {
    }
    
 
-   public void removeMovieFromDb(Movie selectedMovie)
+   public void removeMovieFromDb(Movie selectedMovie, Movie selectedMovieId)
    {
        //also delete from CatMovie where id=?
        try (Connection con = cm.getConnection())
         {
-            String sql = "DELETE FROM Movie WHERE name=?";
+            String sql = 
+                "DELETE FROM Movie WHERE name=? ";
+                  
+                 
             PreparedStatement pstmt = con.prepareStatement(sql);
             pstmt.setString(1, selectedMovie.getName());
+          //  pstmt.setInt(2, selectedMovieId.getId());
             pstmt.execute();
+            
+            String sql2 =
+                "DELETE FROM CatMovie WHERE MovieId=? "; 
+            PreparedStatement pstmt2 = con.prepareStatement(sql2);
+            
+            pstmt2.setInt(1, selectedMovieId.getId());
+            pstmt2.execute();
+            
+             
         } catch (SQLException ex)
         {
             Logger.getLogger(DALManager.class.getName()).log(
                     Level.SEVERE, null, ex);
         }
-   }   
+   }     
     
    
     public List<Movie> getAllMoviesBySearching

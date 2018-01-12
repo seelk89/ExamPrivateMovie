@@ -55,9 +55,9 @@ public class BLLManager {
            dalm.editMovieInDb(m);
        }
     
-       public void removeMovieFromDb(Movie selectedMovie)
+       public void removeMovieFromDb(Movie selectedMovie, Movie selectedMovieId)
        {
-           dalm.removeMovieFromDb(selectedMovie);
+           dalm.removeMovieFromDb(selectedMovie, selectedMovieId);
        }
 
        public void editDate(String d, int selectedId)
