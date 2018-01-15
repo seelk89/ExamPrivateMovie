@@ -77,17 +77,28 @@ public class MovieModel {
            bllm.addMovieToDb(m);
            mList.addAll(bllm.getAllMovies());
        }
+       
+       public void addCategory(Category c)
+       {
+           bllm.addCategoryToDb(c);
+           cList.addAll(bllm.getAllCategories()); //maybe wrong list
+       }
 
        public void editMovie(Movie m)
        {
-           bllm.editMovieInDb(m);
-        
+           bllm.editMovieInDb(m); 
        }
     
        public void removeMovie(Movie selectedMovie, Movie selectedMovieId)
        {
            bllm.removeMovieFromDb(selectedMovie, selectedMovieId);
            catmList.remove(selectedMovie);
+       }
+       
+       public void removeCategory(Category selectedCategory, Category selectedCategoryId)
+       {
+           bllm.removeCategoryFromDb(selectedCategory);
+           cList.remove(selectedCategory);
        }
        
        public void loadMovie()
@@ -114,11 +125,18 @@ public class MovieModel {
             bllm.editDate(formattedDateTime, selectedId);
        }
 
+        
        public void loadMoviesInCategory(int selectedId)
        {
            catmList.clear();
            catmList.addAll(bllm.getAllMoviesInCategory(selectedId));
 
+       }
+       
+       public void loadMoviesInCategory(List<Category> cats)
+       {
+           catmList.clear();
+           catmList.addAll(bllm.getAllMoviesInCategory(cats));
        }
        
        public void matchMovie(String categoryName)

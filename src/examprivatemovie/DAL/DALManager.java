@@ -99,6 +99,7 @@ public class DALManager {
         + " INNER JOIN Category ON CatMovie.CategoryId = Category.id) " 
         + " INNER JOIN Movie ON CatMovie.MovieId = Movie.id) "
         + " WHERE Category.Id = ? "
+                //maybe repeat above 3 times?
         );   
             
             
@@ -144,8 +145,6 @@ public class DALManager {
             pstmt.setString(3, m.getIMDBRating());
             pstmt.setString(4, m.getFilelink());
 
-            
-
             int affected = pstmt.executeUpdate();
             if (affected < 1)
             {
@@ -164,7 +163,40 @@ public class DALManager {
                     Level.SEVERE, null, ex);
         }
    }
-        
+      
+   
+    public void addCategoryToDB(Category c)
+   {
+       try (Connection con = cm.getConnection())
+        {
+            String sql
+                    = "INSERT INTO Category"
+                    + "(name) "
+                    + "VALUES(?)";
+
+            PreparedStatement pstmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+            
+            pstmt.setString(1, c.getName());
+
+            int affected = pstmt.executeUpdate();
+            if (affected < 1)
+            {
+                throw new SQLException("Category could not be added");
+            }
+
+            // Get database generated id, probs not necessary
+            ResultSet rs = pstmt.getGeneratedKeys();
+            if (rs.next())
+            {
+                //char.setId(rs.getInt(1));
+            }
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(DALManager.class.getName()).log(
+                    Level.SEVERE, null, ex);
+        }
+   }
 
    public void editMovieInDb(Movie m)
    {
@@ -208,7 +240,6 @@ public class DALManager {
                  
             PreparedStatement pstmt = con.prepareStatement(sql);
             pstmt.setString(1, selectedMovie.getName());
-          //  pstmt.setInt(2, selectedMovieId.getId());
             pstmt.execute();
             
             String sql2 =
@@ -224,9 +255,37 @@ public class DALManager {
             Logger.getLogger(DALManager.class.getName()).log(
                     Level.SEVERE, null, ex);
         }
-   }     
+   }
     
-   
+   public void removeCategoryFromDb(Category selectedCategory)
+   {
+       //also delete from CatMovie where id=?
+       try (Connection con = cm.getConnection())
+        {
+            String sql = 
+                "DELETE FROM Category WHERE name=? ";
+                  
+                 
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            pstmt.setString(1, selectedCategory.getName());
+            pstmt.execute();
+            
+            String sql2 =
+                "DELETE FROM CatMovie WHERE CategoryId=? "; 
+            PreparedStatement pstmt2 = con.prepareStatement(sql2);
+            
+            pstmt2.setInt(1, selectedCategory.getId());
+            pstmt2.execute();
+            
+             
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(DALManager.class.getName()).log(
+                    Level.SEVERE, null, ex);
+        }
+   }
+    
+    
     public List<Movie> getAllMoviesBySearching
         (
             String name, String imdbRating)
