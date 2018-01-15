@@ -12,6 +12,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
 import java.io.File;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -65,6 +67,28 @@ public class AddMovieViewController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
+        //restricts txtPersonalRating to decimal numbers
+        txtPersonalRating.textProperty().addListener(new ChangeListener<String>() 
+        {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if (!newValue.matches("\\d{0,9}([\\.]\\d{0,9})?")) {
+                    txtPersonalRating.setText(oldValue);
+                }
+            }
+        });
+        
+        //restricts txtImdbRating to decimal numbers
+        txtImdbRating.textProperty().addListener(new ChangeListener<String>() 
+        {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if (!newValue.matches("\\d{0,9}([\\.]\\d{0,9})?")) {
+                    txtPersonalRating.setText(oldValue);
+                }
+            }
+        });
+        
         //genre1 choicebox options
         genre1.setItems(FXCollections.observableArrayList(model.getAllCategories()));
         
@@ -122,26 +146,29 @@ public class AddMovieViewController implements Initializable
                 model.matchMovie(genre1Value);
             }
 
-//            String genre2Value = genre2.getValue().getName();
-//
-//            if(genre2Value != null)
-//            {
-//                model.matchMovie(genre2Value);
-//            }
-//
-//            String genre3Value = genre3.getValue().getName();
-//
-//            if(genre3Value != null)
-//            {
-//                model.matchMovie(genre3Value);
-//            }
-//
-//            String genre4Value = genre4.getValue().getName();
-//
-//            if(genre4Value != null)
-//            {
-//                model.matchMovie(genre4Value);
-//            }
+            boolean genre2Empty = genre2.getSelectionModel().isEmpty();
+
+            if(genre2Empty != true)
+            {
+                String genre2Value = genre2.getValue().getName();
+                model.matchMovie(genre2Value);
+            }
+
+            boolean genre3Empty = genre3.getSelectionModel().isEmpty();
+
+            if(genre3Empty != true)
+            {
+                String genre3Value = genre3.getValue().getName();
+                model.matchMovie(genre3Value);
+            }
+
+            boolean genre4Empty = genre4.getSelectionModel().isEmpty();
+
+            if(genre4Empty != true)
+            {
+                String genre4Value = genre4.getValue().getName();
+                model.matchMovie(genre4Value);
+            }
 
             Stage window = (Stage) btnSave.getScene().getWindow();
             window.close();
