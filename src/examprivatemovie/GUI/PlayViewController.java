@@ -12,8 +12,10 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
@@ -42,17 +44,17 @@ public class PlayViewController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-        //play();
+        play();
     } 
     
-    private void play(MainMovieViewController parent)
+    private void play()
     {
-        this.parent = parent;
-        String path = parent.getSelectedMovie().getFilelink();
+        //this.parent = parent;
+        //String path = parent.getSelectedMovie().getFilelink();
         
-        System.out.println(path);
+        //System.out.println(path);
         
-        String filmPath = new File (path).getAbsolutePath();
+        String filmPath = new File ("C:/Users/Jesper/Desktop/NetbeansProjects/ExamPrivateMovie/SampleVideo_1280x720_2mb.mp4").getAbsolutePath();
         me = new Media(new File(filmPath).toURI().toString());
         mp = new MediaPlayer(me);
         
@@ -70,4 +72,5 @@ public class PlayViewController implements Initializable
     {
         this.parent = parent;
     }
+
 }

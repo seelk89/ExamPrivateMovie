@@ -213,9 +213,9 @@ public class MainMovieViewController implements Initializable {
         controller.setParentWindowController(this);
 
         Scene scene = new Scene(root);
-        newWindow.setTitle("Play view");
         newWindow.setScene(scene);
-
+        
+        //writes the date and time the movie was played
         int selectedMovieId = TableMovieView.getSelectionModel().getSelectedItem().getId();
         System.out.println(selectedMovieId);
         model.editDate(selectedMovieId);
@@ -223,7 +223,6 @@ public class MainMovieViewController implements Initializable {
         newWindow.showAndWait();
 
         model.loadMovie();
-
     }
 
     @FXML
