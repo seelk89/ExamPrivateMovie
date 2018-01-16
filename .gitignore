@@ -22,3 +22,4 @@
 hs_err_pid*
 /build/
 /dist/
+src/examprivatemovie/DAL/DALManager.java

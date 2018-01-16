@@ -28,10 +28,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -77,7 +79,6 @@ public class MainMovieViewController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        editingCells();
         columnCategory.setCellValueFactory(
                 new PropertyValueFactory("name"));
 
@@ -123,25 +124,46 @@ public class MainMovieViewController implements Initializable {
             }
         }
         );
+
+        setCellEditables();
+        autoEditCell();
+
+        columnPersonalRating.setOnEditCommit(new EventHandler<CellEditEvent<Movie, String>>() {
+            @Override
+            public void handle(TableColumn.CellEditEvent<Movie, String> change) {
+                ((Movie) change.getTableView().getItems().get(change.getTablePosition().getRow())).setPersonalRating(change.getNewValue());
+
+            }
+
+        });
     }
 
-    private void editingCells() {
-        TableMovieView.setEditable(true);
-        TableMovieView.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+    
+    private void setCellEditables() {
+        columnPersonalRating.setCellFactory(TextFieldTableCell.forTableColumn());
+        TableMovieView.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
-            public void handle(KeyEvent event) {
-                if (event.getCode().isLetterKey() || event.getCode() == KeyCode.ENTER || event.getCode() == KeyCode.DELETE || event.getCode() == KeyCode.BACK_SPACE) {
-                    return;
-                }
-                if (TableMovieView.getEditingCell() == null) {
-                    if (event.getCode().isLetterKey() || event.getCode().isDigitKey()) {
-                        TablePosition focusedCell = TableMovieView.getFocusModel().getFocusedCell();
-                        TableMovieView.edit(focusedCell.getRow(), focusedCell.getTableColumn());
+            public void handle(MouseEvent event) {
+                if (TableMovieView.isFocused() && event.getClickCount() == 1) {
+                    if (!TableMovieView.isEditable()) {
+                        TableMovieView.setEditable(true);
                     }
                 }
             }
         });
-        TableMovieView.getSelectionModel().setCellSelectionEnabled(true);
+    }
+
+    private void autoEditCell() {
+
+        TableMovieView.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if (event.getCode().equals(KeyCode.ENTER)) {
+
+                }
+            }
+        });
+
     }
 
     /**
