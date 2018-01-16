@@ -47,6 +47,9 @@ public class MovieModel {
        {
            return bllm.getAllMoviesBySearching(name, imdbRating);
        }
+       public List<String> getAllMoviesByTitle(){
+           return bllm.getAllMoviesByTitle();
+       }
        
        public ObservableList<Movie> getMoviesList()
        {

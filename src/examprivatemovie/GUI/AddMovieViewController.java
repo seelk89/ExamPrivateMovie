@@ -5,13 +5,15 @@
  */
 package examprivatemovie.GUI;
 
-
 import examprivatemovie.BE.Category;
 import examprivatemovie.BE.Movie;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -29,12 +31,11 @@ import javafx.stage.Window;
  *
  * @author Jesper
  */
-public class AddMovieViewController implements Initializable
-{
+public class AddMovieViewController implements Initializable {
 
     private MainMovieViewController parent;
     private TextField fileLocation;
-    
+
     @FXML
     private ChoiceBox<Category> genre1;
     @FXML
@@ -43,10 +44,10 @@ public class AddMovieViewController implements Initializable
     private ChoiceBox<Category> genre3;
     @FXML
     private ChoiceBox<Category> genre4;
-    
+
     @FXML
     private Button btnFileLocation;
-    
+
     private Window stage;
     @FXML
     private TextField txtPersonalRating;
@@ -58,20 +59,18 @@ public class AddMovieViewController implements Initializable
     private TextField txtMovieTitle;
     @FXML
     private Button btnSave;
-
     MovieModel model = new MovieModel();
-    
+    List<String> movieTitles = getAllTitles();
+
     /**
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb)
-    {
+    public void initialize(URL url, ResourceBundle rb) {
         int maxChar = 3;
-        
+
         //restricts txtPersonalRating to decimal numbers and limits to 3 characters
-        txtPersonalRating.textProperty().addListener(new ChangeListener<String>() 
-        {
+        txtPersonalRating.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 if (!newValue.matches("\\d{0,9}([\\.]\\d{0,9})?") || newValue.length() > maxChar) {
@@ -79,10 +78,9 @@ public class AddMovieViewController implements Initializable
                 }
             }
         });
-        
+
         //restricts txtImdbRating to decimal numbers and limits to 3 characters
-        txtImdbRating.textProperty().addListener(new ChangeListener<String>() 
-        {
+        txtImdbRating.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 if (!newValue.matches("\\d{0,9}([\\.]\\d{0,9})?") || newValue.length() > maxChar) {
@@ -90,28 +88,32 @@ public class AddMovieViewController implements Initializable
                 }
             }
         });
-        
+
         //genre1 choicebox options
         genre1.setItems(FXCollections.observableArrayList(model.getAllCategories()));
-        
+
         //genre2 choicebox options
         genre2.setItems(FXCollections.observableArrayList(model.getAllCategories()));
-        
+
         //genre3 choicebox options
         genre3.setItems(FXCollections.observableArrayList(model.getAllCategories()));
-        
+
         //genre4 choicebox options
         genre4.setItems(FXCollections.observableArrayList(model.getAllCategories()));
-    }   
-    
-    public void setParentWindowController(MainMovieViewController parent)
-    {
+
+        System.out.println(movieTitles);
+    }
+
+    public void setParentWindowController(MainMovieViewController parent) {
         this.parent = parent;
     }
 
+    public List<String> getAllTitles() {
+        return model.getAllMoviesByTitle();
+    }
+
     @FXML
-    private void clickFileLocation(ActionEvent event)
-    {
+    private void clickFileLocation(ActionEvent event) {
         String absolutePath = null;
 
         final FileChooser fileChooser = new FileChooser();
@@ -125,55 +127,53 @@ public class AddMovieViewController implements Initializable
     }
 
     @FXML
-    private void clickSave(ActionEvent event)
-    {
-        Movie m = new Movie();
-        
-        m.setName(txtMovieTitle.getText());
-        m.setPersonalRating(txtPersonalRating.getText());
-        m.setIMDBRating(txtImdbRating.getText());
-        m.setFilelink(txtFileLocation.getText());
-        
-        String fileLocation = txtFileLocation.getText();
-        
-        if(fileLocation.endsWith("mp4") || fileLocation.endsWith("mpeg4"))
-        {
-            model.addMovie(m);
-        
-            boolean genre1Empty = genre1.getSelectionModel().isEmpty();
+    private void clickSave(ActionEvent event) {
+        if (movieTitles.contains(txtMovieTitle.getText())) {
+            System.out.println("Hey, this film is already saved. Check it!");
+        } else {
+            Movie m = new Movie();
+            
+            m.setName(txtMovieTitle.getText());
+            m.setPersonalRating(txtPersonalRating.getText());
+            m.setIMDBRating(txtImdbRating.getText());
+            m.setFilelink(txtFileLocation.getText());
 
-            if(genre1Empty != true)
-            {
-                String genre1Value = genre1.getValue().getName();
-                model.matchMovie(genre1Value);
+            String fileLocation = txtFileLocation.getText();
+
+            if (fileLocation.endsWith("mp4") || fileLocation.endsWith("mpeg4")) {
+                model.addMovie(m);
+
+                boolean genre1Empty = genre1.getSelectionModel().isEmpty();
+
+                if (genre1Empty != true) {
+                    String genre1Value = genre1.getValue().getName();
+                    model.matchMovie(genre1Value);
+                }
+
+                boolean genre2Empty = genre2.getSelectionModel().isEmpty();
+
+                if (genre2Empty != true) {
+                    String genre2Value = genre2.getValue().getName();
+                    model.matchMovie(genre2Value);
+                }
+
+                boolean genre3Empty = genre3.getSelectionModel().isEmpty();
+
+                if (genre3Empty != true) {
+                    String genre3Value = genre3.getValue().getName();
+                    model.matchMovie(genre3Value);
+                }
+
+                boolean genre4Empty = genre4.getSelectionModel().isEmpty();
+
+                if (genre4Empty != true) {
+                    String genre4Value = genre4.getValue().getName();
+                    model.matchMovie(genre4Value);
+                }
+
+                Stage window = (Stage) btnSave.getScene().getWindow();
+                window.close();
             }
-
-            boolean genre2Empty = genre2.getSelectionModel().isEmpty();
-
-            if(genre2Empty != true)
-            {
-                String genre2Value = genre2.getValue().getName();
-                model.matchMovie(genre2Value);
-            }
-
-            boolean genre3Empty = genre3.getSelectionModel().isEmpty();
-
-            if(genre3Empty != true)
-            {
-                String genre3Value = genre3.getValue().getName();
-                model.matchMovie(genre3Value);
-            }
-
-            boolean genre4Empty = genre4.getSelectionModel().isEmpty();
-
-            if(genre4Empty != true)
-            {
-                String genre4Value = genre4.getValue().getName();
-                model.matchMovie(genre4Value);
-            }
-
-            Stage window = (Stage) btnSave.getScene().getWindow();
-            window.close();
         }
     }
 }
