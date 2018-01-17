@@ -9,6 +9,7 @@ package examprivatemovie.BLL;
 import examprivatemovie.BE.Category;
 import examprivatemovie.BE.Movie;
 import examprivatemovie.DAL.DALManager;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -68,5 +69,15 @@ public class BLLManager {
        public void matchMovieCat(String categoryName)
        {
            dalm.matchMovieCat(categoryName);
+       }
+       
+       public String selectedMovieLastView(int movieId) throws SQLException
+       {
+           return dalm.selectedMovieLastView(movieId);
+       }
+       
+       public float selectedMoviePersRating(int movieId) throws SQLException
+       {
+           return dalm.selectedPersRating(movieId);
        }
 }

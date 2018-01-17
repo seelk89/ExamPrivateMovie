@@ -54,6 +54,8 @@ public class PlayViewController implements Initializable
         
         //System.out.println(path);
         
+        //String filmPath = new File ("C:/Users/Jesper/Desktop/NetbeansProjects/ExamPrivateMovie/SampleVideo_1280x720_2mb.mp4").getAbsolutePath();
+        
         String filmPath = new File ("C:/Users/Jesper/Desktop/NetbeansProjects/ExamPrivateMovie/SampleVideo_1280x720_2mb.mp4").getAbsolutePath();
         me = new Media(new File(filmPath).toURI().toString());
         mp = new MediaPlayer(me);

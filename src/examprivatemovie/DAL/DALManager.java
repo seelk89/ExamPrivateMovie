@@ -41,6 +41,7 @@ public class DALManager {
                 m.setName(rs.getString("name"));
                 m.setPersonalRating(rs.getString("personalRating"));
                 m.setIMDBRating(rs.getString("IMDBRating"));
+                m.setLastview(rs.getString("lastview"));
                 m.setFilelink(rs.getString("filelink"));
 
 
@@ -344,5 +345,47 @@ public class DALManager {
             Logger.getLogger(DALManager.class.getName()).log(
                     Level.SEVERE, null, ex);
         }
+    }
+    
+    public String selectedMovieLastView(int movieId) throws SQLException
+    {
+        String movieLastView = "";
+        
+        try (Connection con = cm.getConnection())
+        {            
+            //Gets the lastview date of the selected movie
+            PreparedStatement pstmt1 = con.prepareStatement ("SELECT lastview FROM Movie WHERE id = ?");
+            
+            pstmt1.setInt(1, movieId);
+            
+            ResultSet rsLastView = pstmt1.executeQuery();
+            
+            if(rsLastView.next())
+                movieLastView = rsLastView.getString(1);
+        }
+        
+        return movieLastView;
+    }
+    
+    public float selectedPersRating(int movieId) throws SQLException
+    {
+        String moviePersRating = "";
+        
+        try (Connection con = cm.getConnection())
+        {            
+            //Gets the personal rating of the selected movie
+            PreparedStatement pstmt1 = con.prepareStatement ("SELECT personalRating FROM Movie WHERE id = ?");
+            
+            pstmt1.setInt(1, movieId);
+            
+            ResultSet rsPersRating = pstmt1.executeQuery();
+            
+            if(rsPersRating.next())
+                moviePersRating = rsPersRating.getString(1);
+        }
+        
+        float floatPersRating = Float.parseFloat(moviePersRating);
+        
+        return floatPersRating;
     }
 }

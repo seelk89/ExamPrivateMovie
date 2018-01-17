@@ -9,8 +9,16 @@ package examprivatemovie.GUI;
 import examprivatemovie.BE.Category;
 import examprivatemovie.BE.Movie;
 import examprivatemovie.BLL.BLLManager;
+import java.sql.SQLException;
+import java.sql.Time;
+import java.time.Instant;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -109,9 +117,47 @@ public class MovieModel {
             LocalDateTime dateTime = LocalDateTime.now();
             String formattedDateTime = dateTime.format(formatter);
             
-            System.out.println(formattedDateTime);
+            Date date = new Date();
+            //System.out.println(date);
+            
+            Instant date2 = date.toInstant();
+            
+            //System.out.println(date2);
+            
+            Instant time = LocalDateTime.now().minusYears(2).toInstant(ZoneOffset.UTC);
+            
+            //System.out.println(time);
+            
+            boolean withinLast2Years = date2.isAfter(time);
+           
+            
             
             bllm.editDate(formattedDateTime, selectedId);
+       }
+       
+       public boolean twoYearWarning(int movieId) throws SQLException
+       {
+           String lastView = bllm.selectedMovieLastView(movieId);
+           LocalDateTime currentDateMinusTwoYears = LocalDateTime.now().minusYears(2);
+           
+           //Gets the String format of the date specified in the selected movie and converts it to LocalDateFormat
+           DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+           LocalDate lastViewDate = LocalDate.parse(lastView, formatter);
+           LocalDateTime localLastViewDate = LocalDateTime.of(lastViewDate, LocalDateTime.now().toLocalTime());
+           
+           boolean afterTwoYears = localLastViewDate.isBefore(currentDateMinusTwoYears);
+
+           return afterTwoYears;
+       }
+       
+       public String selectedMovieLastView(int movieId) throws SQLException
+       {
+            return bllm.selectedMovieLastView(movieId);
+       }    
+       
+       public float selectedMoviePersRating(int movieId) throws SQLException
+       {
+           return bllm.selectedMoviePersRating(movieId);
        }
 
        public void loadMoviesInCategory(int selectedId)

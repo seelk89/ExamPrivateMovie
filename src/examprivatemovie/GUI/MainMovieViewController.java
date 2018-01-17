@@ -11,6 +11,7 @@ import examprivatemovie.BE.Movie;
 import examprivatemovie.GUI.MovieModel;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
@@ -200,7 +201,7 @@ public class MainMovieViewController implements Initializable {
     }
 
     @FXML
-    private void clickPlayMovie(ActionEvent event) throws IOException {
+    private void clickPlayMovie(ActionEvent event) throws IOException, SQLException {
         Stage newWindow = new Stage();
 
         newWindow.initModality(Modality.APPLICATION_MODAL);
@@ -219,10 +220,20 @@ public class MainMovieViewController implements Initializable {
         int selectedMovieId = TableMovieView.getSelectionModel().getSelectedItem().getId();
         System.out.println(selectedMovieId);
         model.editDate(selectedMovieId);
-
+        
         newWindow.showAndWait();
 
         model.loadMovie();
+    }
+    
+    private void twoYearWarning() throws SQLException
+    {
+        int selectedMovieId = TableMovieView.getSelectionModel().getSelectedItem().getId();
+        
+        if(model.twoYearWarning(selectedMovieId) == true && model.selectedMoviePersRating(selectedMovieId) < 6)
+        {
+        
+        }
     }
 
     @FXML
