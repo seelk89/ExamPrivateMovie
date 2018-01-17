@@ -25,7 +25,7 @@ public class PlayViewController implements Initializable
 {
 
     /**
-     * 
+     *
      */
     @FXML
     private MediaView mediaView;
@@ -45,7 +45,7 @@ public class PlayViewController implements Initializable
     }
 
     /**
-     * 
+     *
      */
     private void play()
     {
@@ -53,14 +53,9 @@ public class PlayViewController implements Initializable
         //String path = parent.getSelectedMovie().getFilelink();
 
         //System.out.println(path);
-<<<<<<< HEAD
-        
         //String filmPath = new File ("C:/Users/Jesper/Desktop/NetbeansProjects/ExamPrivateMovie/SampleVideo_1280x720_2mb.mp4").getAbsolutePath();
-        
-        String filmPath = new File ("C:/Users/Jesper/Desktop/NetbeansProjects/ExamPrivateMovie/SampleVideo_1280x720_2mb.mp4").getAbsolutePath();
-=======
         String filmPath = new File("C:/Users/Jesper/Desktop/NetbeansProjects/ExamPrivateMovie/SampleVideo_1280x720_2mb.mp4").getAbsolutePath();
->>>>>>> 55af64cf958eb70c9b4d6257ac5a2cf2c1ef5842
+
         me = new Media(new File(filmPath).toURI().toString());
         mp = new MediaPlayer(me);
 
@@ -75,8 +70,8 @@ public class PlayViewController implements Initializable
     }
 
     /**
-     * 
-     * @param parent 
+     *
+     * @param parent
      */
     public void setParentWindowController(MainMovieViewController parent)
     {

@@ -34,10 +34,11 @@ public class MovieModel
     private ObservableList<Movie> mList = FXCollections.observableArrayList();
     private ObservableList<Category> cList = FXCollections.observableArrayList();
     private ObservableList<Movie> catmList = FXCollections.observableArrayList();
-    
+
     /**
      * get all movies from db
-     * @return 
+     *
+     * @return
      */
     public List<Movie> getAllMovies()
     {
@@ -46,20 +47,19 @@ public class MovieModel
 
     /**
      * get all categories from db
-     * @return 
+     *
+     * @return
      */
     public List<Category> getAllCategories()
     {
         return bllm.getAllCategories();
     }
 
-
-
     /**
-     * 
+     *
      * @param name
      * @param imdbRating
-     * @return 
+     * @return
      */
     public List<Movie> getAllMoviesBySearching(String name, String imdbRating)
     {
@@ -67,8 +67,8 @@ public class MovieModel
     }
 
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     public List<String> getAllMoviesByTitle()
     {
@@ -76,8 +76,8 @@ public class MovieModel
     }
 
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     public ObservableList<Movie> getMoviesList()
     {
@@ -85,8 +85,8 @@ public class MovieModel
     }
 
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     public ObservableList<Category> getCategoriesList()
     {
@@ -94,8 +94,8 @@ public class MovieModel
     }
 
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     public ObservableList<Movie> getMoviesInCategoryList()
     {
@@ -113,8 +113,8 @@ public class MovieModel
     }
 
     /**
-     * 
-     * @param m 
+     *
+     * @param m
      */
     public void addMovie(Movie m)
     {
@@ -123,8 +123,8 @@ public class MovieModel
     }
 
     /**
-     * 
-     * @param c 
+     *
+     * @param c
      */
     public void addCategory(Category c)
     {
@@ -133,8 +133,8 @@ public class MovieModel
     }
 
     /**
-     * 
-     * @param m 
+     *
+     * @param m
      */
     public void editMovie(Movie m)
     {
@@ -142,9 +142,9 @@ public class MovieModel
     }
 
     /**
-     * 
+     *
      * @param selectedMovie
-     * @param selectedMovieId 
+     * @param selectedMovieId
      */
     public void removeMovie(Movie selectedMovie, Movie selectedMovieId)
     {
@@ -153,9 +153,9 @@ public class MovieModel
     }
 
     /**
-     * 
+     *
      * @param selectedCategory
-     * @param selectedCategoryId 
+     * @param selectedCategoryId
      */
     public void removeCategory(Category selectedCategory, Category selectedCategoryId)
     {
@@ -164,7 +164,7 @@ public class MovieModel
     }
 
     /**
-     * 
+     *
      */
     public void loadMovie()
     {
@@ -173,7 +173,7 @@ public class MovieModel
     }
 
     /**
-     * 
+     *
      */
     public void loadCategory()
     {
@@ -182,109 +182,54 @@ public class MovieModel
     }
 
     /**
-     * 
+     *
      * @param selectedId
-     * @return 
+     * @return
      */
     public List<Movie> getAllMoviesInCategory(int selectedId)
     {
         return bllm.getAllMoviesInCategory(selectedId);
     }
-    
-<<<<<<< HEAD
-       public void removeMovie(Movie selectedMovie, Movie selectedMovieId)
-       {
-           bllm.removeMovieFromDb(selectedMovie, selectedMovieId);
-           catmList.remove(selectedMovie);
-       }
-       
-       public void loadMovie()
-       {
-           catmList.clear();
-           catmList.addAll(bllm.getAllMovies());
-       }
-       
-              
-       public void loadCategory()
-       {
-           cList.clear();
-           cList.addAll(bllm.getAllCategories());
-       }
-       
-       public void editDate(int selectedId)
-       {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-            LocalDateTime dateTime = LocalDateTime.now();
-            String formattedDateTime = dateTime.format(formatter);
-            
-            Date date = new Date();
-            //System.out.println(date);
-            
-            Instant date2 = date.toInstant();
-            
-            //System.out.println(date2);
-            
-            Instant time = LocalDateTime.now().minusYears(2).toInstant(ZoneOffset.UTC);
-            
-            //System.out.println(time);
-            
-            boolean withinLast2Years = date2.isAfter(time);
-           
-            
-            
-            bllm.editDate(formattedDateTime, selectedId);
-       }
-       
-       public boolean twoYearWarning(int movieId) throws SQLException
-       {
-           String lastView = bllm.selectedMovieLastView(movieId);
-           LocalDateTime currentDateMinusTwoYears = LocalDateTime.now().minusYears(2);
-           
-           //Gets the String format of the date specified in the selected movie and converts it to LocalDateFormat
-           DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-           LocalDate lastViewDate = LocalDate.parse(lastView, formatter);
-           LocalDateTime localLastViewDate = LocalDateTime.of(lastViewDate, LocalDateTime.now().toLocalTime());
-           
-           boolean afterTwoYears = localLastViewDate.isBefore(currentDateMinusTwoYears);
 
-           return afterTwoYears;
-       }
-       
-       public String selectedMovieLastView(int movieId) throws SQLException
-       {
-            return bllm.selectedMovieLastView(movieId);
-       }    
-       
-       public float selectedMoviePersRating(int movieId) throws SQLException
-       {
-           return bllm.selectedMoviePersRating(movieId);
-       }
+    public boolean twoYearWarning(int movieId) throws SQLException
+    {
+        String lastView = bllm.selectedMovieLastView(movieId);
+        LocalDateTime currentDateMinusTwoYears = LocalDateTime.now().minusYears(2);
 
-       public void loadMoviesInCategory(int selectedId)
-       {
-           catmList.clear();
-           catmList.addAll(bllm.getAllMoviesInCategory(selectedId));
+        //Gets the String format of the date specified in the selected movie and converts it to LocalDateFormat
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        LocalDate lastViewDate = LocalDate.parse(lastView, formatter);
+        LocalDateTime localLastViewDate = LocalDateTime.of(lastViewDate, LocalDateTime.now().toLocalTime());
 
-       }
-       
-       public void matchMovie(String categoryName)
-       {
-           bllm.matchMovieCat(categoryName);
-       }
-=======
+        boolean afterTwoYears = localLastViewDate.isBefore(currentDateMinusTwoYears);
+
+        return afterTwoYears;
+    }
+
+    public String selectedMovieLastView(int movieId) throws SQLException
+    {
+        return bllm.selectedMovieLastView(movieId);
+    }
+
+    public float selectedMoviePersRating(int movieId) throws SQLException
+    {
+        return bllm.selectedMoviePersRating(movieId);
+    }
+
     /**
-     * 
-     * @param selectedId 
+     *
+     * @param selectedId
      */
     public void loadMoviesInCategory(int selectedId)
     {
         catmList.clear();
         catmList.addAll(bllm.getAllMoviesInCategory(selectedId));
     }
-    
+
     /**
      * changes cats to cat, might need to change back !!!!!!!!!!
-     * @param cats 
+     *
+     * @param cats
      */
     public void loadMoviesInCategory(List<Category> cat)
     {
@@ -293,8 +238,8 @@ public class MovieModel
     }
 
     /**
-     * 
-     * @param selectedId 
+     *
+     * @param selectedId
      */
     public void editDate(int selectedId)
     {
@@ -308,12 +253,11 @@ public class MovieModel
     }
 
     /**
-     * 
-     * @param categoryName 
+     *
+     * @param categoryName
      */
     public void matchMovie(String categoryName)
     {
         bllm.matchMovieCat(categoryName);
     }
->>>>>>> 55af64cf958eb70c9b4d6257ac5a2cf2c1ef5842
 }

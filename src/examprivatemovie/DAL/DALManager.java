@@ -62,7 +62,8 @@ public class DALManager
 
     /**
      * Selects all from Category
-     * @return 
+     *
+     * @return
      */
     public List<Category> getAllCategories()
     {
@@ -102,7 +103,7 @@ public class DALManager
         try (Connection con = cm.getConnection())
         {
             PreparedStatement stmt = con.prepareStatement(
-                      " SELECT Movie.name, Movie.personalRating, Movie.imdbRating, Movie.lastview, Movie.filelink "
+                    " SELECT Movie.name, Movie.personalRating, Movie.imdbRating, Movie.lastview, Movie.filelink "
                     + " FROM ((CatMovie "
                     + " INNER JOIN Category ON CatMovie.CategoryId = Category.id) "
                     + " INNER JOIN Movie ON CatMovie.MovieId = Movie.id) "
@@ -134,7 +135,8 @@ public class DALManager
 
     /**
      * Adds an entry to Movie
-     * @param m 
+     *
+     * @param m
      */
     public void addMovieToDB(Movie m)
     {
@@ -173,7 +175,8 @@ public class DALManager
 
     /**
      * Adds a category to Category.
-     * @param c 
+     *
+     * @param c
      */
     public void addCategoryToDB(Category c)
     {
@@ -209,7 +212,8 @@ public class DALManager
 
     /**
      * edits a movie in db
-     * @param m 
+     *
+     * @param m
      */
     public void editMovieInDb(Movie m)
     {
@@ -242,8 +246,9 @@ public class DALManager
 
     /**
      * Removes selected movie from Movie and CatMovie.
+     *
      * @param selectedMovie
-     * @param selectedMovieId 
+     * @param selectedMovieId
      */
     public void removeMovieFromDb(Movie selectedMovie, Movie selectedMovieId)
     {
@@ -273,7 +278,8 @@ public class DALManager
 
     /**
      * Removes selected category from Category and CatMovie
-     * @param selectedCategory 
+     *
+     * @param selectedCategory
      */
     public void removeCategoryFromDb(Category selectedCategory)
     {
@@ -302,10 +308,12 @@ public class DALManager
     }
 
     /**
-     * Gets all Movies where name or imdbRating = whatever text is in the searchFilter
+     * Gets all Movies where name or imdbRating = whatever text is in the
+     * searchFilter
+     *
      * @param name
      * @param imdbRating
-     * @return 
+     * @return
      */
     public List<Movie> getAllMoviesBySearching(
             String name, String imdbRating)
@@ -351,7 +359,8 @@ public class DALManager
     /**
      * Gets all movies by title, why is this one here, not used !!!!!!!!!!
      * Instead look at the method beneath SAM, you can use that one.
-     * @return 
+     *
+     * @return
      */
     public List<String> getAllMoviesByTitle()
     {
@@ -378,8 +387,9 @@ public class DALManager
 
     /**
      * Edits the lastview in Movie
+     *
      * @param d
-     * @param selectedId 
+     * @param selectedId
      */
     public void editDate(String d, int selectedId)
     {
@@ -408,8 +418,9 @@ public class DALManager
     }
 
     /**
-     *  Jesper, write a description !!!!!!!
-     * @param categoryName 
+     * Jesper, write a description !!!!!!!
+     *
+     * @param categoryName
      */
     public void matchMovieCat(String categoryName)
     {
@@ -465,50 +476,50 @@ public class DALManager
                     Level.SEVERE, null, ex);
         }
     }
-<<<<<<< HEAD
-    
+
     public String selectedMovieLastView(int movieId) throws SQLException
     {
         String movieLastView = "";
-        
+
         try (Connection con = cm.getConnection())
-        {            
+        {
             //Gets the lastview date of the selected movie
-            PreparedStatement pstmt1 = con.prepareStatement ("SELECT lastview FROM Movie WHERE id = ?");
-            
+            PreparedStatement pstmt1 = con.prepareStatement("SELECT lastview FROM Movie WHERE id = ?");
+
             pstmt1.setInt(1, movieId);
-            
+
             ResultSet rsLastView = pstmt1.executeQuery();
-            
-            if(rsLastView.next())
+
+            if (rsLastView.next())
+            {
                 movieLastView = rsLastView.getString(1);
+            }
         }
-        
+
         return movieLastView;
     }
-    
+
     public float selectedPersRating(int movieId) throws SQLException
     {
         String moviePersRating = "";
-        
+
         try (Connection con = cm.getConnection())
-        {            
+        {
             //Gets the personal rating of the selected movie
-            PreparedStatement pstmt1 = con.prepareStatement ("SELECT personalRating FROM Movie WHERE id = ?");
-            
+            PreparedStatement pstmt1 = con.prepareStatement("SELECT personalRating FROM Movie WHERE id = ?");
+
             pstmt1.setInt(1, movieId);
-            
+
             ResultSet rsPersRating = pstmt1.executeQuery();
-            
-            if(rsPersRating.next())
+
+            if (rsPersRating.next())
+            {
                 moviePersRating = rsPersRating.getString(1);
+            }
         }
-        
+
         float floatPersRating = Float.parseFloat(moviePersRating);
-        
+
         return floatPersRating;
     }
-=======
-
->>>>>>> 55af64cf958eb70c9b4d6257ac5a2cf2c1ef5842
 }
