@@ -11,9 +11,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -33,10 +31,6 @@ import javafx.stage.Window;
  */
 public class AddMovieViewController implements Initializable
 {
-
-    private MainMovieViewController parent;
-    private TextField fileLocation;
-
     @FXML
     private ChoiceBox<Category> genre1;
     @FXML
@@ -45,10 +39,8 @@ public class AddMovieViewController implements Initializable
     private ChoiceBox<Category> genre3;
     @FXML
     private ChoiceBox<Category> genre4;
-
     @FXML
     private Button btnFileLocation;
-
     private Window stage;
     @FXML
     private TextField txtPersonalRating;
@@ -60,6 +52,8 @@ public class AddMovieViewController implements Initializable
     private TextField txtMovieTitle;
     @FXML
     private Button btnSave;
+    private MainMovieViewController parent;
+    private TextField fileLocation;
     MovieModel model = new MovieModel();
     List<String> movieTitles = getAllTitles();
 
@@ -112,16 +106,28 @@ public class AddMovieViewController implements Initializable
         System.out.println(movieTitles);
     }
 
+    /**
+     * 
+     * @param parent 
+     */
     public void setParentWindowController(MainMovieViewController parent)
     {
         this.parent = parent;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public List<String> getAllTitles()
     {
         return model.getAllMoviesByTitle();
     }
 
+    /**
+     * 
+     * @param event 
+     */
     @FXML
     private void clickFileLocation(ActionEvent event)
     {
@@ -138,6 +144,10 @@ public class AddMovieViewController implements Initializable
         txtFileLocation.setText(absolutePath);
     }
 
+    /**
+     * 
+     * @param event 
+     */
     @FXML
     private void clickSave(ActionEvent event)
     {

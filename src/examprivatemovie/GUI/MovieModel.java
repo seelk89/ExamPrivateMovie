@@ -24,46 +24,71 @@ public class MovieModel
     BLLManager bllm = new BLLManager();
 
     private ObservableList<Movie> mList = FXCollections.observableArrayList();
-
+    private ObservableList<Category> cList = FXCollections.observableArrayList();
+    private ObservableList<Movie> catmList = FXCollections.observableArrayList();
+    
+    /**
+     * get all movies from db
+     * @return 
+     */
     public List<Movie> getAllMovies()
     {
         return bllm.getAllMovies();
     }
 
-    private ObservableList<Category> cList = FXCollections.observableArrayList();
-
+    /**
+     * get all categories from db
+     * @return 
+     */
     public List<Category> getAllCategories()
     {
         return bllm.getAllCategories();
     }
 
-    private ObservableList<Movie> catmList = FXCollections.observableArrayList();
 
-    public List<Movie> getAllMoviesInCategory(int selectedId)
-    {
-        return bllm.getAllMoviesInCategory(selectedId);
-    }
 
+    /**
+     * 
+     * @param name
+     * @param imdbRating
+     * @return 
+     */
     public List<Movie> getAllMoviesBySearching(String name, String imdbRating)
     {
         return bllm.getAllMoviesBySearching(name, imdbRating);
     }
 
+    /**
+     * 
+     * @return 
+     */
     public List<String> getAllMoviesByTitle()
     {
         return bllm.getAllMoviesByTitle();
     }
 
+    /**
+     * 
+     * @return 
+     */
     public ObservableList<Movie> getMoviesList()
     {
         return mList;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public ObservableList<Category> getCategoriesList()
     {
         return cList;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public ObservableList<Movie> getMoviesInCategoryList()
     {
         return catmList;
@@ -79,47 +104,109 @@ public class MovieModel
         catmList.addAll(bllm.getAllMoviesBySearching(title, imdbRating));
     }
 
+    /**
+     * 
+     * @param m 
+     */
     public void addMovie(Movie m)
     {
         bllm.addMovieToDb(m);
         mList.addAll(bllm.getAllMovies());
     }
 
+    /**
+     * 
+     * @param c 
+     */
     public void addCategory(Category c)
     {
         bllm.addCategoryToDb(c);
         cList.addAll(bllm.getAllCategories()); //maybe wrong list
     }
 
+    /**
+     * 
+     * @param m 
+     */
     public void editMovie(Movie m)
     {
         bllm.editMovieInDb(m);
     }
 
+    /**
+     * 
+     * @param selectedMovie
+     * @param selectedMovieId 
+     */
     public void removeMovie(Movie selectedMovie, Movie selectedMovieId)
     {
         bllm.removeMovieFromDb(selectedMovie, selectedMovieId);
         catmList.remove(selectedMovie);
     }
 
+    /**
+     * 
+     * @param selectedCategory
+     * @param selectedCategoryId 
+     */
     public void removeCategory(Category selectedCategory, Category selectedCategoryId)
     {
         bllm.removeCategoryFromDb(selectedCategory);
         cList.remove(selectedCategory);
     }
 
+    /**
+     * 
+     */
     public void loadMovie()
     {
         catmList.clear();
         catmList.addAll(bllm.getAllMovies());
     }
 
+    /**
+     * 
+     */
     public void loadCategory()
     {
         cList.clear();
         cList.addAll(bllm.getAllCategories());
     }
 
+    /**
+     * 
+     * @param selectedId
+     * @return 
+     */
+    public List<Movie> getAllMoviesInCategory(int selectedId)
+    {
+        return bllm.getAllMoviesInCategory(selectedId);
+    }
+    
+    /**
+     * 
+     * @param selectedId 
+     */
+    public void loadMoviesInCategory(int selectedId)
+    {
+        catmList.clear();
+        catmList.addAll(bllm.getAllMoviesInCategory(selectedId));
+    }
+    
+    /**
+     * changes cats to cat, might need to change back !!!!!!!!!!
+     * @param cats 
+     */
+    public void loadMoviesInCategory(List<Category> cat)
+    {
+        catmList.setAll(bllm.getAllMoviesInCategory(cat));
+        // if (catmList.contains(delete all movies once. then you only have 1 of the dupes. perfect result
+    }
+
+    /**
+     * 
+     * @param selectedId 
+     */
     public void editDate(int selectedId)
     {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
@@ -131,19 +218,10 @@ public class MovieModel
         bllm.editDate(formattedDateTime, selectedId);
     }
 
-    public void loadMoviesInCategory(int selectedId)
-    {
-        catmList.clear();
-        catmList.addAll(bllm.getAllMoviesInCategory(selectedId));
-
-    }
-
-    public void loadMoviesInCategory(List<Category> cats)
-    {
-        catmList.clear();
-        catmList.addAll(bllm.getAllMoviesInCategory(cats));
-    }
-
+    /**
+     * 
+     * @param categoryName 
+     */
     public void matchMovie(String categoryName)
     {
         bllm.matchMovieCat(categoryName);

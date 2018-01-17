@@ -5,7 +5,6 @@
  */
 package examprivatemovie.DAL;
 
-import com.microsoft.sqlserver.jdbc.SQLServerException;
 import examprivatemovie.BE.Category;
 import examprivatemovie.BE.Movie;
 import java.sql.Connection;
@@ -25,6 +24,9 @@ import java.util.logging.Logger;
 public class DALManager
 {
 
+    /**
+     * Selects all from Movie.
+     */
     private ConnectionManager cm = new ConnectionManager();
 
     public List<Movie> getAllMovies()
@@ -57,6 +59,10 @@ public class DALManager
         return allMovies;
     }
 
+    /**
+     * Selects all from Category
+     * @return 
+     */
     public List<Category> getAllCategories()
     {
         System.out.println("Getting all Categories.");
@@ -86,21 +92,20 @@ public class DALManager
 
     /**
      *
-     * Shows all movies in the selected category
+     * Gets all movies from selected Category.Id
      */
     public List<Movie> getAllMoviesInCategory(int selectedId)
     {
-        System.out.println("You clicked on a category");
         List<Movie> allMoviesInCategory = new ArrayList();
 
         try (Connection con = cm.getConnection())
         {
-            PreparedStatement stmt = con.prepareStatement(" SELECT Movie.name, Movie.personalRating, Movie.imdbRating, Movie.lastview, Movie.filelink "
+            PreparedStatement stmt = con.prepareStatement(
+                      " SELECT Movie.name, Movie.personalRating, Movie.imdbRating, Movie.lastview, Movie.filelink "
                     + " FROM ((CatMovie "
                     + " INNER JOIN Category ON CatMovie.CategoryId = Category.id) "
                     + " INNER JOIN Movie ON CatMovie.MovieId = Movie.id) "
                     + " WHERE Category.Id = ? "
-            //maybe repeat above 3 times?
             );
 
             stmt.setInt(1, selectedId);
@@ -126,6 +131,10 @@ public class DALManager
         return allMoviesInCategory;
     }
 
+    /**
+     * Adds an entry to Movie
+     * @param m 
+     */
     public void addMovieToDB(Movie m)
     {
         try (Connection con = cm.getConnection())
@@ -161,6 +170,10 @@ public class DALManager
         }
     }
 
+    /**
+     * Adds a category to Category.
+     * @param c 
+     */
     public void addCategoryToDB(Category c)
     {
         try (Connection con = cm.getConnection())
@@ -193,6 +206,10 @@ public class DALManager
         }
     }
 
+    /**
+     * edits a movie in db
+     * @param m 
+     */
     public void editMovieInDb(Movie m)
     {
         try (Connection con = cm.getConnection())
@@ -222,6 +239,11 @@ public class DALManager
         }
     }
 
+    /**
+     * Removes selected movie from Movie and CatMovie.
+     * @param selectedMovie
+     * @param selectedMovieId 
+     */
     public void removeMovieFromDb(Movie selectedMovie, Movie selectedMovieId)
     {
         //also delete from CatMovie where id=?
@@ -248,6 +270,10 @@ public class DALManager
         }
     }
 
+    /**
+     * Removes selected category from Category and CatMovie
+     * @param selectedCategory 
+     */
     public void removeCategoryFromDb(Category selectedCategory)
     {
         //also delete from CatMovie where id=?
@@ -274,6 +300,12 @@ public class DALManager
         }
     }
 
+    /**
+     * Gets all Movies where name or imdbRating = whatever text is in the searchFilter
+     * @param name
+     * @param imdbRating
+     * @return 
+     */
     public List<Movie> getAllMoviesBySearching(
             String name, String imdbRating)
     {
@@ -315,6 +347,11 @@ public class DALManager
 
     }
 
+    /**
+     * Gets all movies by title, why is this one here, not used !!!!!!!!!!
+     * Instead look at the method beneath SAM, you can use that one.
+     * @return 
+     */
     public List<String> getAllMoviesByTitle()
     {
         List<String> allMoviesByTitle = new ArrayList();
@@ -338,6 +375,11 @@ public class DALManager
         return allMoviesByTitle;
     }
 
+    /**
+     * Edits the lastview in Movie
+     * @param d
+     * @param selectedId 
+     */
     public void editDate(String d, int selectedId)
     {
         try (Connection con = cm.getConnection())
@@ -364,6 +406,10 @@ public class DALManager
         }
     }
 
+    /**
+     *  Jesper, write a description !!!!!!!
+     * @param categoryName 
+     */
     public void matchMovieCat(String categoryName)
     {
         try (Connection con = cm.getConnection())

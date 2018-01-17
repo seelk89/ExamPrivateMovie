@@ -11,15 +11,12 @@ import examprivatemovie.BE.Movie;
 import examprivatemovie.GUI.MovieModel;
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDateTime;
-import java.time.Month;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.ResourceBundle;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -28,24 +25,17 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellEditEvent;
-import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.input.InputMethodEvent;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 
 /**
  *
@@ -81,14 +71,16 @@ public class MainMovieViewController implements Initializable
     private Button btnRemove;
     @FXML
     private Button btnPlay;
-    private String lastFocus = "";
-    MovieModel model = new MovieModel();
     @FXML
     private Button btnAddCategory;
     @FXML
     private Button btnRemoveCategory;
     @FXML
     private TextField txtAddCategory;
+
+    MovieModel model = new MovieModel();
+    private ObservableList<Category> masterData = FXCollections.observableArrayList();
+    private TableView<Category> myTable = new TableView<>(masterData);
 
     @Override
     public void initialize(URL url, ResourceBundle rb)
@@ -113,15 +105,17 @@ public class MainMovieViewController implements Initializable
         TableCategoryView.setItems(model.getCategoriesList());
         TableCategoryView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
-        listeners();
-    }
+        search();
 
+    }
+    
+    //get Category.id, get Catmovie.id get Movie.id, only add Movie from CatMovie.id with all chosen Category.id
+    
     /**
      * Gets selected Movie from list
      */
     public Movie getSelectedMovie()
     {
-
         return TableMovieView.getSelectionModel().getSelectedItem();
     }
 
@@ -133,11 +127,18 @@ public class MainMovieViewController implements Initializable
         return TableCategoryView.getSelectionModel().getSelectedItem();
     }
 
+    /**
+     * etiher this one or the one above needs to be deleted by Anni !!!!!!!
+     * @return 
+     */
     public Category getSelectedCategoryId()
     {
         return TableCategoryView.getSelectionModel().getSelectedItem();
     }
 
+    /**
+     * 
+     */
     private void editingCells()
     {
         TableMovieView.setEditable(true);
@@ -153,6 +154,11 @@ public class MainMovieViewController implements Initializable
         //model.editMovie(m);
     }
 
+    /**
+     * opens a new window and loads the list of movies when the window is closed
+     * @param event
+     * @throws IOException 
+     */
     @FXML
     private void clickAddMovie(ActionEvent event) throws IOException
     {
@@ -176,6 +182,10 @@ public class MainMovieViewController implements Initializable
         model.loadMovie();
     }
 
+    /**
+     * Removes a movie from db Movie and catmovie!!!!!!!!
+     * @param event 
+     */
     @FXML
     private void clickRemoveMovie(ActionEvent event)
     {
@@ -185,6 +195,11 @@ public class MainMovieViewController implements Initializable
         model.removeMovie(selectedMovie, selectedMovieId);
     }
 
+    /**
+     * Plays movie in out own mediaplayer and updates lastview.
+     * @param event
+     * @throws IOException 
+     */
     @FXML
     private void clickPlayMovie(ActionEvent event) throws IOException
     {
@@ -212,12 +227,20 @@ public class MainMovieViewController implements Initializable
         model.loadMovie();
     }
 
+    /**
+     * doesn't really do anything, btnEdit might need to be deleted !!!!!!!!!
+     * @param event 
+     */
     @FXML
     private void clickEditMovie(ActionEvent event)
     {
 
     }
 
+    /**
+     * Adds a category by getting the text, adding and loading categories.
+     * @param event 
+     */
     @FXML
     private void clickAddCategory(ActionEvent event)
     {
@@ -228,6 +251,10 @@ public class MainMovieViewController implements Initializable
         model.loadCategory();
     }
 
+    /**
+     * Removes the selected category and loads the list !!!!!!!
+     * @param event 
+     */
     @FXML
     private void clickRemoveCategory(ActionEvent event)
     {
@@ -237,9 +264,11 @@ public class MainMovieViewController implements Initializable
         model.loadCategory();
     }
 
-    private void listeners()
+    /**
+     * Uses txtSearchFilter to search for movies by name or imdb rating.
+     */
+    private void search()
     {
-
         txtSearchFilter.textProperty().addListener(new ChangeListener<String>()
         {
             @Override
@@ -248,38 +277,19 @@ public class MainMovieViewController implements Initializable
                 model.search(newValue, newValue);
             }
         });
-
-        TableMovieView.focusedProperty().addListener(
-                new ChangeListener<Boolean>()
-        {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue)
-            {
-                lastFocus = "Movie";
-            }
-        });
-
-        TableCategoryView.focusedProperty().addListener(
-                new ChangeListener<Boolean>()
-        {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue)
-            {
-                lastFocus = "Category";
-            }
-        });
-
-        TableCategoryView.getSelectionModel().selectedItemProperty().addListener(
-                new ChangeListener<Category>()
-        {
-            @Override
-            public void changed(ObservableValue<? extends Category> observable, Category oldValue, Category newValue)
-            {
-                List<Category> cats = TableCategoryView.getSelectionModel().getSelectedItems();
-
-                model.loadMoviesInCategory(cats);
-                lastFocus = "Category";
-            }
-        });
     }
+
+    /**
+     * Makes it possible to select and deselect multiple items in TableCategoryView
+     * @param event 
+     */
+    @FXML
+    private void clkSelectedItems(MouseEvent event)
+    {
+        List<Category> cat = TableCategoryView.getSelectionModel().getSelectedItems();
+
+                System.out.println(cat);
+                model.loadMoviesInCategory(cat);
+    }
+
 }

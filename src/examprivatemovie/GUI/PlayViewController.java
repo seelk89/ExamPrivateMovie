@@ -5,17 +5,13 @@
  */
 package examprivatemovie.GUI;
 
-import examprivatemovie.BE.Category;
-import examprivatemovie.BE.Movie;
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
@@ -28,6 +24,9 @@ import javafx.scene.media.MediaView;
 public class PlayViewController implements Initializable
 {
 
+    /**
+     * 
+     */
     @FXML
     private MediaView mediaView;
 
@@ -45,6 +44,9 @@ public class PlayViewController implements Initializable
         play();
     }
 
+    /**
+     * 
+     */
     private void play()
     {
         //this.parent = parent;
@@ -65,6 +67,10 @@ public class PlayViewController implements Initializable
         height.bind(Bindings.selectDouble(mediaView.sceneProperty(), "height"));
     }
 
+    /**
+     * 
+     * @param parent 
+     */
     public void setParentWindowController(MainMovieViewController parent)
     {
         this.parent = parent;
