@@ -5,22 +5,17 @@
  */
 package examprivatemovie.GUI;
 
-import examprivatemovie.BE.Category;
-import examprivatemovie.BE.Movie;
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 
- 
 /**
  * FXML Controller class
  *
@@ -29,14 +24,16 @@ import javafx.scene.media.MediaView;
 public class PlayViewController implements Initializable
 {
 
+    /**
+     * 
+     */
     @FXML
     private MediaView mediaView;
-    
+
     private MainMovieViewController parent;
-    
+
     private MediaPlayer mp;
     private Media me;
-    
 
     /**
      * Initializes the controller class.
@@ -45,31 +42,42 @@ public class PlayViewController implements Initializable
     public void initialize(URL url, ResourceBundle rb)
     {
         play();
-    } 
-    
+    }
+
+    /**
+     * 
+     */
     private void play()
     {
         //this.parent = parent;
         //String path = parent.getSelectedMovie().getFilelink();
-        
+
         //System.out.println(path);
+<<<<<<< HEAD
         
         //String filmPath = new File ("C:/Users/Jesper/Desktop/NetbeansProjects/ExamPrivateMovie/SampleVideo_1280x720_2mb.mp4").getAbsolutePath();
         
         String filmPath = new File ("C:/Users/Jesper/Desktop/NetbeansProjects/ExamPrivateMovie/SampleVideo_1280x720_2mb.mp4").getAbsolutePath();
+=======
+        String filmPath = new File("C:/Users/Jesper/Desktop/NetbeansProjects/ExamPrivateMovie/SampleVideo_1280x720_2mb.mp4").getAbsolutePath();
+>>>>>>> 55af64cf958eb70c9b4d6257ac5a2cf2c1ef5842
         me = new Media(new File(filmPath).toURI().toString());
         mp = new MediaPlayer(me);
-        
+
         mediaView.setMediaPlayer(mp);
         mediaView.setMediaPlayer(mp);
         mp.setAutoPlay(true);
-        
+
         DoubleProperty width = mediaView.fitWidthProperty();
         DoubleProperty height = mediaView.fitHeightProperty();
         width.bind(Bindings.selectDouble(mediaView.sceneProperty(), "width"));
         height.bind(Bindings.selectDouble(mediaView.sceneProperty(), "height"));
     }
-    
+
+    /**
+     * 
+     * @param parent 
+     */
     public void setParentWindowController(MainMovieViewController parent)
     {
         this.parent = parent;
