@@ -20,7 +20,6 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 
- 
 /**
  * FXML Controller class
  *
@@ -31,12 +30,11 @@ public class PlayViewController implements Initializable
 
     @FXML
     private MediaView mediaView;
-    
+
     private MainMovieViewController parent;
-    
+
     private MediaPlayer mp;
     private Media me;
-    
 
     /**
      * Initializes the controller class.
@@ -45,29 +43,28 @@ public class PlayViewController implements Initializable
     public void initialize(URL url, ResourceBundle rb)
     {
         play();
-    } 
-    
+    }
+
     private void play()
     {
         //this.parent = parent;
         //String path = parent.getSelectedMovie().getFilelink();
-        
+
         //System.out.println(path);
-        
-        String filmPath = new File ("C:/Users/Jesper/Desktop/NetbeansProjects/ExamPrivateMovie/SampleVideo_1280x720_2mb.mp4").getAbsolutePath();
+        String filmPath = new File("C:/Users/Jesper/Desktop/NetbeansProjects/ExamPrivateMovie/SampleVideo_1280x720_2mb.mp4").getAbsolutePath();
         me = new Media(new File(filmPath).toURI().toString());
         mp = new MediaPlayer(me);
-        
+
         mediaView.setMediaPlayer(mp);
         mediaView.setMediaPlayer(mp);
         mp.setAutoPlay(true);
-        
+
         DoubleProperty width = mediaView.fitWidthProperty();
         DoubleProperty height = mediaView.fitHeightProperty();
         width.bind(Bindings.selectDouble(mediaView.sceneProperty(), "width"));
         height.bind(Bindings.selectDouble(mediaView.sceneProperty(), "height"));
     }
-    
+
     public void setParentWindowController(MainMovieViewController parent)
     {
         this.parent = parent;

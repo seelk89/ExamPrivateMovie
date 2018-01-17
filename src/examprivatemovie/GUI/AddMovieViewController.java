@@ -31,7 +31,8 @@ import javafx.stage.Window;
  *
  * @author Jesper
  */
-public class AddMovieViewController implements Initializable {
+public class AddMovieViewController implements Initializable
+{
 
     private MainMovieViewController parent;
     private TextField fileLocation;
@@ -66,24 +67,31 @@ public class AddMovieViewController implements Initializable {
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize(URL url, ResourceBundle rb)
+    {
         int maxChar = 3;
 
         //restricts txtPersonalRating to decimal numbers and limits to 3 characters
-        txtPersonalRating.textProperty().addListener(new ChangeListener<String>() {
+        txtPersonalRating.textProperty().addListener(new ChangeListener<String>()
+        {
             @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                if (!newValue.matches("\\d{0,9}([\\.]\\d{0,9})?") || newValue.length() > maxChar) {
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue)
+            {
+                if (!newValue.matches("\\d{0,9}([\\.]\\d{0,9})?") || newValue.length() > maxChar)
+                {
                     txtPersonalRating.setText(oldValue);
                 }
             }
         });
 
         //restricts txtImdbRating to decimal numbers and limits to 3 characters
-        txtImdbRating.textProperty().addListener(new ChangeListener<String>() {
+        txtImdbRating.textProperty().addListener(new ChangeListener<String>()
+        {
             @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                if (!newValue.matches("\\d{0,9}([\\.]\\d{0,9})?") || newValue.length() > maxChar) {
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue)
+            {
+                if (!newValue.matches("\\d{0,9}([\\.]\\d{0,9})?") || newValue.length() > maxChar)
+                {
                     txtPersonalRating.setText(oldValue);
                 }
             }
@@ -104,22 +112,26 @@ public class AddMovieViewController implements Initializable {
         System.out.println(movieTitles);
     }
 
-    public void setParentWindowController(MainMovieViewController parent) {
+    public void setParentWindowController(MainMovieViewController parent)
+    {
         this.parent = parent;
     }
 
-    public List<String> getAllTitles() {
+    public List<String> getAllTitles()
+    {
         return model.getAllMoviesByTitle();
     }
 
     @FXML
-    private void clickFileLocation(ActionEvent event) {
+    private void clickFileLocation(ActionEvent event)
+    {
         String absolutePath = null;
 
         final FileChooser fileChooser = new FileChooser();
 
         File song = fileChooser.showOpenDialog(stage);
-        if (song != null) {
+        if (song != null)
+        {
             absolutePath = song.getAbsolutePath();
         }
 
@@ -127,12 +139,15 @@ public class AddMovieViewController implements Initializable {
     }
 
     @FXML
-    private void clickSave(ActionEvent event) {
-        if (movieTitles.contains(txtMovieTitle.getText())) {
+    private void clickSave(ActionEvent event)
+    {
+        if (movieTitles.contains(txtMovieTitle.getText()))
+        {
             System.out.println("Hey, this film is already saved. Check it!");
-        } else {
+        } else
+        {
             Movie m = new Movie();
-            
+
             m.setName(txtMovieTitle.getText());
             m.setPersonalRating(txtPersonalRating.getText());
             m.setIMDBRating(txtImdbRating.getText());
@@ -140,33 +155,38 @@ public class AddMovieViewController implements Initializable {
 
             String fileLocation = txtFileLocation.getText();
 
-            if (fileLocation.endsWith("mp4") || fileLocation.endsWith("mpeg4")) {
+            if (fileLocation.endsWith("mp4") || fileLocation.endsWith("mpeg4"))
+            {
                 model.addMovie(m);
 
                 boolean genre1Empty = genre1.getSelectionModel().isEmpty();
 
-                if (genre1Empty != true) {
+                if (genre1Empty != true)
+                {
                     String genre1Value = genre1.getValue().getName();
                     model.matchMovie(genre1Value);
                 }
 
                 boolean genre2Empty = genre2.getSelectionModel().isEmpty();
 
-                if (genre2Empty != true) {
+                if (genre2Empty != true)
+                {
                     String genre2Value = genre2.getValue().getName();
                     model.matchMovie(genre2Value);
                 }
 
                 boolean genre3Empty = genre3.getSelectionModel().isEmpty();
 
-                if (genre3Empty != true) {
+                if (genre3Empty != true)
+                {
                     String genre3Value = genre3.getValue().getName();
                     model.matchMovie(genre3Value);
                 }
 
                 boolean genre4Empty = genre4.getSelectionModel().isEmpty();
 
-                if (genre4Empty != true) {
+                if (genre4Empty != true)
+                {
                     String genre4Value = genre4.getValue().getName();
                     model.matchMovie(genre4Value);
                 }

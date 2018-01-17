@@ -15,71 +15,88 @@ import java.util.List;
  *
  * @author Anni
  */
-public class BLLManager {
+public class BLLManager
+{
 
     DALManager dalm = new DALManager();
 
-    public List<Movie> getAllMovies() {
+    public List<Movie> getAllMovies()
+    {
         return dalm.getAllMovies();
     }
 
-    public List<Category> getAllCategories() {
+    public List<Category> getAllCategories()
+    {
         return dalm.getAllCategories();
     }
 
-    public List<Movie> getAllMoviesInCategory(int selectedId) {
+    public List<Movie> getAllMoviesInCategory(int selectedId)
+    {
         return dalm.getAllMoviesInCategory(selectedId);
     }
 
-    public List<Movie> getAllMoviesInCategory(List<Category> cats) {
+    public List<Movie> getAllMoviesInCategory(List<Category> cats)
+    {
         List<Movie> movs = new ArrayList<>();
 
-        if (cats.size() > 0) {
+        if (cats.size() > 0)
+        {
 
-            for (int i = 0; i < cats.size(); i++) {
+            for (int i = 0; i < cats.size(); i++)
+            {
                 Category catty = cats.get(i);
                 movs.addAll(dalm.getAllMoviesInCategory(catty.getId()));
             }
-        } else {
+        } else
+        {
             return dalm.getAllMovies();
         }
 
         return movs;
     }
 
-    public List<Movie> getAllMoviesBySearching(String name, String imdbRating) {
+    public List<Movie> getAllMoviesBySearching(String name, String imdbRating)
+    {
         return dalm.getAllMoviesBySearching(name, imdbRating);
     }
 
-    public List<String> getAllMoviesByTitle() {
+    public List<String> getAllMoviesByTitle()
+    {
         return dalm.getAllMoviesByTitle();
     }
 
-    public void addMovieToDb(Movie m) {
+    public void addMovieToDb(Movie m)
+    {
         dalm.addMovieToDB(m);
     }
 
-    public void addCategoryToDb(Category c) {
+    public void addCategoryToDb(Category c)
+    {
         dalm.addCategoryToDB(c);
     }
 
-    public void editMovieInDb(Movie m) {
+    public void editMovieInDb(Movie m)
+    {
         dalm.editMovieInDb(m);
     }
 
-    public void removeMovieFromDb(Movie selectedMovie, Movie selectedMovieId) {
+    public void removeMovieFromDb(Movie selectedMovie, Movie selectedMovieId)
+    {
         dalm.removeMovieFromDb(selectedMovie, selectedMovieId);
     }
 
-    public void removeCategoryFromDb(Category selectedCategory) {
+    public void removeCategoryFromDb(Category selectedCategory)
+    {
         dalm.removeCategoryFromDb(selectedCategory);
     }
 
-    public void editDate(String d, int selectedId) {
+    public void editDate(String d, int selectedId)
+    {
         dalm.editDate(d, selectedId);
     }
 
-    public void matchMovieCat(String categoryName) {
+    public void matchMovieCat(String categoryName)
+    {
         dalm.matchMovieCat(categoryName);
     }
 
