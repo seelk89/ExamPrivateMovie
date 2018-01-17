@@ -5,6 +5,7 @@
  */
 package examprivatemovie.GUI;
 
+import examprivatemovie.BE.Movie;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -12,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -35,8 +37,9 @@ public class DeleteViewController implements Initializable
      */
     @Override
     public void initialize(URL url, ResourceBundle rb)
-    {
-        // TODO
+    {   
+        //String movieName = parent.getSelectedMovie().getName();
+        //labelMovieName.setText(movieName);
     }    
 
     public void setParentWindowController(MainMovieViewController parent)
@@ -47,11 +50,23 @@ public class DeleteViewController implements Initializable
     @FXML
     private void clickAccept(ActionEvent event)
     {
+        this.parent = parent;
+        MovieModel model = new MovieModel();
+        
+        Movie selectedMovieName = parent.getSelectedMovie();
+        Movie selectedId = parent.getSelectedMovie();
+
+        model.removeMovie(selectedMovieName, selectedId);
+
+        Stage window = (Stage) btnCancel.getScene().getWindow();
+        window.close();
     }
 
     @FXML
     private void clickCancel(ActionEvent event)
     {
+        Stage window = (Stage) btnCancel.getScene().getWindow();
+        window.close();
     }
     
 }

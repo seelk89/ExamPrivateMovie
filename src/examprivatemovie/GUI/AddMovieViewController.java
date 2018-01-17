@@ -64,6 +64,7 @@ public class AddMovieViewController implements Initializable
     public void initialize(URL url, ResourceBundle rb)
     {
         int maxChar = 3;
+        float maxGrade = 10;
 
         //restricts txtPersonalRating to decimal numbers and limits to 3 characters
         txtPersonalRating.textProperty().addListener(new ChangeListener<String>()
@@ -71,7 +72,8 @@ public class AddMovieViewController implements Initializable
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue)
             {
-                if (!newValue.matches("\\d{0,9}([\\.]\\d{0,9})?") || newValue.length() > maxChar)
+                float newValueFloat = Float.parseFloat(newValue);
+                if (!newValue.matches("\\d{0,9}([\\.]\\d{0,9})?") || newValue.length() > maxChar || newValueFloat > maxGrade)
                 {
                     txtPersonalRating.setText(oldValue);
                 }

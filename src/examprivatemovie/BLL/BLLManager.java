@@ -203,4 +203,9 @@ public class BLLManager
     {
         dalm.matchMovieCat(categoryName);
     }
+    
+    public int movieCount()
+    {
+        return dalm.getMovieCount();
+    }
 }

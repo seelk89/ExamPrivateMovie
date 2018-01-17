@@ -17,6 +17,8 @@ import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -110,7 +112,17 @@ public class MainMovieViewController implements Initializable
         TableCategoryView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         search();
-
+        
+        try
+        {
+            twoYearWarning();
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(MainMovieViewController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex)
+        {
+            Logger.getLogger(MainMovieViewController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     //get Category.id, get Catmovie.id get Movie.id, only add Movie from CatMovie.id with all chosen Category.id
@@ -166,7 +178,6 @@ public class MainMovieViewController implements Initializable
     @FXML
     private void clickAddMovie(ActionEvent event) throws IOException
     {
-
         Stage newWindow = new Stage();
 
         newWindow.initModality(Modality.APPLICATION_MODAL);
@@ -193,7 +204,6 @@ public class MainMovieViewController implements Initializable
     @FXML
     private void clickRemoveMovie(ActionEvent event)
     {
-
         Movie selectedMovie = getSelectedMovie();
         Movie selectedMovieId = getSelectedMovie();
         model.removeMovie(selectedMovie, selectedMovieId);
@@ -231,14 +241,39 @@ public class MainMovieViewController implements Initializable
         model.loadMovie();
     }
     
-    private void twoYearWarning() throws SQLException
+    private void twoYearWarning() throws SQLException, IOException
     {
-        int selectedMovieId = TableMovieView.getSelectionModel().getSelectedItem().getId();
-        
-        if(model.twoYearWarning(selectedMovieId) == true && model.selectedMoviePersRating(selectedMovieId) < 6)
+       
+        for (int i = 0; i < model.movieCount(); i++)
         {
-        
+            TableMovieView.getSelectionModel().select(i);
+            
+            int selectedMovieId = TableMovieView.getSelectionModel().getSelectedItem().getId();
+            
+            if(model.twoYearWarning(selectedMovieId) == false && model.selectedMoviePersRating(selectedMovieId) < 6)
+            {
+                Stage newWindow = new Stage();
+
+                newWindow.initModality(Modality.APPLICATION_MODAL);
+
+                FXMLLoader fxLoader = new FXMLLoader(getClass().getResource("DeleteView.fxml"));
+
+                Parent root = fxLoader.load();
+
+                DeleteViewController controller = fxLoader.getController();
+                controller.setParentWindowController(this);
+
+                Scene scene = new Scene(root);
+                newWindow.setTitle("Delete Movie");
+                newWindow.setScene(scene);
+                newWindow.showAndWait();   
+            } else
+            {
+            
+            }
         }
+        
+        model.loadMovie();
     }
 
     /**

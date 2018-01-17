@@ -191,6 +191,11 @@ public class MovieModel
         return bllm.getAllMoviesInCategory(selectedId);
     }
 
+    /**
+     * Converts the lastView to a LocalDateTime object so that it can
+     * be compared to the current date, to see if it was last played two years ago.
+     *
+     */
     public boolean twoYearWarning(int movieId) throws SQLException
     {
         String lastView = bllm.selectedMovieLastView(movieId);
@@ -238,7 +243,8 @@ public class MovieModel
     }
 
     /**
-     *
+     * Set the current date as the lastView date of the movie being played
+     * 
      * @param selectedId
      */
     public void editDate(int selectedId)
@@ -259,5 +265,10 @@ public class MovieModel
     public void matchMovie(String categoryName)
     {
         bllm.matchMovieCat(categoryName);
+    }
+    
+    public int movieCount()
+    {
+        return bllm.movieCount();
     }
 }

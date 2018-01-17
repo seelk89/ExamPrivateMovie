@@ -59,6 +59,30 @@ public class DALManager
         }
         return allMovies;
     }
+    
+    /**
+     * Counts all movies.
+     */
+    public int getMovieCount()
+    {
+        int count = 0;
+        
+        try (Connection con = cm.getConnection())
+        { 
+            PreparedStatement stmt = con.prepareStatement("SELECT * FROM Movie");
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next())
+            {
+                count = count + 1;
+            }
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(DALManager.class.getName()).log(
+                    Level.SEVERE, null, ex);
+        }
+        return count;
+    }
 
     /**
      * Selects all from Category
@@ -418,8 +442,8 @@ public class DALManager
     }
 
     /**
-     * Jesper, write a description !!!!!!!
-     *
+     * Combines the id of the movie and the selected category
+     * in the CatMovie table in the database.
      * @param categoryName
      */
     public void matchMovieCat(String categoryName)
@@ -477,6 +501,10 @@ public class DALManager
         }
     }
 
+    /**
+     * Gets the lastViewed date of selected movie.
+     *
+     */
     public String selectedMovieLastView(int movieId) throws SQLException
     {
         String movieLastView = "";
@@ -498,7 +526,11 @@ public class DALManager
 
         return movieLastView;
     }
-
+    
+    /**
+     * Gets the selected movies personalRating and converts it to a float.
+     *
+     */
     public float selectedPersRating(int movieId) throws SQLException
     {
         String moviePersRating = "";
