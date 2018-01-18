@@ -21,6 +21,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -49,8 +51,7 @@ import javafx.stage.Stage;
  *
  * @author Jesper
  */
-public class MainMovieViewController implements Initializable
-{
+public class MainMovieViewController implements Initializable {
 
     private Label label;
     @FXML
@@ -91,8 +92,7 @@ public class MainMovieViewController implements Initializable
     private TableView<Category> myTable = new TableView<>(masterData);
 
     @Override
-    public void initialize(URL url, ResourceBundle rb)
-    {
+    public void initialize(URL url, ResourceBundle rb) {
 
         editingCells(); //is it supposed to be above the cells?
         columnCategory.setCellValueFactory(
@@ -114,59 +114,55 @@ public class MainMovieViewController implements Initializable
         TableCategoryView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         search();
-        
-        try
-        {
+
+        try {
             twoYearWarning();
-        } catch (SQLException ex)
-        {
+        } catch (SQLException ex) {
             Logger.getLogger(MainMovieViewController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex)
-        {
+        } catch (IOException ex) {
             Logger.getLogger(MainMovieViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     //get Category.id, get Catmovie.id get Movie.id, only add Movie from CatMovie.id with all chosen Category.id
-    
     /**
      * Gets selected Movie from list
      */
-    public Movie getSelectedMovie()
-    {
+    public Movie getSelectedMovie() {
         return TableMovieView.getSelectionModel().getSelectedItem();
     }
 
     /**
      * Gets selected Category from left list
      */
-    public Category getSelectedCategory()
-    {
+    public Category getSelectedCategory() {
         return TableCategoryView.getSelectionModel().getSelectedItem();
     }
 
     /**
      * etiher this one or the one above needs to be deleted by Anni !!!!!!!
-     * @return 
+     *
+     * @return
      */
-    public Category getSelectedCategoryId()
-    {
+    public Category getSelectedCategoryId() {
         return TableCategoryView.getSelectionModel().getSelectedItem();
     }
 
     /**
-     * 
+     *
      */
-    private void editingCells()
-    {
+    private void editingCells() {
         TableMovieView.setEditable(true);
         columnPersonalRating.setCellFactory(TextFieldTableCell.forTableColumn());
-        columnPersonalRating.setOnEditCommit(new EventHandler<CellEditEvent<Movie, String>>()
-        {
+        columnPersonalRating.setOnEditCommit(new EventHandler<CellEditEvent<Movie, String>>() {
             @Override
-            public void handle(CellEditEvent<Movie, String> t)
-            {
-                ((Movie) t.getTableView().getItems().get(t.getTablePosition().getRow())).setPersonalRating(t.getNewValue());
+            public void handle(CellEditEvent<Movie, String> t) {
+                String movieName = t.getTableView().getItems().get(t.getTablePosition().getRow()).getName();
+                StringProperty movieTitle = new SimpleStringProperty(movieName);
+                StringProperty moviePersonalRating = new SimpleStringProperty(t.getNewValue());
+                Movie personalRating = getSelectedMovie();
+                personalRating.setPersonalRating(moviePersonalRating.getValue());
+                model.editMovie(personalRating);
             }
         });
         //model.editMovie(m);
@@ -174,12 +170,12 @@ public class MainMovieViewController implements Initializable
 
     /**
      * opens a new window and loads the list of movies when the window is closed
+     *
      * @param event
-     * @throws IOException 
+     * @throws IOException
      */
     @FXML
-    private void clickAddMovie(ActionEvent event) throws IOException
-    {
+    private void clickAddMovie(ActionEvent event) throws IOException {
         Stage newWindow = new Stage();
 
         newWindow.initModality(Modality.APPLICATION_MODAL);
@@ -201,11 +197,11 @@ public class MainMovieViewController implements Initializable
 
     /**
      * Removes a movie from db Movie and catmovie!!!!!!!!
-     * @param event 
+     *
+     * @param event
      */
     @FXML
-    private void clickRemoveMovie(ActionEvent event)
-    {
+    private void clickRemoveMovie(ActionEvent event) {
         Movie selectedMovie = getSelectedMovie();
         Movie selectedMovieId = getSelectedMovie();
         model.removeMovie(selectedMovie, selectedMovieId);
@@ -213,12 +209,12 @@ public class MainMovieViewController implements Initializable
 
     /**
      * Plays movie in out own mediaplayer and updates lastview.
+     *
      * @param event
-     * @throws IOException 
+     * @throws IOException
      */
     @FXML
-    private void clickPlayMovie(ActionEvent event) throws IOException
-    {
+    private void clickPlayMovie(ActionEvent event) throws IOException {
         Stage newWindow = new Stage();
 
         newWindow.initModality(Modality.APPLICATION_MODAL);
@@ -229,7 +225,7 @@ public class MainMovieViewController implements Initializable
 
         PlayViewController controller = fxLoader.getController();
         controller.setParentWindowController(this);
-        
+
         controller.play(TableMovieView.getSelectionModel().getSelectedItem().getFilelink());
 
         Scene scene = new Scene(root);
@@ -239,30 +235,27 @@ public class MainMovieViewController implements Initializable
         int selectedMovieId = TableMovieView.getSelectionModel().getSelectedItem().getId();
         System.out.println(selectedMovieId);
         model.editDate(selectedMovieId);
-        
+
         System.out.println(TableMovieView.getSelectionModel().getSelectedItem().getFilelink());
-        
+
         newWindow.showAndWait();
 
         model.loadMovie();
     }
-    
-     /**
-     * Asks the user if they want to delete a movie with a personal rating below 6, 
-     * that has not been player in over two years.
-     * 
+
+    /**
+     * Asks the user if they want to delete a movie with a personal rating below
+     * 6, that has not been player in over two years.
+     *
      */
-    private void twoYearWarning() throws SQLException, IOException
-    {
-       
-        for (int i = 0; i < model.movieCount(); i++)
-        {
+    private void twoYearWarning() throws SQLException, IOException {
+
+        for (int i = 0; i < model.movieCount(); i++) {
             TableMovieView.getSelectionModel().select(i);
-            
+
             int selectedMovieId = TableMovieView.getSelectionModel().getSelectedItem().getId();
-            
-            if(model.twoYearWarning(selectedMovieId) == false && model.selectedMoviePersRating(selectedMovieId) < 6)
-            {
+
+            if (model.twoYearWarning(selectedMovieId) == false && model.selectedMoviePersRating(selectedMovieId) < 6) {
                 Stage newWindow = new Stage();
 
                 newWindow.initModality(Modality.APPLICATION_MODAL);
@@ -273,38 +266,37 @@ public class MainMovieViewController implements Initializable
 
                 DeleteViewController controller = fxLoader.getController();
                 controller.setParentWindowController(this);
-                
+
                 controller.setMovieName(TableMovieView.getSelectionModel().getSelectedItem().getName());
 
                 Scene scene = new Scene(root);
                 newWindow.setTitle("Delete Movie");
                 newWindow.setScene(scene);
-                newWindow.showAndWait();   
-            } else
-            {
+                newWindow.showAndWait();
+            } else {
             }
         }
-        
+
         model.loadMovie();
     }
 
     /**
      * doesn't really do anything, btnEdit might need to be deleted !!!!!!!!!
-     * @param event 
+     *
+     * @param event
      */
     @FXML
-    private void clickEditMovie(ActionEvent event)
-    {
+    private void clickEditMovie(ActionEvent event) {
 
     }
 
     /**
      * Adds a category by getting the text, adding and loading categories.
-     * @param event 
+     *
+     * @param event
      */
     @FXML
-    private void clickAddCategory(ActionEvent event)
-    {
+    private void clickAddCategory(ActionEvent event) {
         Category c = new Category();
         c.setName(txtAddCategory.getText());
 
@@ -314,11 +306,11 @@ public class MainMovieViewController implements Initializable
 
     /**
      * Removes the selected category and loads the list !!!!!!!
-     * @param event 
+     *
+     * @param event
      */
     @FXML
-    private void clickRemoveCategory(ActionEvent event)
-    {
+    private void clickRemoveCategory(ActionEvent event) {
         Category selectedCategory = TableCategoryView.getSelectionModel().getSelectedItem();
         Category selectedCategoryId = new Category();
         model.removeCategory(selectedCategory, selectedCategoryId);
@@ -328,29 +320,27 @@ public class MainMovieViewController implements Initializable
     /**
      * Uses txtSearchFilter to search for movies by name or imdb rating.
      */
-    private void search()
-    {
-        txtSearchFilter.textProperty().addListener(new ChangeListener<String>()
-        {
+    private void search() {
+        txtSearchFilter.textProperty().addListener(new ChangeListener<String>() {
             @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue)
-            {
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 model.search(newValue, newValue);
             }
         });
     }
 
     /**
-     * Makes it possible to select and deselect multiple items in TableCategoryView
-     * @param event 
+     * Makes it possible to select and deselect multiple items in
+     * TableCategoryView
+     *
+     * @param event
      */
     @FXML
-    private void clkSelectedItems(MouseEvent event)
-    {
+    private void clkSelectedItems(MouseEvent event) {
         List<Category> cat = TableCategoryView.getSelectionModel().getSelectedItems();
 
-                System.out.println(cat);
-                model.loadMoviesInCategory(cat);
+        System.out.println(cat);
+        model.loadMoviesInCategory(cat);
     }
 
 }

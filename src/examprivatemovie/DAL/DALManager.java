@@ -248,15 +248,13 @@ public class DALManager
         {
             String sql
                     = "UPDATE Movie SET "
-                    + "name=?, personalRating=?, IMDBRating=?, filelink=? "
-                    + "WHERE name=?";
+                    + "personalRating=? "
+                    + "WHERE id=?";
 
             PreparedStatement pstmt = con.prepareStatement(sql);
 
-            pstmt.setString(1, m.getName());
-            pstmt.setString(2, m.getPersonalRating());
-            pstmt.setString(3, m.getIMDBRating());
-            pstmt.setString(4, m.getFilelink());
+            pstmt.setString(1, m.getPersonalRating());
+            pstmt.setInt(2, m.getId());
 
             int affected = pstmt.executeUpdate();
             if (affected < 1)
