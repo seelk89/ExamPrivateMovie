@@ -8,16 +8,15 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="563.0" prefWidth="584.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="examprivatemovie.GUI.CONTROLLER.MainMovieViewController">
+<AnchorPane id="AnchorPane" prefHeight="536.0" prefWidth="584.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="examprivatemovie.GUI.CONTROLLER.MainMovieViewController">
 
    <children>
-      <TableView fx:id="TableCategoryView" layoutX="33.0" layoutY="87.0" onMouseClicked="#clkSelectedItems" prefHeight="365.0" prefWidth="108.0">
+      <TableView fx:id="TableCategoryView" layoutX="33.0" layoutY="62.0" onMouseClicked="#clkSelectedItems" prefHeight="365.0" prefWidth="108.0">
         <columns>
           <TableColumn fx:id="columnCategory" prefWidth="107.0" text="Categories" />
         </columns>
       </TableView>
-      <TableView fx:id="TableMovieView" layoutX="145.0" layoutY="87.0" prefHeight="365.0" prefWidth="403.0">
+      <TableView fx:id="TableMovieView" layoutX="145.0" layoutY="62.0" prefHeight="365.0" prefWidth="403.0">
         <columns>
           <TableColumn fx:id="columnTitle" prefWidth="112.0" text="Title" />
           <TableColumn fx:id="columnPersonalRating" prefWidth="104.0" text="Personal Rating" />
@@ -25,20 +24,20 @@
             <TableColumn fx:id="columnLastViewed" prefWidth="99.0" text="Last viewed" />
         </columns>
       </TableView>
-      <ButtonBar layoutX="196.0" layoutY="452.0" prefHeight="40.0" prefWidth="200.0">
+      <ButtonBar layoutX="196.0" layoutY="427.0" prefHeight="40.0" prefWidth="200.0">
         <buttons>
           <Button fx:id="btnEdit" mnemonicParsing="false" onAction="#clickEditMovie" text="Edit" />
             <Button fx:id="btnAdd" mnemonicParsing="false" onAction="#clickAddMovie" text="Add" />
             <Button fx:id="btnRemove" mnemonicParsing="false" onAction="#clickRemoveMovie" text="Remove" />
         </buttons>
       </ButtonBar>
-      <Button fx:id="btnPlay" layoutX="474.0" layoutY="56.0" mnemonicParsing="false" onAction="#clickPlayMovie" text="Play Movie" />
-      <TextField fx:id="txtSearchFilter" layoutX="145.0" layoutY="59.0" AnchorPane.topAnchor="56.0" />
-      <Label fx:id="labelSearch" layoutX="145.0" layoutY="30.0" text="Search" AnchorPane.topAnchor="36.0" />
-      <Button fx:id="btnAddCategory" layoutX="33.0" layoutY="492.0" mnemonicParsing="false" onAction="#clickAddCategory" text="Add Category" />
-      <Button fx:id="btnRemoveCategory" layoutX="33.0" layoutY="526.0" mnemonicParsing="false" onAction="#clickRemoveCategory" prefHeight="25.0" prefWidth="116.0" text="Remove Category" AnchorPane.topAnchor="524.0" />
-      <TextField fx:id="txtAddCategory" layoutX="33.0" layoutY="460.0" prefHeight="25.0" prefWidth="108.0" />
-      <Label layoutX="33.0" layoutY="45.0" text="Ctrl + Click" />
-      <Label layoutX="33.0" layoutY="60.0" text="for multi-selection" />
+      <Button fx:id="btnPlay" layoutX="474.0" layoutY="33.0" mnemonicParsing="false" onAction="#clickPlayMovie" text="Play Movie" />
+      <TextField fx:id="txtSearchFilter" layoutX="145.0" layoutY="33.0" AnchorPane.topAnchor="33.0" />
+      <Label fx:id="labelSearch" layoutX="145.0" layoutY="14.0" text="Search" AnchorPane.topAnchor="14.0" />
+      <Button fx:id="btnAddCategory" layoutX="33.0" layoutY="466.0" mnemonicParsing="false" onAction="#clickAddCategory" text="Add Category" />
+      <Button fx:id="btnRemoveCategory" layoutX="33.0" layoutY="498.0" mnemonicParsing="false" onAction="#clickRemoveCategory" prefHeight="25.0" prefWidth="116.0" text="Remove Category" AnchorPane.topAnchor="498.0" />
+      <TextField fx:id="txtAddCategory" layoutX="33.0" layoutY="434.0" prefHeight="25.0" prefWidth="108.0" />
+      <Label layoutX="34.0" layoutY="14.0" text="Ctrl + Click" />
+      <Label layoutX="34.0" layoutY="37.0" text="for multi-selection" />
    </children>
 </AnchorPane>
