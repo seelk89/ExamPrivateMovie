@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package examprivatemovie.DAL;
-
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import examprivatemovie.BE.Category;
 import examprivatemovie.BE.Movie;
@@ -17,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 /**
  *
  * @author Anni
@@ -170,19 +168,17 @@ public class DALManager {
         }
     }
 
-    public void editMovieInDb(Movie m) {
+    public void editMovieInDb(Movie personalRating) {
         try (Connection con = cm.getConnection()) {
             String sql
                     = "UPDATE Movie SET "
-                    + "name=?, personalRating=?, IMDBRating=?, filelink=? "
-                    + "WHERE name=?";
+                    + "personalRating=?"
+                    + "WHERE id=?";
 
             PreparedStatement pstmt = con.prepareStatement(sql);
 
-            pstmt.setString(1, m.getName());
-            pstmt.setString(2, m.getPersonalRating());
-            pstmt.setString(3, m.getIMDBRating());
-            pstmt.setString(4, m.getFilelink());
+            pstmt.setString(1, personalRating.getPersonalRating());
+            pstmt.setInt(2, personalRating.getId());
 
             int affected = pstmt.executeUpdate();
             if (affected < 1) {

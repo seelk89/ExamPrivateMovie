@@ -10,6 +10,7 @@ import examprivatemovie.BE.Movie;
 import examprivatemovie.DAL.DALManager;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.beans.property.StringProperty;
 
 /**
  *
@@ -63,8 +64,8 @@ public class BLLManager {
         dalm.addCategoryToDB(c);
     }
 
-    public void editMovieInDb(Movie m) {
-        dalm.editMovieInDb(m);
+    public void editMovieInDb(Movie personalRating) {
+        dalm.editMovieInDb(personalRating);
     }
 
     public void removeMovieFromDb(Movie selectedMovie, Movie selectedMovieId) {

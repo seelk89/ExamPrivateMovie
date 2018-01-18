@@ -12,6 +12,7 @@ import examprivatemovie.BLL.BLLManager;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -87,9 +88,9 @@ public class MovieModel {
            cList.addAll(bllm.getAllCategories()); //maybe wrong list
        }
 
-       public void editMovie(Movie m)
+       public void editMovie(Movie personalRating)
        {
-           bllm.editMovieInDb(m); 
+           bllm.editMovieInDb(personalRating); 
        }
     
        public void removeMovie(Movie selectedMovie, Movie selectedMovieId)

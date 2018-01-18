@@ -5,19 +5,15 @@
  */
 package examprivatemovie.GUI;
 
-import examprivatemovie.GUI.AddMovieViewController;
 import examprivatemovie.BE.Category;
 import examprivatemovie.BE.Movie;
-import examprivatemovie.GUI.MovieModel;
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDateTime;
-import java.time.Month;
-import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -28,24 +24,16 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellEditEvent;
-import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.input.InputMethodEvent;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 
 /**
  *
@@ -81,7 +69,7 @@ public class MainMovieViewController implements Initializable {
     @FXML
     private Button btnPlay;
     private String lastFocus = "";
-    MovieModel model = new MovieModel();
+    private MovieModel model = new MovieModel();
     @FXML
     private Button btnAddCategory;
     @FXML
@@ -105,18 +93,15 @@ public class MainMovieViewController implements Initializable {
         columnLastViewed.setCellValueFactory(
                 new PropertyValueFactory("lastview"));
 
-        
         model.loadMovie();
         model.loadCategory();
         TableMovieView.setItems(model.getMoviesInCategoryList());
         TableCategoryView.setItems(model.getCategoriesList());
         TableCategoryView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        
+
         listeners();
     }
 
-    
-   
     /**
      * Gets selected Movie from list
      */
@@ -142,10 +127,16 @@ public class MainMovieViewController implements Initializable {
         columnPersonalRating.setOnEditCommit(new EventHandler<CellEditEvent<Movie, String>>() {
             @Override
             public void handle(CellEditEvent<Movie, String> t) {
-                ((Movie) t.getTableView().getItems().get(t.getTablePosition().getRow())).setPersonalRating(t.getNewValue());
+                //((Movie) t.getTableView().getItems().get(t.getTablePosition().getRow())).setPersonalRating(t.getNewValue());
+                //model.editMovie(t.getTableView().getItems().get(t.getTablePosition().getRow()));
+                String movieName = t.getTableView().getItems().get(t.getTablePosition().getRow()).getName();
+                StringProperty movieTitle = new SimpleStringProperty(movieName);
+                StringProperty moviePersonalRating = new SimpleStringProperty(t.getNewValue());
+                Movie personalRating = getSelectedMovie();
+                model.editMovie(personalRating);
             }
         });
-        //model.editMovie(m);
+
     }
 
     @FXML
@@ -174,8 +165,7 @@ public class MainMovieViewController implements Initializable {
     private void clickRemoveMovie(ActionEvent event) {
 
         Movie selectedMovie = getSelectedMovie();
-        Movie selectedMovieId = getSelectedMovie();
-        model.removeMovie(selectedMovie, selectedMovieId);
+        model.removeMovie(selectedMovie, selectedMovie);
     }
 
     @FXML
@@ -193,7 +183,7 @@ public class MainMovieViewController implements Initializable {
 
         Scene scene = new Scene(root);
         newWindow.setScene(scene);
-        
+
         //writes the date and time the movie was played
         int selectedMovieId = TableMovieView.getSelectionModel().getSelectedItem().getId();
         System.out.println(selectedMovieId);
@@ -206,14 +196,14 @@ public class MainMovieViewController implements Initializable {
 
     @FXML
     private void clickEditMovie(ActionEvent event) {
-        
+
     }
 
     @FXML
     private void clickAddCategory(ActionEvent event) {
         Category c = new Category();
         c.setName(txtAddCategory.getText());
-        
+
         model.addCategory(c);
         model.loadCategory();
     }
@@ -226,44 +216,41 @@ public class MainMovieViewController implements Initializable {
         model.loadCategory();
     }
 
-     private void listeners(){
-        
+    private void listeners() {
+
         txtSearchFilter.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 model.search(newValue, newValue);
             }
         });
-                
-                TableMovieView.focusedProperty().addListener(
+
+        TableMovieView.focusedProperty().addListener(
                 new ChangeListener<Boolean>() {
             @Override
-            public void changed(ObservableValue<? extends Boolean>
-                    observable, Boolean oldValue, Boolean newValue) {
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                 lastFocus = "Movie";
             }
         });
-                
+
         TableCategoryView.focusedProperty().addListener(
                 new ChangeListener<Boolean>() {
             @Override
-            public void changed(ObservableValue<? extends Boolean>
-                    observable, Boolean oldValue, Boolean newValue) {
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                 lastFocus = "Category";
             }
         });
 
-    
         TableCategoryView.getSelectionModel().selectedItemProperty().addListener(
                 new ChangeListener<Category>() {
             @Override
-            public void changed(ObservableValue<? extends Category> 
-                    observable, Category oldValue, Category newValue) {
+            public void changed(ObservableValue<? extends Category> observable, Category oldValue, Category newValue) {
                 List<Category> cats = TableCategoryView.getSelectionModel().getSelectedItems();
-                
+
                 model.loadMoviesInCategory(cats);
                 lastFocus = "Category";
             }
         });
     }
+
 }

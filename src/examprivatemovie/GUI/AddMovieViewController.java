@@ -59,8 +59,11 @@ public class AddMovieViewController implements Initializable {
     private TextField txtMovieTitle;
     @FXML
     private Button btnSave;
-    MovieModel model = new MovieModel();
-    List<String> movieTitles = getAllTitles();
+    private MovieModel model = new MovieModel();
+    private ArrayList<String> movieTitles = (ArrayList<String>) getAllTitles();
+    private ArrayList<String> data = new ArrayList();
+    private String first;
+    private String second;
 
     /**
      * Initializes the controller class.
@@ -101,14 +104,15 @@ public class AddMovieViewController implements Initializable {
         //genre4 choicebox options
         genre4.setItems(FXCollections.observableArrayList(model.getAllCategories()));
 
-        System.out.println(movieTitles);
+        //System.out.println(movieTitles);
+        
     }
 
     public void setParentWindowController(MainMovieViewController parent) {
         this.parent = parent;
     }
 
-    public List<String> getAllTitles() {
+    private List<String> getAllTitles() {
         return model.getAllMoviesByTitle();
     }
 
@@ -128,52 +132,91 @@ public class AddMovieViewController implements Initializable {
 
     @FXML
     private void clickSave(ActionEvent event) {
-        if (movieTitles.contains(txtMovieTitle.getText())) {
-            System.out.println("Hey, this film is already saved. Check it!");
-        } else {
-            Movie m = new Movie();
-            
-            m.setName(txtMovieTitle.getText());
-            m.setPersonalRating(txtPersonalRating.getText());
-            m.setIMDBRating(txtImdbRating.getText());
-            m.setFilelink(txtFileLocation.getText());
+        checkingTheDistance();
+//        } else {
+//            Movie m = new Movie();
+//
+//            m.setName(txtMovieTitle.getText());
+//            m.setPersonalRating(txtPersonalRating.getText());
+//            m.setIMDBRating(txtImdbRating.getText());
+//            m.setFilelink(txtFileLocation.getText());
+//
+//            String fileLocation = txtFileLocation.getText();
+//
+//            if (fileLocation.endsWith("mp4") || fileLocation.endsWith("mpeg4")) {
+//                model.addMovie(m);
+//
+//                boolean genre1Empty = genre1.getSelectionModel().isEmpty();
+//
+//                if (genre1Empty != true) {
+//                    String genre1Value = genre1.getValue().getName();
+//                    model.matchMovie(genre1Value);
+//                }
+//
+//                boolean genre2Empty = genre2.getSelectionModel().isEmpty();
+//
+//                if (genre2Empty != true) {
+//                    String genre2Value = genre2.getValue().getName();
+//                    model.matchMovie(genre2Value);
+//                }
+//
+//                boolean genre3Empty = genre3.getSelectionModel().isEmpty();
+//
+//                if (genre3Empty != true) {
+//                    String genre3Value = genre3.getValue().getName();
+//                    model.matchMovie(genre3Value);
+//                }
+//
+//                boolean genre4Empty = genre4.getSelectionModel().isEmpty();
+//
+//                if (genre4Empty != true) {
+//                    String genre4Value = genre4.getValue().getName();
+//                    model.matchMovie(genre4Value);
+//                }
+//
+//                Stage window = (Stage) btnSave.getScene().getWindow();
+//                window.close();
+//            }
+//        }
+    }
 
-            String fileLocation = txtFileLocation.getText();
 
-            if (fileLocation.endsWith("mp4") || fileLocation.endsWith("mpeg4")) {
-                model.addMovie(m);
-
-                boolean genre1Empty = genre1.getSelectionModel().isEmpty();
-
-                if (genre1Empty != true) {
-                    String genre1Value = genre1.getValue().getName();
-                    model.matchMovie(genre1Value);
-                }
-
-                boolean genre2Empty = genre2.getSelectionModel().isEmpty();
-
-                if (genre2Empty != true) {
-                    String genre2Value = genre2.getValue().getName();
-                    model.matchMovie(genre2Value);
-                }
-
-                boolean genre3Empty = genre3.getSelectionModel().isEmpty();
-
-                if (genre3Empty != true) {
-                    String genre3Value = genre3.getValue().getName();
-                    model.matchMovie(genre3Value);
-                }
-
-                boolean genre4Empty = genre4.getSelectionModel().isEmpty();
-
-                if (genre4Empty != true) {
-                    String genre4Value = genre4.getValue().getName();
-                    model.matchMovie(genre4Value);
-                }
-
-                Stage window = (Stage) btnSave.getScene().getWindow();
-                window.close();
+    public static int distance(String first, String second) {
+        first = first.toLowerCase();
+        second = second.toLowerCase();
+        // i == 0
+        int[] costs = new int[second.length() + 1];
+        for (int j = 0; j < costs.length; j++) {
+            costs[j] = j;
+        }
+        for (int i = 1; i <= first.length(); i++) {
+            // j == 0; nw = lev(i - 1, j)
+            costs[0] = i;
+            int nw = i - 1;
+            for (int j = 1; j <= second.length(); j++) {
+                int cj = Math.min(1 + Math.min(costs[j], costs[j - 1]), first.charAt(i - 1) == second.charAt(j - 1) ? nw : nw + 1);
+                nw = costs[j];
+                costs[j] = cj;
             }
         }
+        return costs[second.length()];
+    }
+
+    private void checkingTheDistance() {
+        //Scanner scanner = new Scanner(System.in);
+            for (int i = 0; i <= movieTitles.size(); i++) {
+                System.out.print(movieTitles.get(i)+"\n");
+            }
+        //System.out.println(movieTitles);
+        
+//        
+//        second = txtMovieTitle.getText();
+//        distance(first, second);
+//        data.add(first);
+//        data.add(second);
+//        ArrayList<String> MAMMA = this.data;
+//        for (int i = 0; i < data.size(); i += 2) {
+//            System.out.println("distance(" + MAMMA.get(i) + ", " + MAMMA.get(i + 1) + ") = " + distance(MAMMA.get(i), MAMMA.get(i + 1)));
+//        }
     }
 }
