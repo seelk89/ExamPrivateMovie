@@ -21,7 +21,7 @@ public class ExamPrivateMovie extends Application
     @Override
     public void start(Stage stage) throws Exception
     {
-        Parent root = FXMLLoader.load(getClass().getResource("GUI/MainMovieView.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("GUI/VIEW/MainMovieView.fxml"));
         
         Scene scene = new Scene(root);
         

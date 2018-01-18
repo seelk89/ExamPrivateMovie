@@ -4,7 +4,9 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="131.0" prefWidth="423.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="examprivatemovie.GUI.DeleteViewController">
+
+<AnchorPane id="AnchorPane" prefHeight="131.0" prefWidth="423.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="examprivatemovie.GUI.CONTROLLER.DeleteViewController">
+
    <children>
       <Button fx:id="btnAccept" layoutX="14.0" layoutY="91.0" mnemonicParsing="false" onAction="#clickAccept" text="Accept" />
       <Button fx:id="btnCancel" layoutX="75.0" layoutY="91.0" mnemonicParsing="false" onAction="#clickCancel" text="Cancel" />

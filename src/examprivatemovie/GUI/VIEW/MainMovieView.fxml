@@ -8,7 +8,9 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="563.0" prefWidth="584.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="examprivatemovie.GUI.MainMovieViewController">
+
+<AnchorPane id="AnchorPane" prefHeight="563.0" prefWidth="584.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="examprivatemovie.GUI.CONTROLLER.MainMovieViewController">
+
    <children>
       <TableView fx:id="TableCategoryView" layoutX="33.0" layoutY="87.0" onMouseClicked="#clkSelectedItems" prefHeight="365.0" prefWidth="108.0">
         <columns>

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package examprivatemovie.GUI;
+package examprivatemovie.GUI.MODEL;
 
 import examprivatemovie.BE.Category;
 import examprivatemovie.BE.Movie;
