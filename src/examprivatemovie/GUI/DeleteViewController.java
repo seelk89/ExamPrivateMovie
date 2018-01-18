@@ -38,8 +38,6 @@ public class DeleteViewController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {   
-        //String movieName = parent.getSelectedMovie().getName();
-        //labelMovieName.setText(movieName);
     }    
 
     public void setParentWindowController(MainMovieViewController parent)
@@ -69,4 +67,8 @@ public class DeleteViewController implements Initializable
         window.close();
     }
     
+    public void setMovieName(String movieName)
+    {
+        labelMovieName.setText(movieName); 
+    }
 }

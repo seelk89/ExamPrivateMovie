@@ -113,16 +113,16 @@ public class MainMovieViewController implements Initializable
 
         search();
         
-//        try
-//        {
-//            twoYearWarning();
-//        } catch (SQLException ex)
-//        {
-//            Logger.getLogger(MainMovieViewController.class.getName()).log(Level.SEVERE, null, ex);
-//        } catch (IOException ex)
-//        {
-//            Logger.getLogger(MainMovieViewController.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+        try
+        {
+            twoYearWarning();
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(MainMovieViewController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex)
+        {
+            Logger.getLogger(MainMovieViewController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     //get Category.id, get Catmovie.id get Movie.id, only add Movie from CatMovie.id with all chosen Category.id
@@ -271,6 +271,8 @@ public class MainMovieViewController implements Initializable
 
                 DeleteViewController controller = fxLoader.getController();
                 controller.setParentWindowController(this);
+                
+                controller.setMovieName(TableMovieView.getSelectionModel().getSelectedItem().getName());
 
                 Scene scene = new Scene(root);
                 newWindow.setTitle("Delete Movie");
@@ -278,7 +280,6 @@ public class MainMovieViewController implements Initializable
                 newWindow.showAndWait();   
             } else
             {
-            
             }
         }
         
