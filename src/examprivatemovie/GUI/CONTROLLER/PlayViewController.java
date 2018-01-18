@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package examprivatemovie.GUI;
+package examprivatemovie.GUI.CONTROLLER;
 
+import examprivatemovie.GUI.CONTROLLER.MainMovieViewController;
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;

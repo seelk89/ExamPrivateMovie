@@ -3,12 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package examprivatemovie.GUI;
+package examprivatemovie.GUI.CONTROLLER;
 
-import examprivatemovie.GUI.AddMovieViewController;
+import examprivatemovie.GUI.CONTROLLER.DeleteViewController;
+import examprivatemovie.GUI.CONTROLLER.AddMovieViewController;
 import examprivatemovie.BE.Category;
 import examprivatemovie.BE.Movie;
-import examprivatemovie.GUI.MovieModel;
+import examprivatemovie.GUI.MODEL.MovieModel;
+import examprivatemovie.GUI.MODEL.MovieModel;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -182,7 +184,7 @@ public class MainMovieViewController implements Initializable
 
         newWindow.initModality(Modality.APPLICATION_MODAL);
 
-        FXMLLoader fxLoader = new FXMLLoader(getClass().getResource("AddMovieView.fxml"));
+        FXMLLoader fxLoader = new FXMLLoader(getClass().getResource("/examprivatemovie/GUI/VIEW/AddMovieView.fxml"));
 
         Parent root = fxLoader.load();
 
@@ -221,7 +223,7 @@ public class MainMovieViewController implements Initializable
 
         newWindow.initModality(Modality.APPLICATION_MODAL);
 
-        FXMLLoader fxLoader = new FXMLLoader(getClass().getResource("PlayView.fxml"));
+        FXMLLoader fxLoader = new FXMLLoader(getClass().getResource("/examprivatemovie/GUI/VIEW/PlayView.fxml"));
 
         Parent root = fxLoader.load();
 
@@ -261,7 +263,7 @@ public class MainMovieViewController implements Initializable
 
                 newWindow.initModality(Modality.APPLICATION_MODAL);
 
-                FXMLLoader fxLoader = new FXMLLoader(getClass().getResource("DeleteView.fxml"));
+                FXMLLoader fxLoader = new FXMLLoader(getClass().getResource("/examprivatemovie/GUI/VIEW/DeleteView.fxml"));
 
                 Parent root = fxLoader.load();
 
