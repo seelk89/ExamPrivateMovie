@@ -86,7 +86,8 @@ public class AddMovieViewController implements Initializable
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue)
             {
-                if (!newValue.matches("\\d{0,9}([\\.]\\d{0,9})?") || newValue.length() > maxChar)
+                float newValueFloat = Float.parseFloat(newValue);
+                if (!newValue.matches("\\d{0,9}([\\.]\\d{0,9})?") || newValue.length() > maxChar || newValueFloat > maxGrade)
                 {
                     txtPersonalRating.setText(oldValue);
                 }

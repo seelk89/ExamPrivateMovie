@@ -241,6 +241,11 @@ public class MainMovieViewController implements Initializable
         model.loadMovie();
     }
     
+     /**
+     * Asks the user if they want to delete a movie with a personal rating below 6, 
+     * that has not been player in over two years.
+     * 
+     */
     private void twoYearWarning() throws SQLException, IOException
     {
        
