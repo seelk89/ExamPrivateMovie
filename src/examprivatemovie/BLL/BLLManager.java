@@ -10,8 +10,10 @@ import examprivatemovie.BE.Movie;
 import examprivatemovie.DAL.DALManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  *
@@ -85,19 +87,33 @@ public class BLLManager
      */
     public List<Movie> getAllMoviesInCategory(List<Category> cats)
     {
-        List<Movie> movs = new ArrayList<>();
-        List<Movie> movss = new ArrayList<>(new HashSet<>(movs));
+      
+        HashMap<Integer, Movie> hm = new HashMap();
+
         if (!cats.isEmpty())
         {
             for (Category cat : cats)
             {
-                movss.addAll(dalm.getAllMoviesInCategory(cat.getId()));
+                List<Movie> allMovies = dalm.getAllMoviesInCategory(cat.getId());
+                for (Movie allMovie : allMovies)
+                {
+                    if (!hm.containsKey(allMovie.getId()))
+                    {
+                        hm.put(allMovie.getId(), allMovie);
+                    }
+                }
+
+                //movs.addAll(dalm.getAllMoviesInCategory(cat.getId()));
+//               Set<Movie> movss = new HashSet<>(movs); 
+
+//               movs.clear();
+//               movs.addAll(movss);
             }
         } else
         {
             return dalm.getAllMovies();
         }
-        return movss;
+        return new ArrayList<>(hm.values());
     }
 
     /**
@@ -203,7 +219,7 @@ public class BLLManager
     {
         dalm.matchMovieCat(categoryName);
     }
-    
+
     public int movieCount()
     {
         return dalm.getMovieCount();

@@ -127,11 +127,13 @@ public class DALManager
         try (Connection con = cm.getConnection())
         {
             PreparedStatement stmt = con.prepareStatement(
-                    " SELECT Movie.name, Movie.personalRating, Movie.imdbRating, Movie.lastview, Movie.filelink "
+                     // " SELECT DISTINCT, DELETE "
+                    " SELECT Movie.id, Movie.name, Movie.personalRating, Movie.imdbRating, Movie.lastview, Movie.filelink "
                     + " FROM ((CatMovie "
                     + " INNER JOIN Category ON CatMovie.CategoryId = Category.id) "
                     + " INNER JOIN Movie ON CatMovie.MovieId = Movie.id) "
                     + " WHERE Category.Id = ? "
+                  //  + "GROUP BY "
             );
 
             stmt.setInt(1, selectedId);
@@ -141,6 +143,7 @@ public class DALManager
             while (rs.next())
             {
                 Movie m = new Movie();
+                m.setId(rs.getInt("id"));
                 m.setName(rs.getString("name"));
                 m.setPersonalRating(rs.getString("personalRating"));
                 m.setIMDBRating(rs.getString("imdbRating"));
