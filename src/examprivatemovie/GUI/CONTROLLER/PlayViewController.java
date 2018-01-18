@@ -5,7 +5,7 @@
  */
 package examprivatemovie.GUI.CONTROLLER;
 
-import examprivatemovie.GUI.CONTROLLER.MainMovieViewController;
+import examprivatemovie.BE.Movie;
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -32,6 +32,7 @@ public class PlayViewController implements Initializable
     private MediaView mediaView;
 
     private MainMovieViewController parent;
+    private Movie movie;
 
     private MediaPlayer mp;
     private Media me;
@@ -42,20 +43,15 @@ public class PlayViewController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-        play();
     }
 
     /**
-     *
+     * Plays a video with given absolute path.
+     * 
      */
-    private void play()
-    {
-        //this.parent = parent;
-        //String path = parent.getSelectedMovie().getFilelink();
-
-        //System.out.println(path);
-        //String filmPath = new File ("C:/Users/Jesper/Desktop/NetbeansProjects/ExamPrivateMovie/SampleVideo_1280x720_2mb.mp4").getAbsolutePath();
-        String filmPath = new File("C:/Users/Jesper/Desktop/NetbeansProjects/ExamPrivateMovie/SampleVideo_1280x720_2mb.mp4").getAbsolutePath();
+    public void play(String path)
+    { 
+        String filmPath = new File(path).getAbsolutePath();
 
         me = new Media(new File(filmPath).toURI().toString());
         mp = new MediaPlayer(me);

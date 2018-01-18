@@ -115,16 +115,16 @@ public class MainMovieViewController implements Initializable
 
         search();
         
-        try
-        {
-            twoYearWarning();
-        } catch (SQLException ex)
-        {
-            Logger.getLogger(MainMovieViewController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex)
-        {
-            Logger.getLogger(MainMovieViewController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        try
+//        {
+//            twoYearWarning();
+//        } catch (SQLException ex)
+//        {
+//            Logger.getLogger(MainMovieViewController.class.getName()).log(Level.SEVERE, null, ex);
+//        } catch (IOException ex)
+//        {
+//            Logger.getLogger(MainMovieViewController.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }
     
     //get Category.id, get Catmovie.id get Movie.id, only add Movie from CatMovie.id with all chosen Category.id
@@ -229,6 +229,8 @@ public class MainMovieViewController implements Initializable
 
         PlayViewController controller = fxLoader.getController();
         controller.setParentWindowController(this);
+        
+        controller.play(TableMovieView.getSelectionModel().getSelectedItem().getFilelink());
 
         Scene scene = new Scene(root);
         newWindow.setScene(scene);
@@ -237,6 +239,8 @@ public class MainMovieViewController implements Initializable
         int selectedMovieId = TableMovieView.getSelectionModel().getSelectedItem().getId();
         System.out.println(selectedMovieId);
         model.editDate(selectedMovieId);
+        
+        System.out.println(TableMovieView.getSelectionModel().getSelectedItem().getFilelink());
         
         newWindow.showAndWait();
 
