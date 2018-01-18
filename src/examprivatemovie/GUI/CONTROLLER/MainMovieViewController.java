@@ -5,8 +5,6 @@
  */
 package examprivatemovie.GUI.CONTROLLER;
 
-import examprivatemovie.GUI.CONTROLLER.DeleteViewController;
-import examprivatemovie.GUI.CONTROLLER.AddMovieViewController;
 import examprivatemovie.BE.Category;
 import examprivatemovie.BE.Movie;
 import examprivatemovie.GUI.MODEL.MovieModel;
@@ -150,7 +148,7 @@ public class MainMovieViewController implements Initializable
     }
 
     /**
-     *
+     * This method makes the cells editable and save the result you write.
      */
     private void editingCells()
     {

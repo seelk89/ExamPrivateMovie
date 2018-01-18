@@ -21,27 +21,28 @@ import java.util.logging.Logger;
  *
  * @author Anni
  */
-public class DALManager
-{
+public class DALManager {
 
     /**
      * Selects all from Movie.
      */
     private ConnectionManager cm = new ConnectionManager();
 
-    public List<Movie> getAllMovies()
-    {
+    /**
+     * This method gets all the movies on a list way.
+     *
+     * @return
+     */
+    public List<Movie> getAllMovies() {
         System.out.println("Getting all Movies.");
 
         List<Movie> allMovies = new ArrayList();
 
-        try (Connection con = cm.getConnection())
-        {
+        try (Connection con = cm.getConnection()) {
             PreparedStatement stmt = con.prepareStatement("SELECT * FROM Movie");
             ResultSet rs = stmt.executeQuery();
 
-            while (rs.next())
-            {
+            while (rs.next()) {
                 Movie m = new Movie();
                 m.setId(rs.getInt("id"));
                 m.setName(rs.getString("name"));
@@ -52,32 +53,27 @@ public class DALManager
 
                 allMovies.add(m);
             }
-        } catch (SQLException ex)
-        {
+        } catch (SQLException ex) {
             Logger.getLogger(DALManager.class.getName()).log(
                     Level.SEVERE, null, ex);
         }
         return allMovies;
     }
-    
+
     /**
      * Counts all movies.
      */
-    public int getMovieCount()
-    {
+    public int getMovieCount() {
         int count = 0;
-        
-        try (Connection con = cm.getConnection())
-        { 
+
+        try (Connection con = cm.getConnection()) {
             PreparedStatement stmt = con.prepareStatement("SELECT * FROM Movie");
             ResultSet rs = stmt.executeQuery();
 
-            while (rs.next())
-            {
+            while (rs.next()) {
                 count = count + 1;
             }
-        } catch (SQLException ex)
-        {
+        } catch (SQLException ex) {
             Logger.getLogger(DALManager.class.getName()).log(
                     Level.SEVERE, null, ex);
         }
@@ -89,27 +85,23 @@ public class DALManager
      *
      * @return
      */
-    public List<Category> getAllCategories()
-    {
+    public List<Category> getAllCategories() {
         System.out.println("Getting all Categories.");
 
         List<Category> allCategories = new ArrayList();
 
-        try (Connection con = cm.getConnection())
-        {
+        try (Connection con = cm.getConnection()) {
             PreparedStatement stmt = con.prepareStatement("SELECT * FROM Category");
             ResultSet rs = stmt.executeQuery();
 
-            while (rs.next())
-            {
+            while (rs.next()) {
                 Category c = new Category();
                 c.setName(rs.getString("name"));
                 c.setId(rs.getInt("id"));
 
                 allCategories.add(c);
             }
-        } catch (SQLException ex)
-        {
+        } catch (SQLException ex) {
             Logger.getLogger(DALManager.class.getName()).log(
                     Level.SEVERE, null, ex);
         }
@@ -120,14 +112,12 @@ public class DALManager
      *
      * Gets all movies from selected Category.Id
      */
-    public List<Movie> getAllMoviesInCategory(int selectedId)
-    {
+    public List<Movie> getAllMoviesInCategory(int selectedId) {
         List<Movie> allMoviesInCategory = new ArrayList();
 
-        try (Connection con = cm.getConnection())
-        {
+        try (Connection con = cm.getConnection()) {
             PreparedStatement stmt = con.prepareStatement(
-                      " SELECT Movie.id, Movie.name, Movie.personalRating, Movie.imdbRating, Movie.lastview, Movie.filelink "
+                    " SELECT Movie.id, Movie.name, Movie.personalRating, Movie.imdbRating, Movie.lastview, Movie.filelink "
                     + " FROM ((CatMovie "
                     + " INNER JOIN Category ON CatMovie.CategoryId = Category.id) "
                     + " INNER JOIN Movie ON CatMovie.MovieId = Movie.id) "
@@ -138,8 +128,7 @@ public class DALManager
 
             ResultSet rs = stmt.executeQuery();
 
-            while (rs.next())
-            {
+            while (rs.next()) {
                 Movie m = new Movie();
                 m.setId(rs.getInt("id"));
                 m.setName(rs.getString("name"));
@@ -150,8 +139,7 @@ public class DALManager
 
                 allMoviesInCategory.add(m);
             }
-        } catch (SQLException ex)
-        {
+        } catch (SQLException ex) {
             Logger.getLogger(DALManager.class.getName()).log(
                     Level.SEVERE, null, ex);
         }
@@ -163,10 +151,8 @@ public class DALManager
      *
      * @param m
      */
-    public void addMovieToDB(Movie m)
-    {
-        try (Connection con = cm.getConnection())
-        {
+    public void addMovieToDB(Movie m) {
+        try (Connection con = cm.getConnection()) {
             String sql
                     = "INSERT INTO Movie"
                     + "(name, personalRating, IMDBRating, filelink) "
@@ -180,19 +166,16 @@ public class DALManager
             pstmt.setString(4, m.getFilelink());
 
             int affected = pstmt.executeUpdate();
-            if (affected < 1)
-            {
+            if (affected < 1) {
                 throw new SQLException("Movie could not be added");
             }
 
             // Get database generated id, probs not necessary
             ResultSet rs = pstmt.getGeneratedKeys();
-            if (rs.next())
-            {
+            if (rs.next()) {
                 //char.setId(rs.getInt(1));
             }
-        } catch (SQLException ex)
-        {
+        } catch (SQLException ex) {
             Logger.getLogger(DALManager.class.getName()).log(
                     Level.SEVERE, null, ex);
         }
@@ -203,10 +186,8 @@ public class DALManager
      *
      * @param c
      */
-    public void addCategoryToDB(Category c)
-    {
-        try (Connection con = cm.getConnection())
-        {
+    public void addCategoryToDB(Category c) {
+        try (Connection con = cm.getConnection()) {
             String sql
                     = "INSERT INTO Category"
                     + "(name) "
@@ -217,19 +198,16 @@ public class DALManager
             pstmt.setString(1, c.getName());
 
             int affected = pstmt.executeUpdate();
-            if (affected < 1)
-            {
+            if (affected < 1) {
                 throw new SQLException("Category could not be added");
             }
 
             // Get database generated id, probs not necessary
             ResultSet rs = pstmt.getGeneratedKeys();
-            if (rs.next())
-            {
+            if (rs.next()) {
                 //char.setId(rs.getInt(1));
             }
-        } catch (SQLException ex)
-        {
+        } catch (SQLException ex) {
             Logger.getLogger(DALManager.class.getName()).log(
                     Level.SEVERE, null, ex);
         }
@@ -240,10 +218,8 @@ public class DALManager
      *
      * @param m
      */
-    public void editMovieInDb(Movie m)
-    {
-        try (Connection con = cm.getConnection())
-        {
+    public void editMovieInDb(Movie m) {
+        try (Connection con = cm.getConnection()) {
             String sql
                     = "UPDATE Movie SET "
                     + "personalRating=? "
@@ -255,13 +231,11 @@ public class DALManager
             pstmt.setInt(2, m.getId());
 
             int affected = pstmt.executeUpdate();
-            if (affected < 1)
-            {
+            if (affected < 1) {
                 throw new SQLException("Movie could not be edited");
             }
 
-        } catch (SQLException ex)
-        {
+        } catch (SQLException ex) {
             Logger.getLogger(DALManager.class.getName()).log(
                     Level.SEVERE, null, ex);
         }
@@ -273,10 +247,8 @@ public class DALManager
      * @param selectedMovie
      * @param selectedMovieId
      */
-    public void removeMovieFromDb(Movie selectedMovie, Movie selectedMovieId)
-    {
-        try (Connection con = cm.getConnection())
-        {
+    public void removeMovieFromDb(Movie selectedMovie, Movie selectedMovieId) {
+        try (Connection con = cm.getConnection()) {
             String sql
                     = "DELETE FROM Movie WHERE name=? ";
 
@@ -291,8 +263,7 @@ public class DALManager
             pstmt2.setInt(1, selectedMovieId.getId());
             pstmt2.execute();
 
-        } catch (SQLException ex)
-        {
+        } catch (SQLException ex) {
             Logger.getLogger(DALManager.class.getName()).log(
                     Level.SEVERE, null, ex);
         }
@@ -303,10 +274,8 @@ public class DALManager
      *
      * @param selectedCategory
      */
-    public void removeCategoryFromDb(Category selectedCategory)
-    {
-        try (Connection con = cm.getConnection())
-        {
+    public void removeCategoryFromDb(Category selectedCategory) {
+        try (Connection con = cm.getConnection()) {
             String sql
                     = "DELETE FROM Category WHERE name=? ";
 
@@ -321,8 +290,7 @@ public class DALManager
             pstmt2.setInt(1, selectedCategory.getId());
             pstmt2.execute();
 
-        } catch (SQLException ex)
-        {
+        } catch (SQLException ex) {
             Logger.getLogger(DALManager.class.getName()).log(
                     Level.SEVERE, null, ex);
         }
@@ -337,13 +305,11 @@ public class DALManager
      * @return
      */
     public List<Movie> getAllMoviesBySearching(
-            String name, String imdbRating)
-    {
+            String name, String imdbRating) {
 
         List<Movie> allMovies = new ArrayList();
 
-        try (Connection con = cm.getConnection())
-        {
+        try (Connection con = cm.getConnection()) {
 
             String query
                     = "SELECT * FROM Movie "
@@ -358,8 +324,7 @@ public class DALManager
             pstmt.setString(2, "%" + imdbRating + "%");
 
             ResultSet rs = pstmt.executeQuery();
-            while (rs.next())
-            {
+            while (rs.next()) {
 
                 Movie m = new Movie();
                 m.setName(rs.getString("name"));
@@ -368,8 +333,7 @@ public class DALManager
                 m.setFilelink(rs.getString("filelink"));
                 allMovies.add(m);
             }
-        } catch (SQLException ex)
-        {
+        } catch (SQLException ex) {
             Logger.getLogger(DALManager.class.getName()).log(
                     Level.SEVERE, null, ex);
         }
@@ -383,21 +347,17 @@ public class DALManager
      *
      * @return
      */
-    public List<String> getAllMoviesByTitle()
-    {
+    public List<String> getAllMoviesByTitle() {
         List<String> allMoviesByTitle = new ArrayList();
 
-        try (Connection con = cm.getConnection())
-        {
+        try (Connection con = cm.getConnection()) {
             PreparedStatement pstmt = con.prepareStatement("SELECT name FROM Movie");
             ResultSet rs = pstmt.executeQuery();
 
-            while (rs.next())
-            {
+            while (rs.next()) {
                 allMoviesByTitle.add(rs.getString("name"));
             }
-        } catch (SQLException ex)
-        {
+        } catch (SQLException ex) {
             Logger.getLogger(DALManager.class.getName()).log(Level.SEVERE, null, ex);
         }
         return allMoviesByTitle;
@@ -409,10 +369,8 @@ public class DALManager
      * @param d
      * @param selectedId
      */
-    public void editDate(String d, int selectedId)
-    {
-        try (Connection con = cm.getConnection())
-        {
+    public void editDate(String d, int selectedId) {
+        try (Connection con = cm.getConnection()) {
             String sql
                     = "UPDATE Movie SET "
                     + "lastview=? "
@@ -423,27 +381,24 @@ public class DALManager
             pstmt.setInt(2, selectedId);
 
             int affected = pstmt.executeUpdate();
-            if (affected < 1)
-            {
+            if (affected < 1) {
                 throw new SQLException("Date could not be updated");
             }
 
-        } catch (SQLException ex)
-        {
+        } catch (SQLException ex) {
             Logger.getLogger(DALManager.class.getName()).log(
                     Level.SEVERE, null, ex);
         }
     }
 
     /**
-     * Combines the id of the movie and the selected category
-     * in the CatMovie table in the database.
+     * Combines the id of the movie and the selected category in the CatMovie
+     * table in the database.
+     *
      * @param categoryName
      */
-    public void matchMovieCat(String categoryName)
-    {
-        try (Connection con = cm.getConnection())
-        {
+    public void matchMovieCat(String categoryName) {
+        try (Connection con = cm.getConnection()) {
             int movieId = 0;
             int catId = 0;
 
@@ -452,8 +407,7 @@ public class DALManager
 
             ResultSet rsMovie = pstmt1.executeQuery();
 
-            if (rsMovie.next())
-            {
+            if (rsMovie.next()) {
                 movieId = rsMovie.getInt(1);
             }
 
@@ -466,8 +420,7 @@ public class DALManager
 
             ResultSet rsCat = pstmt2.executeQuery();
 
-            if (rsCat.next())
-            {
+            if (rsCat.next()) {
                 catId = rsCat.getInt(1);
             }
 
@@ -483,13 +436,11 @@ public class DALManager
             pstmt3.setInt(2, movieId);
 
             int affected = pstmt3.executeUpdate();
-            if (affected < 1)
-            {
+            if (affected < 1) {
                 throw new SQLException("Date could not be updated");
             }
 
-        } catch (SQLException ex)
-        {
+        } catch (SQLException ex) {
             Logger.getLogger(DALManager.class.getName()).log(
                     Level.SEVERE, null, ex);
         }
@@ -499,12 +450,10 @@ public class DALManager
      * Gets the lastViewed date of selected movie.
      *
      */
-    public String selectedMovieLastView(int movieId) throws SQLException
-    {
+    public String selectedMovieLastView(int movieId) throws SQLException {
         String movieLastView = "";
 
-        try (Connection con = cm.getConnection())
-        {
+        try (Connection con = cm.getConnection()) {
             //Gets the lastview date of the selected movie
             PreparedStatement pstmt1 = con.prepareStatement("SELECT lastview FROM Movie WHERE id = ?");
 
@@ -512,25 +461,22 @@ public class DALManager
 
             ResultSet rsLastView = pstmt1.executeQuery();
 
-            if (rsLastView.next())
-            {
+            if (rsLastView.next()) {
                 movieLastView = rsLastView.getString(1);
             }
         }
 
         return movieLastView;
     }
-    
+
     /**
      * Gets the selected movies personalRating and converts it to a float.
      *
      */
-    public float selectedPersRating(int movieId) throws SQLException
-    {
+    public float selectedPersRating(int movieId) throws SQLException {
         String moviePersRating = "";
 
-        try (Connection con = cm.getConnection())
-        {
+        try (Connection con = cm.getConnection()) {
             //Gets the personal rating of the selected movie
             PreparedStatement pstmt1 = con.prepareStatement("SELECT personalRating FROM Movie WHERE id = ?");
 
@@ -538,8 +484,7 @@ public class DALManager
 
             ResultSet rsPersRating = pstmt1.executeQuery();
 
-            if (rsPersRating.next())
-            {
+            if (rsPersRating.next()) {
                 moviePersRating = rsPersRating.getString(1);
             }
         }

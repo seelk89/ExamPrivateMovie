@@ -21,8 +21,7 @@ import javafx.stage.Stage;
  *
  * @author Jesper
  */
-public class DeleteViewController implements Initializable
-{
+public class DeleteViewController implements Initializable {
 
     @FXML
     private Button btnAccept;
@@ -30,28 +29,35 @@ public class DeleteViewController implements Initializable
     private Button btnCancel;
     @FXML
     private Label labelMovieName;
-    
+
     private MainMovieViewController parent;
 
     /**
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb)
-    {   
-    }    
+    public void initialize(URL url, ResourceBundle rb) {
+    }
 
-    public void setParentWindowController(MainMovieViewController parent)
-    {
+    /**
+     * It makes the mainwindow able to open the other windows.
+     *
+     * @param parent
+     */
+    public void setParentWindowController(MainMovieViewController parent) {
         this.parent = parent;
     }
-    
+
+    /**
+     * Method to make the "accept button" functionality.
+     *
+     * @param event
+     */
     @FXML
-    private void clickAccept(ActionEvent event)
-    {
+    private void clickAccept(ActionEvent event) {
         this.parent = parent;
         MovieModel model = new MovieModel();
-        
+
         Movie selectedMovieName = parent.getSelectedMovie();
         Movie selectedId = parent.getSelectedMovie();
 
@@ -61,15 +67,22 @@ public class DeleteViewController implements Initializable
         window.close();
     }
 
+    /**
+     * Method to make the "cancel button" functionality.
+     *
+     * @param event
+     */
     @FXML
-    private void clickCancel(ActionEvent event)
-    {
+    private void clickCancel(ActionEvent event) {
         Stage window = (Stage) btnCancel.getScene().getWindow();
         window.close();
     }
-    
-    public void setMovieName(String movieName)
-    {
-        labelMovieName.setText(movieName); 
+
+    /**
+     * This method set the name of the movie.
+     * @param movieName
+     */
+    public void setMovieName(String movieName) {
+        labelMovieName.setText(movieName);
     }
 }

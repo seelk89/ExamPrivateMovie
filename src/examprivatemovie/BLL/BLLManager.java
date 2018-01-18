@@ -17,8 +17,7 @@ import java.util.List;
  *
  * @author Anni
  */
-public class BLLManager
-{
+public class BLLManager {
 
     DALManager dalm = new DALManager();
 
@@ -27,8 +26,7 @@ public class BLLManager
      *
      * @return
      */
-    public List<Movie> getAllMovies()
-    {
+    public List<Movie> getAllMovies() {
         return dalm.getAllMovies();
     }
 
@@ -37,8 +35,7 @@ public class BLLManager
      *
      * @return
      */
-    public List<Category> getAllCategories()
-    {
+    public List<Category> getAllCategories() {
         return dalm.getAllCategories();
     }
 
@@ -48,38 +45,30 @@ public class BLLManager
      * @param selectedId
      * @return
      */
-    public List<Movie> getAllMoviesInCategory(int selectedId)
-    {
+    public List<Movie> getAllMoviesInCategory(int selectedId) {
         return dalm.getAllMoviesInCategory(selectedId);
     }
 
     /**
-     * Gets all movies from selected categories. All of them. duplicated and
-     * all. WHY DOES HASHSET NOT WORK? !!!!!!!!!!!!!!!!
+     * Gets all movies from selected categories.
      *
      * @param cats
      * @return
      */
-    public List<Movie> getAllMoviesInCategory(List<Category> cats)
-    {
-      
+    public List<Movie> getAllMoviesInCategory(List<Category> cats) {
+
         HashMap<Integer, Movie> hm = new HashMap();
 
-        if (!cats.isEmpty())
-        {
-            for (Category cat : cats)
-            {
+        if (!cats.isEmpty()) {
+            for (Category cat : cats) {
                 List<Movie> allMovies = dalm.getAllMoviesInCategory(cat.getId());
-                for (Movie allMovie : allMovies)
-                {
-                    if (!hm.containsKey(allMovie.getId()))
-                    {
+                for (Movie allMovie : allMovies) {
+                    if (!hm.containsKey(allMovie.getId())) {
                         hm.put(allMovie.getId(), allMovie);
                     }
                 }
             }
-        } else
-        {
+        } else {
             return dalm.getAllMovies();
         }
         return new ArrayList<>(hm.values());
@@ -92,18 +81,15 @@ public class BLLManager
      * @param imdbRating
      * @return
      */
-    public List<Movie> getAllMoviesBySearching(String name, String imdbRating)
-    {
+    public List<Movie> getAllMoviesBySearching(String name, String imdbRating) {
         return dalm.getAllMoviesBySearching(name, imdbRating);
     }
 
-    public String selectedMovieLastView(int movieId) throws SQLException
-    {
+    public String selectedMovieLastView(int movieId) throws SQLException {
         return dalm.selectedMovieLastView(movieId);
     }
 
-    public float selectedMoviePersRating(int movieId) throws SQLException
-    {
+    public float selectedMoviePersRating(int movieId) throws SQLException {
         return dalm.selectedPersRating(movieId);
     }
 
@@ -112,8 +98,7 @@ public class BLLManager
      *
      * @return
      */
-    public List<String> getAllMoviesByTitle()
-    {
+    public List<String> getAllMoviesByTitle() {
         return dalm.getAllMoviesByTitle();
     }
 
@@ -122,8 +107,7 @@ public class BLLManager
      *
      * @param m
      */
-    public void addMovieToDb(Movie m)
-    {
+    public void addMovieToDb(Movie m) {
         dalm.addMovieToDB(m);
     }
 
@@ -132,8 +116,7 @@ public class BLLManager
      *
      * @param c
      */
-    public void addCategoryToDb(Category c)
-    {
+    public void addCategoryToDb(Category c) {
         dalm.addCategoryToDB(c);
     }
 
@@ -142,8 +125,7 @@ public class BLLManager
      *
      * @param m
      */
-    public void editMovieInDb(Movie m)
-    {
+    public void editMovieInDb(Movie m) {
         dalm.editMovieInDb(m);
     }
 
@@ -153,8 +135,7 @@ public class BLLManager
      * @param selectedMovie
      * @param selectedMovieId
      */
-    public void removeMovieFromDb(Movie selectedMovie, Movie selectedMovieId)
-    {
+    public void removeMovieFromDb(Movie selectedMovie, Movie selectedMovieId) {
         dalm.removeMovieFromDb(selectedMovie, selectedMovieId);
     }
 
@@ -163,8 +144,7 @@ public class BLLManager
      *
      * @param selectedCategory
      */
-    public void removeCategoryFromDb(Category selectedCategory)
-    {
+    public void removeCategoryFromDb(Category selectedCategory) {
         dalm.removeCategoryFromDb(selectedCategory);
     }
 
@@ -174,22 +154,24 @@ public class BLLManager
      * @param d
      * @param selectedId
      */
-    public void editDate(String d, int selectedId)
-    {
+    public void editDate(String d, int selectedId) {
         dalm.editDate(d, selectedId);
     }
 
     /**
+     * This method matchs the movie category based on the String "categoryName"
      *
      * @param categoryName
      */
-    public void matchMovieCat(String categoryName)
-    {
+    public void matchMovieCat(String categoryName) {
         dalm.matchMovieCat(categoryName);
     }
 
-    public int movieCount()
-    {
+    /**
+     *
+     * @return This method returns the "movieCount" parameter as an integer.
+     */
+    public int movieCount() {
         return dalm.getMovieCount();
     }
 }

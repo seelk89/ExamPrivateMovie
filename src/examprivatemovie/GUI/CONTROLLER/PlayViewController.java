@@ -22,8 +22,7 @@ import javafx.scene.media.MediaView;
  *
  * @author Jesper
  */
-public class PlayViewController implements Initializable
-{
+public class PlayViewController implements Initializable {
 
     /**
      *
@@ -41,16 +40,14 @@ public class PlayViewController implements Initializable
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb)
-    {
+    public void initialize(URL url, ResourceBundle rb) {
     }
 
     /**
      * Plays a video with given absolute path.
-     * 
+     *
      */
-    public void play(String path)
-    { 
+    public void play(String path) {
         String filmPath = new File(path).getAbsolutePath();
 
         me = new Media(new File(filmPath).toURI().toString());
@@ -67,11 +64,11 @@ public class PlayViewController implements Initializable
     }
 
     /**
+     * It makes the mainwindow able to open the other windows
      *
      * @param parent
      */
-    public void setParentWindowController(MainMovieViewController parent)
-    {
+    public void setParentWindowController(MainMovieViewController parent) {
         this.parent = parent;
     }
 

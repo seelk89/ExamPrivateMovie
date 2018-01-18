@@ -17,7 +17,9 @@ public class ConnectionManager {
     
         
     private SQLServerDataSource ds = new SQLServerDataSource();
-
+/**
+ * All the information to connect to the database.
+ */
     public ConnectionManager()
     {
         ds.setDatabaseName("CS2017B_Exam1");
@@ -28,7 +30,11 @@ public class ConnectionManager {
             
 
     }
-
+/**
+ * Will get the connection with the database.
+ * @return
+ * @throws SQLServerException 
+ */
     public Connection getConnection() throws SQLServerException
     {
         return ds.getConnection();

@@ -67,7 +67,6 @@ public class AddMovieViewController implements Initializable
         int maxChar = 3;
         float maxGrade = 10;
 
-        //restricts txtPersonalRating to decimal numbers and limits to 3 characters
         txtPersonalRating.textProperty().addListener(new ChangeListener<String>()
         {
             @Override
@@ -81,7 +80,6 @@ public class AddMovieViewController implements Initializable
             }
         });
 
-        //restricts txtImdbRating to decimal numbers and limits to 3 characters
         txtImdbRating.textProperty().addListener(new ChangeListener<String>()
         {
             @Override
@@ -95,23 +93,15 @@ public class AddMovieViewController implements Initializable
             }
         });
 
-        //genre1 choicebox options
         genre1.setItems(FXCollections.observableArrayList(model.getAllCategories()));
-
-        //genre2 choicebox options
         genre2.setItems(FXCollections.observableArrayList(model.getAllCategories()));
-
-        //genre3 choicebox options
         genre3.setItems(FXCollections.observableArrayList(model.getAllCategories()));
-
-        //genre4 choicebox options
         genre4.setItems(FXCollections.observableArrayList(model.getAllCategories()));
-
         System.out.println(movieTitles);
     }
 
     /**
-     * 
+     * It makes the mainwindow able to open the other windows.
      * @param parent 
      */
     public void setParentWindowController(MainMovieViewController parent)
@@ -120,7 +110,7 @@ public class AddMovieViewController implements Initializable
     }
 
     /**
-     * 
+     *  This method returns all the titles from the movies on a List of Strings.
      * @return 
      */
     public List<String> getAllTitles()
@@ -129,7 +119,7 @@ public class AddMovieViewController implements Initializable
     }
 
     /**
-     * 
+     * This method makes able to set the file location.
      * @param event 
      */
     @FXML
@@ -149,7 +139,7 @@ public class AddMovieViewController implements Initializable
     }
 
     /**
-     * 
+     * This method makes able to save the parameters registered.
      * @param event 
      */
     @FXML
