@@ -11,9 +11,7 @@ import examprivatemovie.DAL.DALManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  *
@@ -55,29 +53,6 @@ public class BLLManager
         return dalm.getAllMoviesInCategory(selectedId);
     }
 
-    //this method will be deleted by me, anni !!!!!!!!!
-    public List<Movie> getAllMoviesInCategor(List<Category> cats)
-    {
-        List<Movie> movs = new ArrayList<>();
-        List<Movie> movss = new ArrayList<>(new HashSet<>(movs));
-
-        if (cats.size() > 0)
-        {
-
-            for (int i = 0; i < cats.size(); i++)
-            {
-                Category catty = cats.get(i);
-                movss.addAll(dalm.getAllMoviesInCategory(catty.getId()));
-                //remove if duplicate result
-            }
-            //add more for loops, with 1, 2, 3, 4 and 5 categories chosen 
-        } else
-        {
-            return dalm.getAllMovies();
-        }
-        return movss;
-    }
-
     /**
      * Gets all movies from selected categories. All of them. duplicated and
      * all. WHY DOES HASHSET NOT WORK? !!!!!!!!!!!!!!!!
@@ -102,12 +77,6 @@ public class BLLManager
                         hm.put(allMovie.getId(), allMovie);
                     }
                 }
-
-                //movs.addAll(dalm.getAllMoviesInCategory(cat.getId()));
-//               Set<Movie> movss = new HashSet<>(movs); 
-
-//               movs.clear();
-//               movs.addAll(movss);
             }
         } else
         {
@@ -139,7 +108,7 @@ public class BLLManager
     }
 
     /**
-     * returns all movies by title. !!!!!!!! - sam delete
+     * returns all movies by title.
      *
      * @return
      */
@@ -211,7 +180,6 @@ public class BLLManager
     }
 
     /**
-     * choicebox?
      *
      * @param categoryName
      */

@@ -9,15 +9,9 @@ import examprivatemovie.BE.Category;
 import examprivatemovie.BE.Movie;
 import examprivatemovie.BLL.BLLManager;
 import java.sql.SQLException;
-import java.sql.Time;
-import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -129,7 +123,7 @@ public class MovieModel
     public void addCategory(Category c)
     {
         bllm.addCategoryToDb(c);
-        cList.addAll(bllm.getAllCategories()); //maybe wrong list
+        cList.addAll(bllm.getAllCategories());
     }
 
     /**
@@ -239,7 +233,6 @@ public class MovieModel
     public void loadMoviesInCategory(List<Category> cat)
     {
         catmList.setAll(bllm.getAllMoviesInCategory(cat));
-        // if (catmList.contains(delete all movies once. then you only have 1 of the dupes. perfect result
     }
 
     /**

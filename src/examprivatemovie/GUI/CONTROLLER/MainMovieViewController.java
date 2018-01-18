@@ -10,13 +10,9 @@ import examprivatemovie.GUI.CONTROLLER.AddMovieViewController;
 import examprivatemovie.BE.Category;
 import examprivatemovie.BE.Movie;
 import examprivatemovie.GUI.MODEL.MovieModel;
-import examprivatemovie.GUI.MODEL.MovieModel;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
-import java.time.Month;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -127,8 +123,6 @@ public class MainMovieViewController implements Initializable
         }
     }
     
-    //get Category.id, get Catmovie.id get Movie.id, only add Movie from CatMovie.id with all chosen Category.id
-    
     /**
      * Gets selected Movie from list
      */
@@ -169,7 +163,6 @@ public class MainMovieViewController implements Initializable
                 ((Movie) t.getTableView().getItems().get(t.getTablePosition().getRow())).setPersonalRating(t.getNewValue());
             }
         });
-        //model.editMovie(m);
     }
 
     /**
@@ -289,7 +282,7 @@ public class MainMovieViewController implements Initializable
     }
 
     /**
-     * doesn't really do anything, btnEdit might need to be deleted !!!!!!!!!
+     * 
      * @param event 
      */
     @FXML
@@ -313,7 +306,7 @@ public class MainMovieViewController implements Initializable
     }
 
     /**
-     * Removes the selected category and loads the list !!!!!!!
+     * Removes the selected category and loads the list.
      * @param event 
      */
     @FXML

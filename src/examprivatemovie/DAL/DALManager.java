@@ -127,13 +127,11 @@ public class DALManager
         try (Connection con = cm.getConnection())
         {
             PreparedStatement stmt = con.prepareStatement(
-                     // " SELECT DISTINCT, DELETE "
-                    " SELECT Movie.id, Movie.name, Movie.personalRating, Movie.imdbRating, Movie.lastview, Movie.filelink "
+                      " SELECT Movie.id, Movie.name, Movie.personalRating, Movie.imdbRating, Movie.lastview, Movie.filelink "
                     + " FROM ((CatMovie "
                     + " INNER JOIN Category ON CatMovie.CategoryId = Category.id) "
                     + " INNER JOIN Movie ON CatMovie.MovieId = Movie.id) "
                     + " WHERE Category.Id = ? "
-                  //  + "GROUP BY "
             );
 
             stmt.setInt(1, selectedId);
@@ -147,7 +145,7 @@ public class DALManager
                 m.setName(rs.getString("name"));
                 m.setPersonalRating(rs.getString("personalRating"));
                 m.setIMDBRating(rs.getString("imdbRating"));
-                m.setFilelink(rs.getString("filelink")); //dunno if works
+                m.setFilelink(rs.getString("filelink"));
                 m.setLastview(rs.getString("lastview"));
 
                 allMoviesInCategory.add(m);
@@ -279,7 +277,6 @@ public class DALManager
      */
     public void removeMovieFromDb(Movie selectedMovie, Movie selectedMovieId)
     {
-        //also delete from CatMovie where id=?
         try (Connection con = cm.getConnection())
         {
             String sql
@@ -310,7 +307,6 @@ public class DALManager
      */
     public void removeCategoryFromDb(Category selectedCategory)
     {
-        //also delete from CatMovie where id=?
         try (Connection con = cm.getConnection())
         {
             String sql
@@ -370,7 +366,7 @@ public class DALManager
                 Movie m = new Movie();
                 m.setName(rs.getString("name"));
                 m.setPersonalRating(rs.getString("personalRating"));
-                m.setIMDBRating(rs.getString("imdbRating")); //imdb capital letters or no?
+                m.setIMDBRating(rs.getString("imdbRating"));
                 m.setFilelink(rs.getString("filelink"));
                 allMovies.add(m);
             }
@@ -401,9 +397,6 @@ public class DALManager
             while (rs.next())
             {
                 allMoviesByTitle.add(rs.getString("name"));
-                //m.setPersonalRating(rs.getString("personalRating"));
-                //m.setIMDBRating(rs.getString("imdbRating"));
-                //m.setFilelink(rs.getString("filelink"));
             }
         } catch (SQLException ex)
         {
