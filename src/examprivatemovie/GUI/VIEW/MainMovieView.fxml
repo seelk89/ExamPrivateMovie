@@ -26,7 +26,6 @@
       </TableView>
       <ButtonBar layoutX="196.0" layoutY="427.0" prefHeight="40.0" prefWidth="200.0">
         <buttons>
-          <Button fx:id="btnEdit" mnemonicParsing="false" onAction="#clickEditMovie" text="Edit" />
             <Button fx:id="btnAdd" mnemonicParsing="false" onAction="#clickAddMovie" text="Add" />
             <Button fx:id="btnRemove" mnemonicParsing="false" onAction="#clickRemoveMovie" text="Remove" />
         </buttons>

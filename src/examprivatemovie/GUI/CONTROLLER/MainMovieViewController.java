@@ -47,7 +47,8 @@ import javafx.stage.Stage;
  *
  * @author Jesper
  */
-public class MainMovieViewController implements Initializable {
+public class MainMovieViewController implements Initializable
+{
 
     private Label label;
     @FXML
@@ -69,8 +70,6 @@ public class MainMovieViewController implements Initializable {
     @FXML
     private Label labelSearch;
     @FXML
-    private Button btnEdit;
-    @FXML
     private Button btnAdd;
     @FXML
     private Button btnRemove;
@@ -88,9 +87,10 @@ public class MainMovieViewController implements Initializable {
     private TableView<Category> myTable = new TableView<>(masterData);
 
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize(URL url, ResourceBundle rb)
+    {
 
-        editingCells(); //is it supposed to be above the cells?
+        editingCells();
         columnCategory.setCellValueFactory(
                 new PropertyValueFactory("name"));
 
@@ -111,47 +111,56 @@ public class MainMovieViewController implements Initializable {
 
         search();
 
-        try {
+        try
+        {
             twoYearWarning();
-        } catch (SQLException ex) {
+        } catch (SQLException ex)
+        {
             Logger.getLogger(MainMovieViewController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
+        } catch (IOException ex)
+        {
             Logger.getLogger(MainMovieViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-   
+
     /**
      * Gets selected Movie from list
      */
-    public Movie getSelectedMovie() {
+    public Movie getSelectedMovie()
+    {
         return TableMovieView.getSelectionModel().getSelectedItem();
     }
 
     /**
      * Gets selected Category from left list
      */
-    public Category getSelectedCategory() {
+    public Category getSelectedCategory()
+    {
         return TableCategoryView.getSelectionModel().getSelectedItem();
     }
 
     /**
-     * etiher this one or the one above needs to be deleted by Anni !!!!!!!
+     * Gets selected Category from left list
      *
      * @return
      */
-    public Category getSelectedCategoryId() {
+    public Category getSelectedCategoryId()
+    {
         return TableCategoryView.getSelectionModel().getSelectedItem();
     }
 
     /**
      *
      */
-    private void editingCells() {
+    private void editingCells()
+    {
         TableMovieView.setEditable(true);
         columnPersonalRating.setCellFactory(TextFieldTableCell.forTableColumn());
-        columnPersonalRating.setOnEditCommit(new EventHandler<CellEditEvent<Movie, String>>() {
+        columnPersonalRating.setOnEditCommit(new EventHandler<CellEditEvent<Movie, String>>()
+        {
             @Override
-            public void handle(CellEditEvent<Movie, String> t) {
+            public void handle(CellEditEvent<Movie, String> t)
+            {
                 String movieName = t.getTableView().getItems().get(t.getTablePosition().getRow()).getName();
                 StringProperty movieTitle = new SimpleStringProperty(movieName);
                 StringProperty moviePersonalRating = new SimpleStringProperty(t.getNewValue());
@@ -169,7 +178,8 @@ public class MainMovieViewController implements Initializable {
      * @throws IOException
      */
     @FXML
-    private void clickAddMovie(ActionEvent event) throws IOException {
+    private void clickAddMovie(ActionEvent event) throws IOException
+    {
         Stage newWindow = new Stage();
 
         newWindow.initModality(Modality.APPLICATION_MODAL);
@@ -195,7 +205,8 @@ public class MainMovieViewController implements Initializable {
      * @param event
      */
     @FXML
-    private void clickRemoveMovie(ActionEvent event) {
+    private void clickRemoveMovie(ActionEvent event)
+    {
         Movie selectedMovie = getSelectedMovie();
         Movie selectedMovieId = getSelectedMovie();
         model.removeMovie(selectedMovie, selectedMovieId);
@@ -208,7 +219,8 @@ public class MainMovieViewController implements Initializable {
      * @throws IOException
      */
     @FXML
-    private void clickPlayMovie(ActionEvent event) throws IOException {
+    private void clickPlayMovie(ActionEvent event) throws IOException
+    {
         Stage newWindow = new Stage();
 
         newWindow.initModality(Modality.APPLICATION_MODAL);
@@ -242,14 +254,17 @@ public class MainMovieViewController implements Initializable {
      * 6, that has not been player in over two years.
      *
      */
-    private void twoYearWarning() throws SQLException, IOException {
+    private void twoYearWarning() throws SQLException, IOException
+    {
 
-        for (int i = 0; i < model.movieCount(); i++) {
+        for (int i = 0; i < model.movieCount(); i++)
+        {
             TableMovieView.getSelectionModel().select(i);
 
             int selectedMovieId = TableMovieView.getSelectionModel().getSelectedItem().getId();
 
-            if (model.twoYearWarning(selectedMovieId) == false && model.selectedMoviePersRating(selectedMovieId) < 6) {
+            if (model.twoYearWarning(selectedMovieId) == true && model.selectedMoviePersRating(selectedMovieId) < 6)
+            {
                 Stage newWindow = new Stage();
 
                 newWindow.initModality(Modality.APPLICATION_MODAL);
@@ -267,23 +282,12 @@ public class MainMovieViewController implements Initializable {
                 newWindow.setTitle("Delete Movie");
                 newWindow.setScene(scene);
                 newWindow.showAndWait();
-            } else {
+            } else
+            {
             }
         }
 
         model.loadMovie();
-    }
-
-    /**
-     * 
-     * @param event 
-     * doesn't really do anything, btnEdit might need to be deleted !!!!!!!!!
-     *
-     * @param event
-     */
-    @FXML
-    private void clickEditMovie(ActionEvent event) {
-
     }
 
     /**
@@ -292,7 +296,8 @@ public class MainMovieViewController implements Initializable {
      * @param event
      */
     @FXML
-    private void clickAddCategory(ActionEvent event) {
+    private void clickAddCategory(ActionEvent event)
+    {
         Category c = new Category();
         c.setName(txtAddCategory.getText());
 
@@ -301,17 +306,13 @@ public class MainMovieViewController implements Initializable {
     }
 
     /**
-<<<<<<< HEAD
      * Removes the selected category and loads the list.
-     * @param event 
-=======
-     * Removes the selected category and loads the list !!!!!!!
      *
      * @param event
->>>>>>> 413f4042630a3e218291a8bffc5aac5f8ae3effe
      */
     @FXML
-    private void clickRemoveCategory(ActionEvent event) {
+    private void clickRemoveCategory(ActionEvent event)
+    {
         Category selectedCategory = TableCategoryView.getSelectionModel().getSelectedItem();
         Category selectedCategoryId = new Category();
         model.removeCategory(selectedCategory, selectedCategoryId);
@@ -321,10 +322,13 @@ public class MainMovieViewController implements Initializable {
     /**
      * Uses txtSearchFilter to search for movies by name or imdb rating.
      */
-    private void search() {
-        txtSearchFilter.textProperty().addListener(new ChangeListener<String>() {
+    private void search()
+    {
+        txtSearchFilter.textProperty().addListener(new ChangeListener<String>()
+        {
             @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue)
+            {
                 model.search(newValue, newValue);
             }
         });
@@ -337,7 +341,8 @@ public class MainMovieViewController implements Initializable {
      * @param event
      */
     @FXML
-    private void clkSelectedItems(MouseEvent event) {
+    private void clkSelectedItems(MouseEvent event)
+    {
         List<Category> cat = TableCategoryView.getSelectionModel().getSelectedItems();
 
         System.out.println(cat);
