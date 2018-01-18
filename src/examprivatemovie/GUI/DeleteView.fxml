@@ -4,12 +4,12 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="102.0" prefWidth="146.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.111" fx:controller="examprivatemovie.GUI.DeleteViewController">
+<AnchorPane id="AnchorPane" prefHeight="131.0" prefWidth="423.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="examprivatemovie.GUI.DeleteViewController">
    <children>
-      <Button fx:id="btnAccept" layoutX="14.0" layoutY="64.0" mnemonicParsing="false" onAction="#clickAccept" text="Accept" />
-      <Button fx:id="btnCancel" layoutX="75.0" layoutY="64.0" mnemonicParsing="false" onAction="#clickCancel" text="Cancel" />
+      <Button fx:id="btnAccept" layoutX="14.0" layoutY="91.0" mnemonicParsing="false" onAction="#clickAccept" text="Accept" />
+      <Button fx:id="btnCancel" layoutX="75.0" layoutY="91.0" mnemonicParsing="false" onAction="#clickCancel" text="Cancel" />
       <Label fx:id="labelMovieName" layoutX="14.0" layoutY="38.0" text="movieName" />
       <Label layoutX="14.0" layoutY="14.0" text="Do you want to delete:" />
+      <Label layoutX="14.0" layoutY="63.0" text="It has a personal rating below 6 and has not been played in over two years." />
    </children>
 </AnchorPane>
